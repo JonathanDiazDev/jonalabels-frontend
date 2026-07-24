@@ -17,7 +17,7 @@ const STEPS = [
     icon: Factory,
     number: '03',
     title: 'Producción',
-    desc: 'Una vez aprobada la cotización, comenzamos la producción con satén de alta definición y colores que no se desvanecen.',
+    desc: 'Una vez aprobada la cotización, comenzamos la producción con satín de alta definición y colores que no se desvanecen.',
   },
   {
     icon: Truck,

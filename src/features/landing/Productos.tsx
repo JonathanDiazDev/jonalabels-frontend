@@ -11,13 +11,13 @@ const CATEGORIES = [
     title: 'Etiquetas Internas',
     image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=450&fit=crop',
     desc: 'Satín de Alta Definición: El roce perfecto. Un acabado sedoso con brillo elegante que jamás irrita la piel. Ideal para alta costura y lencería. Bordes sellados impecables que no se deshilachan.',
-    items: ['Satén suave', 'Tejido de alta densidad', 'Tinta resistente al lavado', 'Impresión digital'],
+    items: ['Satín suave', 'Tejido de alta densidad', 'Tinta resistente al lavado', 'Impresión digital'],
   },
   {
     title: 'Etiquetas Externas',
     image: 'https://images.unsplash.com/photo-1528459105426-b9548367069b?w=600&h=450&fit=crop',
     desc: 'Cartón Colgante (Hang Tags): Tu carta de presentación. El primer contacto físico del cliente con tu identidad. Acabados en relieve, texturas mate y detalles metalizados para un unboxing inolvidable.',
-    items: ['Satén brillante', 'Damasco tejido', 'Bordado premium', 'Sellos en relieve'],
+    items: ['Satín brillante', 'Damasco tejido', 'Bordado premium', 'Sellos en relieve'],
   },
   {
     title: 'Etiquetas para Mezclilla',

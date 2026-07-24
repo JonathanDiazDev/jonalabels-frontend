@@ -211,7 +211,7 @@ export default function QuoteForm() {
     >
       {logoFile && (
         <p className="-mt-2 mb-4 text-center text-sm font-medium text-stone-500 transition-colors duration-300 dark:text-stone-400">
-          Vista previa seleccionada: etiqueta {labelType === 'SATIN' ? 'de satén' : 'colgante'}.
+          Vista previa seleccionada: etiqueta {labelType === 'SATIN' ? 'de satín' : 'colgante'}.
         </p>
       )}
 

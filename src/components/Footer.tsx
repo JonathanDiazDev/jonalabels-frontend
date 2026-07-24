@@ -13,7 +13,7 @@ export default function Footer() {
           <div>
             <span className="text-xl font-bold tracking-tight text-stone-900 transition-colors duration-300 dark:text-stone-100">Jona Labels</span>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-stone-500 transition-colors duration-300 dark:text-stone-400">
-              Etiquetas textiles personalizadas que dan identidad a tu marca. Producción rápida con satén de alta definición.
+              Etiquetas textiles personalizadas que dan identidad a tu marca. Producción rápida con satín de alta definición.
             </p>
           </div>
 

@@ -38,7 +38,7 @@ const INPUT_CLASS =
 const LABEL_CLASS = 'mb-1.5 block text-sm font-medium text-slate-700 dark:text-brand-blue'
 
 const MATERIAL_OPTIONS: { value: MaterialTipo; label: string }[] = [
-  { value: 'SATEN', label: 'Satén' },
+  { value: 'SATEN', label: 'Satín' },
   { value: 'DAMASCO', label: 'Damasco' },
   { value: 'ALGODON', label: 'Algodón' },
 ]

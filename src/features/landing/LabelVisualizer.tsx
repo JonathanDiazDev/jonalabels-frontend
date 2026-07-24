@@ -3,7 +3,7 @@ import { ImageUp, Tag } from 'lucide-react'
 import { type LabelType, useQuote } from '../../context/QuoteContext'
 
 const OPTIONS: { value: LabelType; title: string; description: string }[] = [
-  { value: 'SATIN', title: 'Etiqueta de satén', description: 'Suave, elegante y lista para coser.' },
+  { value: 'SATIN', title: 'Etiqueta de satín', description: 'Suave, elegante y lista para coser.' },
   { value: 'COLGANTE', title: 'Etiqueta colgante', description: 'Ideal para presentar tu marca y colección.' },
 ]
 
@@ -54,7 +54,7 @@ export default function LabelVisualizer() {
   const WHATSAPP_PHONE = '523339472657'
 
   const goToWhatsApp = () => {
-    const material = labelType === 'SATIN' ? 'Satén' : 'Colgante'
+    const material = labelType === 'SATIN' ? 'Satín' : 'Colgante'
     const colorLabel = activeColor.label
     const tieneDiseno = logoFile ? 'Sí, archivo adjunto en breve' : 'No'
 

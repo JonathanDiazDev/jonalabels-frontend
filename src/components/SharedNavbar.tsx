@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: 'Inicio', to: '/' },
   { label: 'Nosotros', to: '/nosotros' },
   { label: 'Productos', to: '/productos' },
+  { label: 'Diario', to: '/blog' },
   { label: 'Cotizar', to: '/cotizar' },
 ]
 

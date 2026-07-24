@@ -13,7 +13,7 @@ export default function ProductShowcase() {
             La diferencia se nota en los detalles.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">
-            Hilos de alta definición y un satén que refleja la verdadera calidad de tu marca. Observa de cerca por qué nuestros clientes confían en nosotros para su toque final.
+            Hilos de alta definición y un satín que refleja la verdadera calidad de tu marca. Observa de cerca por qué nuestros clientes confían en nosotros para su toque final.
           </p>
         </div>
 

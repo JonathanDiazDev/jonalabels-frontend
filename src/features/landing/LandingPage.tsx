@@ -58,7 +58,7 @@ export default function LandingPage() {
               Etiquetas que dan identidad
             </h1>
             <p className="max-w-xl text-lg font-medium text-brand-blue/70">
-              Dale identidad a tus prendas con etiquetas de satén premium personalizadas.
+              Dale identidad a tus prendas con etiquetas de satín premium personalizadas.
             </p>
           </motion.div>
         </div>
@@ -80,7 +80,7 @@ export default function LandingPage() {
           className="relative z-30 flex flex-col items-center justify-center px-6 py-32"
         >
           <p className="mb-8 max-w-xl text-center text-lg font-medium text-brand-blue/80">
-            Dale identidad a tus prendas con etiquetas de satén premium personalizadas.
+            Dale identidad a tus prendas con etiquetas de satín premium personalizadas.
           </p>
           <motion.button
             onClick={handleCtaClick}
