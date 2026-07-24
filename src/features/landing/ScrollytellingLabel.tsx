@@ -86,41 +86,23 @@ export default function ScrollytellingLabel() {
   return (
     <section ref={containerRef} id="materiales" className="relative h-[300vh] scroll-mt-20">
 
-      {/* SVG ClipPaths para las flechas chevron */}
-      <svg className="absolute h-0 w-0" aria-hidden="true">
-        <defs>
-          <clipPath id="chevron-left" clipPathUnits="objectBoundingBox">
-            <path d="M0,0 L0.88,0 L1,0.5 L0.88,1 L0,1 Z" />
-          </clipPath>
-          <clipPath id="chevron-right" clipPathUnits="objectBoundingBox">
-            <path d="M0.12,0 L1,0 L1,1 L0.12,1 L0,0.5 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 
         {/* ════════════════════════════════════════════════════════════
-            MÓVIL — Grid 2×2 + imagen central sticky
+            MÓVIL — Columna vertical + imagen central sticky
            ════════════════════════════════════════════════════════════ */}
         <div className="absolute inset-0 z-10 flex items-center justify-center md:hidden">
           <div className="w-full max-w-2xl px-5">
 
-            {/* ── Fila superior: 2 chevrons ── */}
-            <div className="grid grid-cols-2 gap-5 mb-6">
+            {/* ── Tarjetas superiores: apiladas verticalmente ── */}
+            <div className="flex flex-col gap-4 mb-6">
               <motion.div style={{ opacity: chevronLeft1 }}>
-                <div
-                  className={`${GLASS} relative overflow-hidden p-6 pr-7`}
-                  style={{ clipPath: 'url(#chevron-left)' }}
-                >
+                <div className={`${GLASS} relative overflow-hidden p-6`}>
                   <FeatureItem {...MATERIAL_FEATURES[0]} align="left" />
                 </div>
               </motion.div>
               <motion.div style={{ opacity: chevronRight1 }}>
-                <div
-                  className={`${GLASS} relative overflow-hidden p-6 pl-7`}
-                  style={{ clipPath: 'url(#chevron-right)' }}
-                >
+                <div className={`${GLASS} relative overflow-hidden p-6`}>
                   <FeatureItem {...SERVICE_FEATURES[0]} align="left" />
                 </div>
               </motion.div>
@@ -187,21 +169,15 @@ export default function ScrollytellingLabel() {
               </div>
             </div>
 
-            {/* ── Fila inferior: 2 chevrons ── */}
-            <div className="grid grid-cols-2 gap-5 mt-6">
+            {/* ── Tarjetas inferiores: apiladas verticalmente ── */}
+            <div className="flex flex-col gap-4 mt-6">
               <motion.div style={{ opacity: chevronLeft2 }}>
-                <div
-                  className={`${GLASS} relative overflow-hidden p-6 pr-7`}
-                  style={{ clipPath: 'url(#chevron-left)' }}
-                >
+                <div className={`${GLASS} relative overflow-hidden p-6`}>
                   <FeatureItem {...MATERIAL_FEATURES[1]} align="left" />
                 </div>
               </motion.div>
               <motion.div style={{ opacity: chevronRight2 }}>
-                <div
-                  className={`${GLASS} relative overflow-hidden p-6 pl-7`}
-                  style={{ clipPath: 'url(#chevron-right)' }}
-                >
+                <div className={`${GLASS} relative overflow-hidden p-6`}>
                   <FeatureItem {...SERVICE_FEATURES[1]} align="left" />
                 </div>
               </motion.div>
