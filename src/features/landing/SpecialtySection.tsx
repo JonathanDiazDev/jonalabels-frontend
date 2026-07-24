@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const SPECIALTIES = [
   {
     title: 'Cartón Colgante',
@@ -38,9 +40,9 @@ export default function SpecialtySection() {
 
               <div className="absolute bottom-0 left-0 flex w-full flex-col items-center p-8">
                 <h3 className="mb-4 text-2xl font-bold text-white">{title}</h3>
-                <button className="rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:bg-black/70 dark:bg-white/10 dark:hover:bg-white/20">
-                  Ver mas
-                </button>
+                <Link to="/productos" className="rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white transition-colors duration-300 hover:bg-black/70 dark:bg-white/10 dark:hover:bg-white/20">
+                  Ver más
+                </Link>
               </div>
             </div>
           ))}

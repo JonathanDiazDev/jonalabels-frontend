@@ -48,7 +48,7 @@ export default function InstagramSection() {
               <div className="absolute bottom-0 left-0 flex w-full flex-col items-center p-8">
                 <InstagramIcon />
                 <h3 className="mt-4 text-2xl font-bold text-white">@jonalabels</h3>
-                <button className="mt-4 rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:bg-black/70 dark:bg-white/10 dark:hover:bg-white/20">
+                <button className="mt-4 rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white transition-colors duration-300 hover:bg-black/70 dark:bg-white/10 dark:hover:bg-white/20">
                   Seguir
                 </button>
               </div>
