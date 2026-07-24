@@ -30,7 +30,7 @@ function Stars() {
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-20 transition-colors duration-300 sm:py-24">
+    <section className="relative z-10 bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
 
         <h2 className="mb-16 text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
@@ -40,7 +40,7 @@ export default function TestimonialsSection() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
           {TESTIMONIALS.map(({ text, name, role }) => (
             <div key={name} className="relative">
-              <span className="absolute -top-6 -left-2 text-6xl font-serif leading-none text-stone-200 transition-colors duration-300 dark:text-stone-700/40">&ldquo;</span>
+              <span className="absolute -top-6 -left-2 text-6xl font-serif leading-none text-stone-300 transition-colors duration-300 dark:text-stone-600">&ldquo;</span>
               <Stars />
               <p className="mt-4 text-sm leading-relaxed text-stone-600 italic transition-colors duration-300 md:text-base dark:text-stone-400">
                 {text}

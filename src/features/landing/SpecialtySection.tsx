@@ -1,21 +1,21 @@
 const SPECIALTIES = [
   {
     title: 'Cartón Colgante',
-    image: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=800&fit=crop',
+    image: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921824/pexels-ron-lach-9594081_x9fu4i.jpg',
   },
   {
     title: 'Bordado',
-    image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=800&fit=crop',
+    image: 'https://res.cloudinary.com/oisispbh/image/upload/v1784922414/wmremove-transformed_cnwfot.png',
   },
   {
     title: 'Satín',
-    image: 'https://images.unsplash.com/photo-1528459105426-b9548367069b?w=600&h=800&fit=crop',
+    image: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg',
   },
 ]
 
 export default function SpecialtySection() {
   return (
-    <section className="bg-white py-20 transition-colors duration-300 dark:bg-transparent sm:py-24">
+    <section className="relative z-10 bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
 
         <h2 className="text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">

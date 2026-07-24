@@ -195,7 +195,7 @@ export default function QuoteForm() {
         <button
           type="button"
           onClick={resetForm}
-          className="mt-8 cursor-pointer text-sm font-semibold text-stone-900 underline underline-offset-4 transition-opacity hover:opacity-70"
+          className="mt-8 cursor-pointer text-sm font-semibold text-stone-900 underline underline-offset-4 transition-opacity hover:opacity-70 dark:text-stone-100"
         >
           Nueva cotización
         </button>
@@ -217,7 +217,7 @@ export default function QuoteForm() {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <div>
-          <label htmlFor="qnombre" className="mb-1.5 block text-sm font-medium text-stone-900">
+          <label htmlFor="qnombre" className="mb-1.5 block text-sm font-medium text-stone-900 transition-colors duration-300 dark:text-stone-100">
             Nombre Completo
           </label>
           <input
@@ -234,11 +234,11 @@ export default function QuoteForm() {
           {fieldErrors.nombre && <p className="mt-1 text-xs text-red-500">{fieldErrors.nombre}</p>}
         </div>
         <div>
-          <label htmlFor="qwhatsapp" className="mb-1.5 block text-sm font-medium text-stone-900">
+          <label htmlFor="qwhatsapp" className="mb-1.5 block text-sm font-medium text-stone-900 transition-colors duration-300 dark:text-stone-100">
             WhatsApp <span className="text-red-400">*</span>
           </label>
           <div className="relative">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400 transition-colors duration-300 dark:text-stone-500">
               <path d="M22 2L11 13" />
               <path d="M22 2l-7 20-4-9-9-4 20-7z" />
             </svg>
@@ -257,7 +257,7 @@ export default function QuoteForm() {
           {fieldErrors.whatsapp && <p className="mt-1 text-xs text-red-500">{fieldErrors.whatsapp}</p>}
         </div>
         <div>
-          <label htmlFor="qemail" className="mb-1.5 block text-sm font-medium text-stone-900">
+          <label htmlFor="qemail" className="mb-1.5 block text-sm font-medium text-stone-900 transition-colors duration-300 dark:text-stone-100">
             Correo Electrónico <span className="font-normal text-stone-400">(Opcional)</span>
           </label>
           <input
@@ -273,7 +273,7 @@ export default function QuoteForm() {
           {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
         </div>
         <div>
-          <label htmlFor="qcantidad" className="mb-1.5 block text-sm font-medium text-stone-900">
+          <label htmlFor="qcantidad" className="mb-1.5 block text-sm font-medium text-stone-900 transition-colors duration-300 dark:text-stone-100">
             Cantidad <span className="text-red-400">*</span>
           </label>
           <input
@@ -290,13 +290,13 @@ export default function QuoteForm() {
             disabled={isSubmitting}
           />
           {quantityError ? (
-            <p className="mt-1 text-xs text-stone-600">{quantityError}</p>
+              <p className="mt-1 text-xs text-stone-600 transition-colors duration-300 dark:text-stone-400">{quantityError}</p>
           ) : (
             <span className="mt-1 block text-xs text-stone-400 transition-colors duration-300 dark:text-stone-500">Pedido mínimo: 5,000 piezas</span>
           )}
         </div>
         <div className="md:col-span-2">
-          <label htmlFor="qmedidas" className="mb-1.5 block text-sm font-medium text-stone-900">
+          <label htmlFor="qmedidas" className="mb-1.5 block text-sm font-medium text-stone-900 transition-colors duration-300 dark:text-stone-100">
             Medidas deseadas
           </label>
           <input
@@ -335,7 +335,7 @@ export default function QuoteForm() {
         />
         {file ? (
           <div className="flex items-center justify-center gap-3" onClick={(e) => e.stopPropagation()}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-8 w-8 shrink-0 text-stone-900">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-8 w-8 shrink-0 text-stone-900 transition-colors duration-300 dark:text-stone-100">
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
               <polyline points="14 2 14 8 20 8" />
               <line x1="16" y1="13" x2="8" y2="13" />

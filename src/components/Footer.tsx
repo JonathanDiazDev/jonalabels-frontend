@@ -6,7 +6,7 @@ const CONTACT = {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-stone-200 bg-white transition-colors duration-300 dark:border-stone-800 dark:bg-stone-950">
+    <footer className="relative z-10 border-t border-stone-200 bg-white transition-colors duration-300 dark:border-stone-800 dark:bg-stone-950">
       <div className="mx-auto max-w-7xl px-6 py-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
 

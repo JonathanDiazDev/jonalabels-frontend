@@ -29,7 +29,7 @@ const STEPS = [
 
 export default function ProcessSection() {
   return (
-    <section id="proceso" className="bg-white py-20 transition-colors duration-300 dark:bg-transparent sm:py-24">
+    <section id="proceso" className="relative z-10 bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-16 text-center">
           <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
@@ -43,7 +43,7 @@ export default function ProcessSection() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step) => (
             <div key={step.number} className="relative">
-              <span className="mb-4 block text-5xl font-extrabold text-stone-100 transition-colors duration-300 dark:text-stone-700/40">
+              <span className="mb-4 block text-5xl font-extrabold text-stone-300 transition-colors duration-300 dark:text-stone-600">
                 {step.number}
               </span>
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-stone-900 text-white transition-colors duration-300 dark:bg-stone-100 dark:text-stone-900">

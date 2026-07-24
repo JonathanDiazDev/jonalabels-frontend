@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import EditorialHero from './features/landing/EditorialHero'
-import BenefitsSection from './features/landing/BenefitsSection'
 import SpecialtySection from './features/landing/SpecialtySection'
 import InstagramSection from './features/landing/InstagramSection'
 import TestimonialsSection from './features/landing/TestimonialsSection'
@@ -26,7 +25,6 @@ export const router = createBrowserRouter([
         element: (
           <div className="relative">
             <EditorialHero />
-            <BenefitsSection />
             <SpecialtySection />
             <ProcessSection />
             <InstagramSection />

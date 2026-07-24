@@ -2,6 +2,20 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html,
+body {
+  overscroll-behavior-y: contain;
+}
+
+html {
+  background-color: #fbfbfa;
+}
+
+.dark html,
+.dark body {
+  background-color: #0c0a09;
+}
+
 @theme {
   --color-brand-blue: #1B2A4A;
   --color-brand-orange: #FF6B35;
