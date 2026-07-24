@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { type LabelType, useQuote } from '../../context/QuoteContext'
+import {  useQuote } from '../../context/QuoteContext'
 
 const COLORS = [
   { id: 'white', label: 'Blanco', bg: 'bg-white', border: 'border-gray-200', textDark: false, satinGradient: 'from-white to-gray-50', isDark: false },
