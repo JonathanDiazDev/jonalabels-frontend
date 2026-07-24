@@ -35,7 +35,7 @@ export default function InstagramSection() {
               href={PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative h-[450px] overflow-hidden rounded-3xl"
+              className="group relative aspect-square overflow-hidden rounded-3xl"
             >
               <img
                 src={imageUrl}
