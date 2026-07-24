@@ -32,13 +32,15 @@ function FeatureItem({
   align: 'right' | 'left'
 }) {
   return (
-    <div className={`flex items-start gap-3 ${align === 'right' ? 'flex-row-reverse text-right' : ''}`}>
+    <div
+      className={`flex items-start gap-3 md:mx-auto md:w-fit ${align === 'right' ? 'md:flex-row-reverse md:text-right' : ''}`}
+    >
       <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-jona-orange/10 dark:text-jona-orange">
         <Icon className="h-5 w-5" />
       </div>
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 dark:text-white">{title}</h3>
-        <p className="mt-0.5 text-sm leading-relaxed text-slate-700 dark:text-slate-400">{desc}</p>
+        <h3 className="text-sm font-semibold text-white">{title}</h3>
+        <p className="mt-0.5 text-sm leading-relaxed text-white/70">{desc}</p>
       </div>
     </div>
   )
@@ -80,93 +82,104 @@ export default function ScrollytellingLabel() {
 
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 
-        {/* ── Grid de características ── */}
+        {/* ── Label animado (z-10, detrás de features) ── */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center" style={{ perspective: 1000 }}>
+          <div className="relative h-[55vh] md:h-[65vh] aspect-[600/800]">
+            <motion.div
+              style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
+              className="relative w-full h-full"
+            >
+              {/* Cara frontal */}
+              <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
+                {FRONT_LAYERS.map((layer, i) => {
+                  if (i === 0) {
+                    return (
+                      <motion.img
+                        key={layer.id}
+                        src={layer.src}
+                        alt={layer.alt}
+                        style={{ y: layer1Y, opacity: layer1Opacity, backfaceVisibility: 'hidden' as const }}
+                        className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                      />
+                    )
+                  }
+                  if (i === 1) {
+                    return (
+                      <motion.img
+                        key={layer.id}
+                        src={layer.src}
+                        alt={layer.alt}
+                        style={{ x: layer2X, opacity: layer2Opacity, backfaceVisibility: 'hidden' as const }}
+                        className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                      />
+                    )
+                  }
+                  return (
+                    <motion.img
+                      key={layer.id}
+                      src={layer.src}
+                      alt={layer.alt}
+                      style={{ x: layer3X, opacity: layer3Opacity, backfaceVisibility: 'hidden' as const }}
+                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                    />
+                  )
+                })}
+              </div>
+              {/* Cara trasera */}
+              <div
+                className="absolute inset-0"
+                style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+              >
+                <img
+                  src="/reverso-etiqueta.png"
+                  alt="Reverso de la etiqueta"
+                  className="w-full h-full object-contain pointer-events-none"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ── Features glassmorphism (z-30, encima del label en móvil) ── */}
         <motion.div
           style={{ opacity: gridOpacity }}
-          className="absolute inset-0 z-20 flex items-center justify-center px-6 pointer-events-none"
+          className="absolute inset-0 z-30 pointer-events-none md:z-20 md:flex md:items-center md:justify-center md:px-6"
         >
-          <div className="grid w-full max-w-6xl grid-cols-1 items-center gap-8 md:grid-cols-3 md:gap-12">
+          {/* Mobile: columna única con scroll vertical */}
+          <div className="flex h-full flex-col justify-center gap-10 px-4 py-16 md:hidden">
+            {MATERIAL_FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="rounded-2xl border border-white/10 bg-[rgba(10,15,30,0.85)] p-5 shadow-2xl backdrop-blur-md"
+              >
+                <FeatureItem {...f} align="left" />
+              </div>
+            ))}
+            {SERVICE_FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="rounded-2xl border border-white/10 bg-[rgba(10,15,30,0.85)] p-5 shadow-2xl backdrop-blur-md"
+              >
+                <FeatureItem {...f} align="left" />
+              </div>
+            ))}
+          </div>
 
-            {/* Left — Material features */}
+          {/* Desktop: grid 3 columnas original */}
+          <div className="hidden md:grid md:w-full md:max-w-6xl md:grid-cols-3 md:items-center md:gap-12">
             <div className="flex flex-col gap-8">
               {MATERIAL_FEATURES.map((f) => (
                 <FeatureItem key={f.title} {...f} align="right" />
               ))}
             </div>
-
-            {/* Center — empty spacer (animated label shows through) */}
             <div />
-
-            {/* Right — Service features */}
             <div className="flex flex-col gap-8">
               {SERVICE_FEATURES.map((f) => (
                 <FeatureItem key={f.title} {...f} align="left" />
               ))}
             </div>
-
           </div>
         </motion.div>
-
-        {/* ── Contenedor con perspectiva 3D ── */}
-        <div className="relative h-[55vh] md:h-[65vh] aspect-[600/800]" style={{ perspective: 1000 }}>
-
-          {/* ── Tarjeta que gira ── */}
-          <motion.div
-            style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
-            className="relative w-full h-full"
-          >
-
-            {/* ── Cara frontal ── */}
-            <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
-              {FRONT_LAYERS.map((layer, i) => {
-                if (i === 0) {
-                  return (
-                    <motion.img
-                      key={layer.id}
-                      src={layer.src}
-                      alt={layer.alt}
-                      style={{ y: layer1Y, opacity: layer1Opacity, backfaceVisibility: 'hidden' as const }}
-                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                    />
-                  )
-                }
-                if (i === 1) {
-                  return (
-                    <motion.img
-                      key={layer.id}
-                      src={layer.src}
-                      alt={layer.alt}
-                      style={{ x: layer2X, opacity: layer2Opacity, backfaceVisibility: 'hidden' as const }}
-                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                    />
-                  )
-                }
-                return (
-                  <motion.img
-                    key={layer.id}
-                    src={layer.src}
-                    alt={layer.alt}
-                    style={{ x: layer3X, opacity: layer3Opacity, backfaceVisibility: 'hidden' as const }}
-                    className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                  />
-                )
-              })}
-            </div>
-
-            {/* ── Cara trasera (reverso) ── */}
-            <div
-              className="absolute inset-0"
-              style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-            >
-              <img
-                src="/reverso-etiqueta.png"
-                alt="Reverso de la etiqueta"
-                className="w-full h-full object-contain pointer-events-none"
-              />
-            </div>
-
-          </motion.div>
-        </div>
 
       </div>
 
