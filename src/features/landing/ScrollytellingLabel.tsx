@@ -52,16 +52,6 @@ const FRONT_LAYERS: ILayerConfig[] = [
   { id: 'detalles', src: '/detalles-costura.png', alt: 'Detalles de costura de la etiqueta' },
 ]
 
-const CHEVRON_CLIP = {
-  left: 'polygon(0% 0%, calc(100% - 16px) 0%, 100% 50%, calc(100% - 16px) 100%, 0% 100%)',
-  right: 'polygon(16px 0%, 100% 0%, 100% 100%, 16px 100%, 0% 50%)',
-}
-
-const CHEVRON_CLIP_PADDED = {
-  left: 'polygon(6px 6px, calc(100% - 22px) 6px, calc(100% - 6px) 50%, calc(100% - 22px) calc(100% - 6px), 6px calc(100% - 6px))',
-  right: 'polygon(22px 6px, calc(100% - 6px) 6px, calc(100% - 6px) calc(100% - 6px), 22px calc(100% - 6px), 6px 50%)',
-}
-
 const GLASS =
   'bg-[rgba(10,15,30,0.8)] border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-lg [-webkit-backdrop-filter:blur(16px)]'
 
