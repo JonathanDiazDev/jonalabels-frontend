@@ -20,29 +20,7 @@ const SERVICE_FEATURES = [
   { icon: Timer, title: 'Gestión rápida', desc: 'Cotización y distribución ágil.' },
 ]
 
-function MobileFeatureCard({
-  icon: Icon,
-  title,
-  desc,
-}: {
-  icon: React.ComponentType<{ className?: string }>
-  title: string
-  desc: string
-}) {
-  return (
-    <div className={`flex items-start gap-3 rounded-2xl p-5 sm:p-6 ${GLASS}`}>
-      <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-jona-orange/10 dark:text-jona-orange sm:h-11 sm:w-11">
-        <Icon className="h-5 w-5 sm:h-[22px] sm:w-[22px]" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <h3 className="text-base font-bold text-white sm:text-lg">{title}</h3>
-        <p className="mt-1 text-sm leading-relaxed text-white/70">{desc}</p>
-      </div>
-    </div>
-  )
-}
-
-function DesktopFeatureItem({
+function FeatureItem({
   icon: Icon,
   title,
   desc,
@@ -100,88 +78,140 @@ export default function ScrollytellingLabel() {
   const labelScale = useTransform(smooth, [0.6, 0.8], [1, 1.25])
   const labelFinalY = useTransform(smooth, [0.6, 0.8], [0, -40])
 
-  const cardsTopOpacity = useTransform(smooth, [0, 0.08, 0.3, 0.4], [0, 1, 1, 0])
-  const cardsBottomOpacity = useTransform(smooth, [0.5, 0.6, 0.88, 0.96], [0, 1, 1, 0])
+  const chevronLeft1 = useTransform(smooth, [0.35, 0.45, 0.68, 0.75], [0, 1, 1, 0])
+  const chevronRight1 = useTransform(smooth, [0.38, 0.48, 0.68, 0.75], [0, 1, 1, 0])
+  const chevronLeft2 = useTransform(smooth, [0.43, 0.53, 0.68, 0.75], [0, 1, 1, 0])
+  const chevronRight2 = useTransform(smooth, [0.46, 0.56, 0.68, 0.75], [0, 1, 1, 0])
 
   return (
-    <section ref={containerRef} id="materiales" className="relative h-[400vh] scroll-mt-20">
+    <section ref={containerRef} id="materiales" className="relative h-[300vh] scroll-mt-20">
+
+      {/* SVG ClipPaths para las flechas chevron */}
+      <svg className="absolute h-0 w-0" aria-hidden="true">
+        <defs>
+          <clipPath id="chevron-left" clipPathUnits="objectBoundingBox">
+            <path d="M0,0 L0.88,0 L1,0.5 L0.88,1 L0,1 Z" />
+          </clipPath>
+          <clipPath id="chevron-right" clipPathUnits="objectBoundingBox">
+            <path d="M0.12,0 L1,0 L1,1 L0.12,1 L0,0.5 Z" />
+          </clipPath>
+        </defs>
+      </svg>
 
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 
         {/* ════════════════════════════════════════════════════════════
-            MÓVIL — Staggered 2×2: Cards 1 → Label → Cards 2
-            Label sticky at center, cards scroll over it (z-20 > z-10)
+            MÓVIL — Grid 2×2 + imagen central sticky
            ════════════════════════════════════════════════════════════ */}
-        <div className="absolute inset-0 z-10 flex flex-col md:hidden">
+        <div className="absolute inset-0 z-10 flex items-center justify-center md:hidden">
+          <div className="w-full max-w-lg px-3">
 
-          {/* Label sticky gigante — el protagonista absoluto */}
-          <div
-            className="sticky top-[50dvh] z-10 flex items-center justify-center w-full -translate-y-1/2"
-            style={{ perspective: 1000 }}
-          >
-            <div className="relative h-[60vh] w-[75vw] max-w-[320px]">
-              <motion.div
-                style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
-                className="relative h-full w-full"
-              >
-                <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
-                  {FRONT_LAYERS.map((layer, i) => {
-                    const yStyle = i === 0 ? { y: layer1Y, opacity: layer1Opacity } : undefined
-                    const xStyle = i === 1 ? { x: layer2X, opacity: layer2Opacity } : i === 2 ? { x: layer3X, opacity: layer3Opacity } : undefined
-                    return (
-                      <motion.img
-                        key={layer.id}
-                        src={layer.src}
-                        alt={layer.alt}
-                        style={{ ...yStyle, ...xStyle, backfaceVisibility: 'hidden' as const }}
-                        className="absolute inset-0 h-full w-full object-contain pointer-events-none"
-                      />
-                    )
-                  })}
-                </div>
+            {/* ── Fila superior: 2 chevrons ── */}
+            <div className="grid grid-cols-2 gap-2.5 mb-3">
+              <motion.div style={{ opacity: chevronLeft1 }}>
                 <div
-                  className="absolute inset-0"
-                  style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                  className={`${GLASS} relative overflow-hidden p-4 pr-5`}
+                  style={{ clipPath: 'url(#chevron-left)' }}
                 >
-                  <img
-                    src="/reverso-etiqueta.png"
-                    alt="Reverso de la etiqueta"
-                    className="h-full w-full object-contain pointer-events-none"
-                  />
+                  <FeatureItem {...MATERIAL_FEATURES[0]} align="left" />
+                </div>
+              </motion.div>
+              <motion.div style={{ opacity: chevronRight1 }}>
+                <div
+                  className={`${GLASS} relative overflow-hidden p-4 pl-5`}
+                  style={{ clipPath: 'url(#chevron-right)' }}
+                >
+                  <FeatureItem {...SERVICE_FEATURES[0]} align="left" />
                 </div>
               </motion.div>
             </div>
-          </div>
 
-          {/* Tarjetas — z-20 para pasar SOBRE la imagen sticky (z-10) */}
-          <div className="relative z-20 -mt-[50vh] flex flex-col">
-
-            {/* Secuencia 1: Satinado + Impresión */}
-            <motion.div
-              style={{ opacity: cardsTopOpacity }}
-              className="grid grid-cols-2 gap-3 px-4 pb-10 sm:gap-4 sm:px-5 sm:pb-14"
+            {/* ── Imagen central sticky ── */}
+            <div
+              className="sticky top-0 z-20 mx-auto flex items-center justify-center py-2"
+              style={{ perspective: 1000 }}
             >
-              <MobileFeatureCard {...MATERIAL_FEATURES[0]} />
-              <MobileFeatureCard {...SERVICE_FEATURES[0]} />
-            </motion.div>
+              <div className="relative h-[38vh] w-full max-w-[220px]">
+                <motion.div
+                  style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
+                  className="relative h-full w-full"
+                >
+                  {/* Cara frontal */}
+                  <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
+                    {FRONT_LAYERS.map((layer, i) => {
+                      if (i === 0) {
+                        return (
+                          <motion.img
+                            key={layer.id}
+                            src={layer.src}
+                            alt={layer.alt}
+                            style={{ y: layer1Y, opacity: layer1Opacity, backfaceVisibility: 'hidden' as const }}
+                            className="absolute inset-0 h-full w-full object-contain pointer-events-none"
+                          />
+                        )
+                      }
+                      if (i === 1) {
+                        return (
+                          <motion.img
+                            key={layer.id}
+                            src={layer.src}
+                            alt={layer.alt}
+                            style={{ x: layer2X, opacity: layer2Opacity, backfaceVisibility: 'hidden' as const }}
+                            className="absolute inset-0 h-full w-full object-contain pointer-events-none"
+                          />
+                        )
+                      }
+                      return (
+                        <motion.img
+                          key={layer.id}
+                          src={layer.src}
+                          alt={layer.alt}
+                          style={{ x: layer3X, opacity: layer3Opacity, backfaceVisibility: 'hidden' as const }}
+                          className="absolute inset-0 h-full w-full object-contain pointer-events-none"
+                        />
+                      )
+                    })}
+                  </div>
+                  {/* Cara trasera */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                  >
+                    <img
+                      src="/reverso-etiqueta.png"
+                      alt="Reverso de la etiqueta"
+                      className="h-full w-full object-contain pointer-events-none"
+                    />
+                  </div>
+                </motion.div>
+              </div>
+            </div>
 
-            {/* Spacer — genera la distancia visual donde solo se ve la etiqueta libre */}
-            <div className="h-[65vh] w-full shrink-0" />
-
-            {/* Secuencia 2: Corte + Gestión */}
-            <motion.div
-              style={{ opacity: cardsBottomOpacity }}
-              className="grid grid-cols-2 gap-3 px-4 pt-10 sm:gap-4 sm:px-5 sm:pt-14"
-            >
-              <MobileFeatureCard {...MATERIAL_FEATURES[1]} />
-              <MobileFeatureCard {...SERVICE_FEATURES[1]} />
-            </motion.div>
+            {/* ── Fila inferior: 2 chevrons ── */}
+            <div className="grid grid-cols-2 gap-2.5 mt-3">
+              <motion.div style={{ opacity: chevronLeft2 }}>
+                <div
+                  className={`${GLASS} relative overflow-hidden p-4 pr-5`}
+                  style={{ clipPath: 'url(#chevron-left)' }}
+                >
+                  <FeatureItem {...MATERIAL_FEATURES[1]} align="left" />
+                </div>
+              </motion.div>
+              <motion.div style={{ opacity: chevronRight2 }}>
+                <div
+                  className={`${GLASS} relative overflow-hidden p-4 pl-5`}
+                  style={{ clipPath: 'url(#chevron-right)' }}
+                >
+                  <FeatureItem {...SERVICE_FEATURES[1]} align="left" />
+                </div>
+              </motion.div>
+            </div>
 
           </div>
         </div>
 
         {/* ════════════════════════════════════════════════════════════
-            ESCRITORIO — Grid 3 columnas original (sin cambios)
+            ESCRITORIO — Grid 3 columnas original
            ════════════════════════════════════════════════════════════ */}
 
         {/* Label animado (escritorio) */}
@@ -248,13 +278,13 @@ export default function ScrollytellingLabel() {
           <div className="grid w-full max-w-6xl grid-cols-3 items-center gap-12">
             <div className="flex flex-col gap-8">
               {MATERIAL_FEATURES.map((f) => (
-                <DesktopFeatureItem key={f.title} {...f} align="right" />
+                <FeatureItem key={f.title} {...f} align="right" />
               ))}
             </div>
             <div />
             <div className="flex flex-col gap-8">
               {SERVICE_FEATURES.map((f) => (
-                <DesktopFeatureItem key={f.title} {...f} align="left" />
+                <FeatureItem key={f.title} {...f} align="left" />
               ))}
             </div>
           </div>
