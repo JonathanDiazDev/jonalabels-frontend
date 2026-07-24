@@ -20,14 +20,7 @@ const SERVICE_FEATURES = [
   { icon: Timer, title: 'Gestión rápida', desc: 'Cotización y distribución ágil.' },
 ]
 
-const ALL_FEATURES = [
-  MATERIAL_FEATURES[0],
-  SERVICE_FEATURES[0],
-  MATERIAL_FEATURES[1],
-  SERVICE_FEATURES[1],
-]
-
-function FeatureCard({
+function MobileFeatureCard({
   icon: Icon,
   title,
   desc,
@@ -37,21 +30,19 @@ function FeatureCard({
   desc: string
 }) {
   return (
-    <div
-      className={`mx-6 flex items-start gap-4 rounded-2xl p-6 sm:p-8 ${GLASS}`}
-    >
-      <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-jona-orange/10 dark:text-jona-orange sm:h-12 sm:w-12">
-        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+    <div className={`flex items-start gap-3 rounded-2xl p-5 sm:p-6 ${GLASS}`}>
+      <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-jona-orange/10 dark:text-jona-orange sm:h-11 sm:w-11">
+        <Icon className="h-5 w-5 sm:h-[22px] sm:w-[22px]" />
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="text-lg font-bold text-white sm:text-xl">{title}</h3>
-        <p className="mt-1.5 text-sm leading-relaxed text-white/70 sm:text-base">{desc}</p>
+        <h3 className="text-base font-bold text-white sm:text-lg">{title}</h3>
+        <p className="mt-1 text-sm leading-relaxed text-white/70">{desc}</p>
       </div>
     </div>
   )
 }
 
-function FeatureItem({
+function DesktopFeatureItem({
   icon: Icon,
   title,
   desc,
@@ -109,28 +100,26 @@ export default function ScrollytellingLabel() {
   const labelScale = useTransform(smooth, [0.6, 0.8], [1, 1.25])
   const labelFinalY = useTransform(smooth, [0.6, 0.8], [0, -40])
 
-  const featureOpacity1 = useTransform(smooth, [0.3, 0.4, 0.85, 0.95], [0, 1, 1, 0])
-  const featureOpacity2 = useTransform(smooth, [0.4, 0.5, 0.85, 0.95], [0, 1, 1, 0])
-  const featureOpacity3 = useTransform(smooth, [0.5, 0.6, 0.85, 0.95], [0, 1, 1, 0])
-  const featureOpacity4 = useTransform(smooth, [0.6, 0.7, 0.85, 0.95], [0, 1, 1, 0])
-  const featureOpacities = [featureOpacity1, featureOpacity2, featureOpacity3, featureOpacity4]
+  const cardsTopOpacity = useTransform(smooth, [0, 0.08, 0.3, 0.4], [0, 1, 1, 0])
+  const cardsBottomOpacity = useTransform(smooth, [0.5, 0.6, 0.88, 0.96], [0, 1, 1, 0])
 
   return (
-    <section ref={containerRef} id="materiales" className="relative h-[300vh] scroll-mt-20">
+    <section ref={containerRef} id="materiales" className="relative h-[400vh] scroll-mt-20">
 
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 
         {/* ════════════════════════════════════════════════════════════
-            MÓVIL — Imagen gigante sticky + tarjetas apiladas que pasan por encima
+            MÓVIL — Staggered 2×2: Cards 1 → Label → Cards 2
+            Label sticky at center, cards scroll over it (z-20 > z-10)
            ════════════════════════════════════════════════════════════ */}
         <div className="absolute inset-0 z-10 flex flex-col md:hidden">
 
-          {/* Imagen sticky gigante: se centra en el viewport y las tarjetas pasan sobre ella */}
+          {/* Label sticky gigante — el protagonista absoluto */}
           <div
-            className="sticky top-[50dvh] z-0 flex items-center justify-center -translate-y-1/2"
-            style={{ perspective: 1000, alignSelf: 'center' }}
+            className="sticky top-[50dvh] z-10 flex items-center justify-center w-full -translate-y-1/2"
+            style={{ perspective: 1000 }}
           >
-            <div className="relative h-[55vh] w-[65vw] max-w-[280px]">
+            <div className="relative h-[60vh] w-[75vw] max-w-[320px]">
               <motion.div
                 style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
                 className="relative h-full w-full"
@@ -164,17 +153,30 @@ export default function ScrollytellingLabel() {
             </div>
           </div>
 
-          {/* Tarjetas de features apiladas verticalmente — z-index alto para pasar sobre la imagen */}
-          <div className="relative z-20 -mt-[40vh] flex flex-col gap-5 pb-24 sm:gap-6">
-            {ALL_FEATURES.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                style={{ opacity: featureOpacities[i] }}
-                className="flex justify-center"
-              >
-                <FeatureCard {...feature} />
-              </motion.div>
-            ))}
+          {/* Tarjetas — z-20 para pasar SOBRE la imagen sticky (z-10) */}
+          <div className="relative z-20 -mt-[50vh] flex flex-col">
+
+            {/* Secuencia 1: Satinado + Impresión */}
+            <motion.div
+              style={{ opacity: cardsTopOpacity }}
+              className="grid grid-cols-2 gap-3 px-4 pb-10 sm:gap-4 sm:px-5 sm:pb-14"
+            >
+              <MobileFeatureCard {...MATERIAL_FEATURES[0]} />
+              <MobileFeatureCard {...SERVICE_FEATURES[0]} />
+            </motion.div>
+
+            {/* Spacer — genera la distancia visual donde solo se ve la etiqueta libre */}
+            <div className="h-[65vh] w-full shrink-0" />
+
+            {/* Secuencia 2: Corte + Gestión */}
+            <motion.div
+              style={{ opacity: cardsBottomOpacity }}
+              className="grid grid-cols-2 gap-3 px-4 pt-10 sm:gap-4 sm:px-5 sm:pt-14"
+            >
+              <MobileFeatureCard {...MATERIAL_FEATURES[1]} />
+              <MobileFeatureCard {...SERVICE_FEATURES[1]} />
+            </motion.div>
+
           </div>
         </div>
 
@@ -246,13 +248,13 @@ export default function ScrollytellingLabel() {
           <div className="grid w-full max-w-6xl grid-cols-3 items-center gap-12">
             <div className="flex flex-col gap-8">
               {MATERIAL_FEATURES.map((f) => (
-                <FeatureItem key={f.title} {...f} align="right" />
+                <DesktopFeatureItem key={f.title} {...f} align="right" />
               ))}
             </div>
             <div />
             <div className="flex flex-col gap-8">
               {SERVICE_FEATURES.map((f) => (
-                <FeatureItem key={f.title} {...f} align="left" />
+                <DesktopFeatureItem key={f.title} {...f} align="left" />
               ))}
             </div>
           </div>
