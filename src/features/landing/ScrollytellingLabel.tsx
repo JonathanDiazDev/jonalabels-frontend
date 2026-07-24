@@ -89,31 +89,30 @@ export default function ScrollytellingLabel() {
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 
         {/* ════════════════════════════════════════════════════════════
-            MÓVIL — Columna vertical + imagen central sticky
+            MÓVIL — Grid 3 filas: cards arriba + label center + cards abajo
            ════════════════════════════════════════════════════════════ */}
-        <div className="absolute inset-0 z-10 flex items-center justify-center md:hidden">
-          <div className="w-full max-w-2xl px-5">
+        <div className="absolute inset-0 z-10 grid grid-rows-[auto_1fr_auto] items-center md:hidden px-5 py-6">
 
-            {/* ── Tarjetas superiores: apiladas verticalmente ── */}
-            <div className="flex flex-col gap-4 mb-6">
-              <motion.div style={{ opacity: chevronLeft1 }}>
-                <div className={`${GLASS} relative overflow-hidden p-6`}>
-                  <FeatureItem {...MATERIAL_FEATURES[0]} align="left" />
-                </div>
-              </motion.div>
-              <motion.div style={{ opacity: chevronRight1 }}>
-                <div className={`${GLASS} relative overflow-hidden p-6`}>
-                  <FeatureItem {...SERVICE_FEATURES[0]} align="left" />
-                </div>
-              </motion.div>
-            </div>
+          {/* ── Tarjetas superiores: 2 apiladas ── */}
+          <div className="flex flex-col gap-4">
+            <motion.div style={{ opacity: chevronLeft1 }}>
+              <div className={`${GLASS} relative overflow-hidden p-6`}>
+                <FeatureItem {...MATERIAL_FEATURES[0]} align="left" />
+              </div>
+            </motion.div>
+            <motion.div style={{ opacity: chevronRight1 }}>
+              <div className={`${GLASS} relative overflow-hidden p-6`}>
+                <FeatureItem {...SERVICE_FEATURES[0]} align="left" />
+              </div>
+            </motion.div>
+          </div>
 
-            {/* ── Imagen central sticky ── */}
-            <div
-              className="sticky top-0 z-20 mx-auto flex items-center justify-center py-2"
-              style={{ perspective: 1000 }}
-            >
-              <div className="relative h-[55vh] w-full max-w-[440px]">
+          {/* ── Imagen central gigante ── */}
+          <div
+            className="sticky top-0 z-20 mx-auto flex items-center justify-center w-full"
+            style={{ perspective: 1000 }}
+          >
+            <div className="relative h-[50vh] w-[70vw] max-w-[360px]">
                 <motion.div
                   style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
                   className="relative h-full w-full"
@@ -166,24 +165,23 @@ export default function ScrollytellingLabel() {
                     />
                   </div>
                 </motion.div>
-              </div>
             </div>
-
-            {/* ── Tarjetas inferiores: apiladas verticalmente ── */}
-            <div className="flex flex-col gap-4 mt-6">
-              <motion.div style={{ opacity: chevronLeft2 }}>
-                <div className={`${GLASS} relative overflow-hidden p-6`}>
-                  <FeatureItem {...MATERIAL_FEATURES[1]} align="left" />
-                </div>
-              </motion.div>
-              <motion.div style={{ opacity: chevronRight2 }}>
-                <div className={`${GLASS} relative overflow-hidden p-6`}>
-                  <FeatureItem {...SERVICE_FEATURES[1]} align="left" />
-                </div>
-              </motion.div>
-            </div>
-
           </div>
+
+          {/* ── Tarjetas inferiores: 2 apiladas ── */}
+          <div className="flex flex-col gap-4">
+            <motion.div style={{ opacity: chevronLeft2 }}>
+              <div className={`${GLASS} relative overflow-hidden p-6`}>
+                <FeatureItem {...MATERIAL_FEATURES[1]} align="left" />
+              </div>
+            </motion.div>
+            <motion.div style={{ opacity: chevronRight2 }}>
+              <div className={`${GLASS} relative overflow-hidden p-6`}>
+                <FeatureItem {...SERVICE_FEATURES[1]} align="left" />
+              </div>
+            </motion.div>
+          </div>
+
         </div>
 
         {/* ════════════════════════════════════════════════════════════
