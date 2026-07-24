@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-blue: #1B2A4A;
+  --color-brand-orange: #FF6B35;
+  --color-brand-light: #FDF8F5;
+  --color-jona-blue: #11317B;
+  --color-jona-orange: #FF6B00;
+}

@@ -1,0 +1,300 @@
+================================================================================
+                        JONALABELS FRONTEND - FULL CONTEXT
+================================================================================
+
+Stack: React 19, TypeScript 6, Vite 8, Tailwind CSS v4, Framer Motion 12, React Router DOM 7
+Build: Vite + @vitejs/plugin-react + @tailwindcss/vite
+Testing: Vitest + jsdom + @testing-library/react
+Linting: oxlint
+
+================================================================================
+1. ENVIRONMENT & CONFIG
+================================================================================
+
+Vite proxy: /api -> http://localhost:8080 (changeOrigin: true)
+Port: 5173
+Env var: VITE_API_URL (defaults to /api/v1)
+No path aliases defined. No tailwind.config.ts (Tailwind v4 pure CSS setup).
+
+================================================================================
+2. TAILWIND BRAND TOKENS (src/index.css)
+================================================================================
+
+@theme {
+  --color-brand-blue: #1B2A4A;
+  --color-brand-orange: #FF6B35;
+  --color-brand-light: #FDF8F5;
+  --color-jona-blue: #11317B;
+  --color-jona-orange: #FF6B00;
+}
+
+Dark mode: class-based via @custom-variant dark (&:where(.dark, .dark *)).
+Toggled by adding/removing 'dark' class on <html>.
+
+================================================================================
+3. ROUTE TABLE (src/App.tsx)
+================================================================================
+
+Path                Component                       Layout
+─────────────────────────────────────────────────────────────
+/ (index)           Hero+Scrollytelling+Value+      MainLayout
+                    Process+Showcase+Testimonials+
+                    QuoteSection
+/visualizar         LabelVisualizer                 MainLayout
+/cotizar            QuoteSection                    MainLayout
+/admin              AdminRoute (lazy AdminDashboard) MainLayout
+/privacidad         PrivacyPolicy                   MainLayout
+/terminos           TermsOfService                  MainLayout
+/*                  NotFound                        MainLayout
+/login              Login                           NONE (standalone)
+
+================================================================================
+4. API LAYER (src/api/http.ts)
+================================================================================
+
+Base URL: import.meta.env.VITE_API_URL ?? '/api/v1'
+
+apiUrl(path):
+  - Strips leading slash from path
+  - Returns `${API_BASE_URL}/${path}`
+  - Example: apiUrl('/cotizaciones') -> '/api/v1/cotizaciones'
+
+apiFetch(path, init):
+  - Calls fetch(apiUrl(path), { ...init, credentials: 'include' })
+  - On 401 (if not on /login): redirects to /login + throws
+  - Returns Response
+
+axios instance (src/lib/axios.ts):
+  - baseURL: API_BASE_URL
+  - withCredentials: true
+  - Exported as default, currently unused (apiFetch is used everywhere)
+
+================================================================================
+5. PROVIDERS & CONTEXTS
+================================================================================
+
+ThemeProvider (src/context/ThemeContext.tsx):
+  - localStorage key: 'jona-theme'
+  - Toggles 'dark' class on document.documentElement
+  - Exposes: isDark, toggle()
+
+QuoteProvider (src/context/QuoteContext.tsx):
+  - State: labelType ('SATIN'|'COLGANTE'), logoFile (File|null)
+  - Exposes: labelType, logoFile, setLabelType, setLogoFile
+
+Provider tree (main.tsx):
+  StrictMode > ThemeProvider > QuoteProvider > RouterProvider > FloatingThemeToggle
+
+================================================================================
+6. COMPONENTS
+================================================================================
+
+MainLayout (src/layouts/MainLayout.tsx):
+  - Wrapper: bg-orange-50 dark:bg-slate-950, min-h-screen
+  - Glow layer: fixed, 800px max cap, orange-400/25 (light) / cyan-900/25 (dark), blur-[100px], animate-pulse
+  - AnimatePresence on route change (fade+slide, duration 0.25s)
+  - Renders: Navbar > <Outlet> > Footer > WhatsAppButton
+
+Navbar (src/components/Navbar.tsx):
+  - sticky top-0 z-50, height h-20
+  - Dynamic logo: HorizontalOscuro.png (dark) / HorizontalClaro.png (light), h-14 max-h-16
+  - Nav links: Materiales (#materiales), Beneficios (#beneficios), Contacto (#quote-form)
+  - handleNav: smooth scroll if on home, redirect if on other page
+  - CTA: "Visualizar" -> /visualizar, outline style
+  - Scroll shadow: bg-white/80 + backdrop-blur-xl when scrolled
+
+Footer (src/components/Footer.tsx):
+  - 3-column grid: Brand | Navigation | Contact
+  - Contact links: WhatsApp (https://wa.me/521XXXXXXXXXX), Instagram, Email (hola@jonalabels.com)
+  - Bottom bar: copyright, /privacidad, /terminos
+
+FloatingThemeToggle (src/components/FloatingThemeToggle.tsx):
+  - fixed bottom-6 right-6 z-50
+  - bg-orange-500, white icon
+  - Sun/moon SVG with rotate animation
+
+WhatsAppButton (src/components/WhatsAppButton.tsx):
+  - fixed bottom-6 left-6 z-50
+  - Phone: 523339472657
+  - bg-[#25D366], bounce animation
+  - Pre-filled message: "Hola, vengo de la página web..."
+
+================================================================================
+7. AUTH FLOW
+================================================================================
+
+Login (src/features/auth/Login.tsx):
+  - Standalone (no MainLayout)
+  - POST /auth/login with { email, password }, credentials: 'include'
+  - On success: navigate('/admin')
+  - Error display: 401 -> "Correo o contraseña incorrectos"
+
+ProtectedRoute (src/features/auth/ProtectedRoute.tsx):
+  - POST /auth/refresh (credentials: 'include')
+  - On success: renders children
+  - On failure: navigate('/login', { replace: true })
+  - Shows spinner while checking
+
+AdminRoute (src/features/admin/AdminRoute.tsx):
+  - Wraps ProtectedRoute > Suspense > lazy AdminDashboard
+
+AdminDashboard (src/features/admin/AdminDashboard.tsx):
+  - GET /cotizaciones?page=&size=&busqueda=&estado= (paginated)
+  - GET /cotizaciones/metricas
+  - GET /cotizaciones/exportar?busqueda=&estado= (CSV blob download)
+  - PATCH /cotizaciones/{id}/estado?estado=
+  - All via apiFetch (credentials included)
+  - Estado types: NUEVO, CONTACTADO, COTIZADO, CERRADO
+  - Search debounce: 500ms
+
+================================================================================
+8. LANDING PAGE SECTIONS
+================================================================================
+
+Hero:
+  - 2-column grid (text left, foto_log (1).png right)
+  - min-h-[calc(100dvh-4rem)]
+  - CTA: "Visualiza tu etiqueta" -> navigate('/visualizar')
+  - Badge: "Especialistas en Etiquetas Textiles"
+
+ScrollytellingLabel:
+  - Section ID: #materiales
+  - scroll-mt-20
+  - 300vh height, sticky viewport
+  - 3 layers: base-etiqueta.png, logo-impresion.png, detalles-costura.png
+  - Back face: reverso-etiqueta.png
+  - Features grid fades in/out during scroll
+  - Flip animation at scroll 0.6-0.8
+
+ValueProposition:
+  - Section ID: #beneficios
+  - 3 cards with SVG icons
+
+ProcessSection:
+  - Section ID: #proceso
+  - 4 steps: Upload, FileText, Factory, Truck (lucide icons)
+
+ProductShowcase:
+  - 2 photos: foto_log (2).png, foto_log (3).png
+  - Sticky left heading, grid right
+
+TestimonialsSection:
+  - 3 hardcoded testimonials with star ratings
+
+QuoteSection:
+  - Section ID: #quote-form
+  - Fields: nombre, whatsapp, email (opt), cantidad (min 5000), medidas
+  - File upload: drag & drop, max 10MB, png/jpg/jpeg/svg/ai/pdf
+  - POST /cotizaciones with FormData (data JSON blob + archivo file)
+  - Inline validation on blur
+  - Success state with animation
+
+================================================================================
+9. LABEL VISUALIZER (/visualizar)
+================================================================================
+
+LabelVisualizer (src/features/landing/LabelVisualizer.tsx):
+  - Label types: SATIN, COLGANTE
+  - Colors: white, beige (#f3f0e6), black (slate-900), navy (#1B2A4A)
+  - File validation: png, jpg, jpeg, svg only; max 10MB
+  - Logo: w-11/12, conditional mix-blend-multiply (light colors only)
+  - Scale slider: 0.5 to 2.0, step 0.05, default 0.75
+  - WhatsApp: 523339472657, generates dynamic message with label specs
+  - Uses QuoteContext for shared labelType/logoFile state
+
+================================================================================
+10. LEGAL PAGES
+================================================================================
+
+PrivacyPolicy (/privacidad):
+  - Sections: Responsable, Datos recabados, Finalidad, Protección, ARCO, Cambios
+  - Last updated: julio 2026
+
+TermsOfService (/terminos):
+  - Sections: Aceptación, Servicios, Cotizaciones, Producción, PI, Cancelaciones
+  - Last updated: julio 2026
+
+NotFound (/*):
+  - 404 with orange CTA "Volver al inicio"
+
+================================================================================
+11. INDEX.HTML SEO
+================================================================================
+
+  lang: es-MX
+  canonical: https://jonalabels.com
+  robots: index, follow
+  OG: type=website, locale=es_MX, site_name=Jona Labels, image=og-image.png
+  Twitter: summary_large_image
+  JSON-LD: LocalBusiness schema (name, description, areaServed=Mexico)
+  Favicons: favicon.svg, favicon-96x96.png, favicon.ico, apple-touch-icon.png
+  Manifest: site.webmanifest (JonaLabels, maskable icons)
+
+================================================================================
+12. PUBLIC ASSETS
+================================================================================
+
+  HorizontalClaro.png       (light mode logo)
+  HorizontalOscuro.png      (dark mode logo)
+  foto_log (1).png          (hero image)
+  foto_log (2).png          (showcase photo 1)
+  foto_log (3).png          (showcase photo 2)
+  base-etiqueta.png         (scrollytelling layer 1)
+  logo-impresion.png        (scrollytelling layer 2)
+  detalles-costura.png      (scrollytelling layer 3)
+  reverso-etiqueta.png      (scrollytelling back face)
+  favicon.svg, favicon-96x96.png, favicon.ico, apple-touch-icon.png
+  site.webmanifest
+  icons.svg, 2.png, preview-etiqueta-completa.png, demo-scroll.html
+
+================================================================================
+13. API ENDPOINTS SUMMARY (frontend -> backend)
+================================================================================
+
+Method   Frontend path                Backend path                        Auth?
+──────   ────────────────             ──────────────                      ─────
+POST     /auth/login                  /api/v1/auth/login                  Public
+POST     /auth/refresh                /api/v1/auth/refresh                Public
+POST     /cotizaciones                /api/v1/cotizaciones                Public
+GET      /cotizaciones                /api/v1/cotizaciones                Auth
+GET      /cotizaciones/metricas       /api/v1/cotizaciones/metricas       Auth
+GET      /cotizaciones/exportar       /api/v1/cotizaciones/exportar       Auth
+PATCH    /cotizaciones/{id}/estado    /api/v1/cotizaciones/{id}/estado    Auth
+
+All proxied via Vite dev server: /api/* -> http://localhost:8080/api/*
+
+================================================================================
+14. FILE INVENTORY
+================================================================================
+
+src/main.tsx                          Root entry point
+src/App.tsx                           Router definition
+src/index.css                         Tailwind v4 + brand tokens
+src/api/http.ts                       apiFetch + apiUrl
+src/lib/axios.ts                      Axios instance (unused)
+src/context/ThemeContext.tsx           Dark mode provider
+src/context/QuoteContext.tsx           Label visualizer state
+src/layouts/MainLayout.tsx            Main layout with glow + transitions
+src/components/Navbar.tsx             Sticky nav with dynamic logo
+src/components/Footer.tsx             3-column footer
+src/components/FloatingThemeToggle.tsx Orange theme toggle button
+src/components/WhatsAppButton.tsx     Green floating WhatsApp button
+src/features/auth/Login.tsx           Login form (standalone)
+src/features/auth/ProtectedRoute.tsx  Auth gate (refresh check)
+src/features/admin/AdminRoute.tsx     Lazy admin wrapper
+src/features/admin/AdminDashboard.tsx Admin cotizaciones table
+src/features/landing/Hero.tsx         2-col hero section
+src/features/landing/ScrollytellingLabel.tsx  300vh scroll animation
+src/features/landing/ValueProposition.tsx     3 value cards
+src/features/landing/ProcessSection.tsx       4-step how-it-works
+src/features/landing/ProductShowcase.tsx      2 photo grid
+src/features/landing/TestimonialsSection.tsx  3 testimonial cards
+src/features/landing/QuoteSection.tsx         Quote form with file upload
+src/features/landing/LabelVisualizer.tsx      Interactive label preview
+src/features/landing/NotFound.tsx             404 page
+src/features/landing/PrivacyPolicy.tsx        /privacidad
+src/features/landing/TermsOfService.tsx       /terminos
+src/test/setup.ts                    Vitest setup (IntersectionObserver mock)
+index.html                            SEO meta + JSON-LD + favicons
+
+================================================================================
