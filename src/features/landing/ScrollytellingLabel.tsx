@@ -35,12 +35,12 @@ function FeatureItem({
     <div
       className={`flex items-start gap-3 md:mx-auto md:w-fit ${align === 'right' ? 'md:flex-row-reverse md:text-right' : ''}`}
     >
-      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-600 dark:bg-jona-orange/10 dark:text-jona-orange md:h-10 md:w-10 md:rounded-xl">
-        <Icon className="h-4 w-4 md:h-5 md:w-5" />
+      <div className="mt-0.5 flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-jona-orange/10 dark:text-jona-orange md:h-9 md:w-9 md:rounded-lg">
+        <Icon className="h-6 w-6 md:h-4 md:w-4" />
       </div>
       <div className="min-w-0">
-        <h3 className="text-xs font-semibold text-white md:text-sm">{title}</h3>
-        <p className="mt-0.5 text-xs leading-relaxed text-white/70 md:text-sm">{desc}</p>
+        <h3 className="text-base font-semibold text-white md:text-xs">{title}</h3>
+        <p className="mt-0.5 text-sm leading-relaxed text-white/70 md:text-xs">{desc}</p>
       </div>
     </div>
   )
@@ -104,13 +104,13 @@ export default function ScrollytellingLabel() {
             MÓVIL — Grid 2×2 + imagen central sticky
            ════════════════════════════════════════════════════════════ */}
         <div className="absolute inset-0 z-10 flex items-center justify-center md:hidden">
-          <div className="w-full max-w-lg px-3">
+          <div className="w-full max-w-2xl px-5">
 
             {/* ── Fila superior: 2 chevrons ── */}
-            <div className="grid grid-cols-2 gap-2.5 mb-3">
+            <div className="grid grid-cols-2 gap-5 mb-6">
               <motion.div style={{ opacity: chevronLeft1 }}>
                 <div
-                  className={`${GLASS} relative overflow-hidden p-4 pr-5`}
+                  className={`${GLASS} relative overflow-hidden p-6 pr-7`}
                   style={{ clipPath: 'url(#chevron-left)' }}
                 >
                   <FeatureItem {...MATERIAL_FEATURES[0]} align="left" />
@@ -118,7 +118,7 @@ export default function ScrollytellingLabel() {
               </motion.div>
               <motion.div style={{ opacity: chevronRight1 }}>
                 <div
-                  className={`${GLASS} relative overflow-hidden p-4 pl-5`}
+                  className={`${GLASS} relative overflow-hidden p-6 pl-7`}
                   style={{ clipPath: 'url(#chevron-right)' }}
                 >
                   <FeatureItem {...SERVICE_FEATURES[0]} align="left" />
@@ -131,7 +131,7 @@ export default function ScrollytellingLabel() {
               className="sticky top-0 z-20 mx-auto flex items-center justify-center py-2"
               style={{ perspective: 1000 }}
             >
-              <div className="relative h-[38vh] w-full max-w-[220px]">
+              <div className="relative h-[55vh] w-full max-w-[440px]">
                 <motion.div
                   style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
                   className="relative h-full w-full"
@@ -188,10 +188,10 @@ export default function ScrollytellingLabel() {
             </div>
 
             {/* ── Fila inferior: 2 chevrons ── */}
-            <div className="grid grid-cols-2 gap-2.5 mt-3">
+            <div className="grid grid-cols-2 gap-5 mt-6">
               <motion.div style={{ opacity: chevronLeft2 }}>
                 <div
-                  className={`${GLASS} relative overflow-hidden p-4 pr-5`}
+                  className={`${GLASS} relative overflow-hidden p-6 pr-7`}
                   style={{ clipPath: 'url(#chevron-left)' }}
                 >
                   <FeatureItem {...MATERIAL_FEATURES[1]} align="left" />
@@ -199,7 +199,7 @@ export default function ScrollytellingLabel() {
               </motion.div>
               <motion.div style={{ opacity: chevronRight2 }}>
                 <div
-                  className={`${GLASS} relative overflow-hidden p-4 pl-5`}
+                  className={`${GLASS} relative overflow-hidden p-6 pl-7`}
                   style={{ clipPath: 'url(#chevron-right)' }}
                 >
                   <FeatureItem {...SERVICE_FEATURES[1]} align="left" />
