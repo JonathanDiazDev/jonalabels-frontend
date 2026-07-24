@@ -1,71 +1,58 @@
-import { motion } from 'framer-motion'
-import { Star } from 'lucide-react'
-
 const TESTIMONIALS = [
   {
-    name: 'María López',
-    role: 'Diseñadora de moda',
-    text: 'Las etiquetas superaron mis expectativas. El satén se siente premium y los colores quedaron exactamente como los diseñé.',
-    stars: 5,
+    text: 'La calidad de las etiquetas de satín superó nuestras expectativas. Tienen un brillo elegante y los bordes no se deshilachan. Le dieron el toque premium que nuestra colección necesitaba.',
+    name: 'Valeria M.',
+    role: 'Diseñadora de Modas',
   },
   {
-    name: 'Carlos Hernández',
-    role: 'Fundador de marca textil',
-    text: 'El proceso fue increíblemente rápido. En menos de una semana tenía mis etiquetas listas para coser en toda mi colección.',
-    stars: 5,
+    text: 'Excelente servicio y atención al detalle. Pedimos etiquetas de cartón colgante y los acabados son impecables. Definitivamente volveremos a trabajar con ellos.',
+    name: 'Roberto C.',
+    role: 'Fundador de Marca',
   },
   {
-    name: 'Ana García',
-    role: 'Emprendedora',
-    text: 'Lo que más me gustó fue la atención personalizada. Me ayudaron a elegir el material correcto para mi tipo de prenda.',
-    stars: 5,
+    text: 'Buscábamos un proveedor que entendiera el concepto de nuestra marca boutique. Entregaron a tiempo, con precios justos y una calidad de impresión en tela insuperable.',
+    name: 'Andrea G.',
+    role: 'Directora Creativa',
   },
 ]
 
+function Stars() {
+  return (
+    <div className="flex gap-1 text-stone-800 dark:text-stone-200">
+      {[...Array(5)].map((_, i) => (
+        <svg key={i} viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+  )
+}
+
 export default function TestimonialsSection() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mb-16 text-center"
-        >
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-4xl">
-            Lo que dicen nuestros clientes
-          </h2>
-        </motion.div>
+    <section className="py-20 transition-colors duration-300 sm:py-24">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ y: 40, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, ease: 'easeOut', delay: i * 0.12 }}
-              className="flex flex-col rounded-2xl border border-gray-100 bg-white p-8 dark:border-slate-800 dark:bg-slate-900"
-            >
-              <div className="mb-4 flex gap-1">
-                {Array.from({ length: t.stars }).map((_, j) => (
-                  <Star key={j} className="h-4 w-4 fill-orange-400 text-orange-400" />
-                ))}
+        <h2 className="mb-16 text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
+          Lo que dicen nuestros clientes
+        </h2>
+
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
+          {TESTIMONIALS.map(({ text, name, role }) => (
+            <div key={name} className="relative">
+              <span className="absolute -top-6 -left-2 text-6xl font-serif leading-none text-stone-200 transition-colors duration-300 dark:text-stone-700/40">&ldquo;</span>
+              <Stars />
+              <p className="mt-4 text-sm leading-relaxed text-stone-600 italic transition-colors duration-300 md:text-base dark:text-stone-400">
+                {text}
+              </p>
+              <div className="mt-6">
+                <p className="font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">{name}</p>
+                <p className="text-sm text-stone-400 transition-colors duration-300 dark:text-stone-500">{role}</p>
               </div>
-              <p className="flex-1 text-sm leading-relaxed text-slate-700 dark:text-slate-300">&ldquo;{t.text}&rdquo;</p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-sm font-bold text-orange-600 dark:bg-orange-500/10 dark:text-orange-400">
-                  {t.name.charAt(0)}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white">{t.name}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t.role}</p>
-                </div>
-              </div>
-            </motion.div>
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   )

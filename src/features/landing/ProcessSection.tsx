@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Upload, FileText, Factory, Truck } from 'lucide-react'
 
 const STEPS = [
@@ -30,42 +29,29 @@ const STEPS = [
 
 export default function ProcessSection() {
   return (
-    <section id="proceso" className="py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mb-16 text-center"
-        >
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-4xl">
+    <section id="proceso" className="bg-white py-20 transition-colors duration-300 dark:bg-transparent sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-16 text-center">
+          <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
             Cómo funciona
           </h2>
-          <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
+          <p className="mt-4 text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
             De tu idea a tus prendas en 4 pasos simples.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step, i) => (
-            <motion.div
-              key={step.number}
-              initial={{ y: 40, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, ease: 'easeOut', delay: i * 0.12 }}
-              className="group relative rounded-2xl border border-gray-100 bg-white p-8 transition-shadow hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 dark:hover:shadow-slate-800/50"
-            >
-              <span className="absolute right-6 top-6 text-5xl font-extrabold text-gray-100 transition-colors group-hover:text-orange-100 dark:text-slate-800 dark:group-hover:text-orange-900/30">
+          {STEPS.map((step) => (
+            <div key={step.number} className="relative">
+              <span className="mb-4 block text-5xl font-extrabold text-stone-100 transition-colors duration-300 dark:text-stone-700/40">
                 {step.number}
               </span>
-              <div className="relative mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-orange-600 transition-colors group-hover:bg-orange-500 group-hover:text-white dark:bg-orange-500/10 dark:text-orange-400 dark:group-hover:bg-orange-500 dark:group-hover:text-white">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-stone-900 text-white transition-colors duration-300 dark:bg-stone-100 dark:text-stone-900">
                 <step.icon className="h-6 w-6" />
               </div>
-              <h3 className="relative text-lg font-semibold text-slate-900 dark:text-white">{step.title}</h3>
-              <p className="relative mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{step.desc}</p>
-            </motion.div>
+              <h3 className="text-lg font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">{step.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">{step.desc}</p>
+            </div>
           ))}
         </div>
       </div>

@@ -1,13 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
-import Hero from './features/landing/Hero'
-import LabelVisualizer from './features/landing/LabelVisualizer'
-import ScrollytellingLabel from './features/landing/ScrollytellingLabel'
-import ValueProposition from './features/landing/ValueProposition'
-import ProductShowcase from './features/landing/ProductShowcase'
-import QuoteSection from './features/landing/QuoteSection'
-import ProcessSection from './features/landing/ProcessSection'
+import EditorialHero from './features/landing/EditorialHero'
+import BenefitsSection from './features/landing/BenefitsSection'
+import SpecialtySection from './features/landing/SpecialtySection'
+import InstagramSection from './features/landing/InstagramSection'
 import TestimonialsSection from './features/landing/TestimonialsSection'
+import LabelVisualizer from './features/landing/LabelVisualizer'
+import ProcessSection from './features/landing/ProcessSection'
+import QuoteSection from './features/landing/QuoteSection'
+import Productos from './features/landing/Productos'
 import NotFound from './features/landing/NotFound'
 import PrivacyPolicy from './features/landing/PrivacyPolicy'
 import TermsOfService from './features/landing/TermsOfService'
@@ -22,17 +23,18 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <div className="relative">
-            <Hero />
-            <ScrollytellingLabel />
-            <ValueProposition />
+            <EditorialHero />
+            <BenefitsSection />
+            <SpecialtySection />
             <ProcessSection />
-            <ProductShowcase />
+            <InstagramSection />
             <TestimonialsSection />
             <QuoteSection />
           </div>
         ),
       },
       { path: 'visualizar', element: <LabelVisualizer /> },
+      { path: 'productos', element: <Productos /> },
       { path: 'cotizar', element: <QuoteSection /> },
       { path: 'admin', element: <AdminRoute /> },
       { path: 'privacidad', element: <PrivacyPolicy /> },
