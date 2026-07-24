@@ -20,6 +20,37 @@ const SERVICE_FEATURES = [
   { icon: Timer, title: 'Gestión rápida', desc: 'Cotización y distribución ágil.' },
 ]
 
+const ALL_FEATURES = [
+  MATERIAL_FEATURES[0],
+  SERVICE_FEATURES[0],
+  MATERIAL_FEATURES[1],
+  SERVICE_FEATURES[1],
+]
+
+function FeatureCard({
+  icon: Icon,
+  title,
+  desc,
+}: {
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  desc: string
+}) {
+  return (
+    <div
+      className={`mx-6 flex items-start gap-4 rounded-2xl p-6 sm:p-8 ${GLASS}`}
+    >
+      <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-jona-orange/10 dark:text-jona-orange sm:h-12 sm:w-12">
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-lg font-bold text-white sm:text-xl">{title}</h3>
+        <p className="mt-1.5 text-sm leading-relaxed text-white/70 sm:text-base">{desc}</p>
+      </div>
+    </div>
+  )
+}
+
 function FeatureItem({
   icon: Icon,
   title,
@@ -78,140 +109,77 @@ export default function ScrollytellingLabel() {
   const labelScale = useTransform(smooth, [0.6, 0.8], [1, 1.25])
   const labelFinalY = useTransform(smooth, [0.6, 0.8], [0, -40])
 
-  const chevronLeft1 = useTransform(smooth, [0.35, 0.45, 0.68, 0.75], [0, 1, 1, 0])
-  const chevronRight1 = useTransform(smooth, [0.38, 0.48, 0.68, 0.75], [0, 1, 1, 0])
-  const chevronLeft2 = useTransform(smooth, [0.43, 0.53, 0.68, 0.75], [0, 1, 1, 0])
-  const chevronRight2 = useTransform(smooth, [0.46, 0.56, 0.68, 0.75], [0, 1, 1, 0])
+  const featureOpacity1 = useTransform(smooth, [0.3, 0.4, 0.85, 0.95], [0, 1, 1, 0])
+  const featureOpacity2 = useTransform(smooth, [0.4, 0.5, 0.85, 0.95], [0, 1, 1, 0])
+  const featureOpacity3 = useTransform(smooth, [0.5, 0.6, 0.85, 0.95], [0, 1, 1, 0])
+  const featureOpacity4 = useTransform(smooth, [0.6, 0.7, 0.85, 0.95], [0, 1, 1, 0])
+  const featureOpacities = [featureOpacity1, featureOpacity2, featureOpacity3, featureOpacity4]
 
   return (
     <section ref={containerRef} id="materiales" className="relative h-[300vh] scroll-mt-20">
 
-      {/* SVG ClipPaths para las flechas chevron */}
-      <svg className="absolute h-0 w-0" aria-hidden="true">
-        <defs>
-          <clipPath id="chevron-left" clipPathUnits="objectBoundingBox">
-            <path d="M0,0 L0.88,0 L1,0.5 L0.88,1 L0,1 Z" />
-          </clipPath>
-          <clipPath id="chevron-right" clipPathUnits="objectBoundingBox">
-            <path d="M0.12,0 L1,0 L1,1 L0.12,1 L0,0.5 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 
         {/* ════════════════════════════════════════════════════════════
-            MÓVIL — Grid 2×2 + imagen central sticky
+            MÓVIL — Imagen gigante sticky + tarjetas apiladas que pasan por encima
            ════════════════════════════════════════════════════════════ */}
-        <div className="absolute inset-0 z-10 flex items-center justify-center md:hidden">
-          <div className="w-full max-w-lg px-3">
+        <div className="absolute inset-0 z-10 flex flex-col md:hidden">
 
-            {/* ── Fila superior: 2 chevrons ── */}
-            <div className="grid grid-cols-2 gap-2.5 mb-3">
-              <motion.div style={{ opacity: chevronLeft1 }}>
-                <div
-                  className={`${GLASS} relative overflow-hidden p-4 pr-5`}
-                  style={{ clipPath: 'url(#chevron-left)' }}
-                >
-                  <FeatureItem {...MATERIAL_FEATURES[0]} align="left" />
+          {/* Imagen sticky gigante: se centra en el viewport y las tarjetas pasan sobre ella */}
+          <div
+            className="sticky top-[50dvh] z-0 flex items-center justify-center -translate-y-1/2"
+            style={{ perspective: 1000, alignSelf: 'center' }}
+          >
+            <div className="relative h-[55vh] w-[65vw] max-w-[280px]">
+              <motion.div
+                style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
+                className="relative h-full w-full"
+              >
+                <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
+                  {FRONT_LAYERS.map((layer, i) => {
+                    const yStyle = i === 0 ? { y: layer1Y, opacity: layer1Opacity } : undefined
+                    const xStyle = i === 1 ? { x: layer2X, opacity: layer2Opacity } : i === 2 ? { x: layer3X, opacity: layer3Opacity } : undefined
+                    return (
+                      <motion.img
+                        key={layer.id}
+                        src={layer.src}
+                        alt={layer.alt}
+                        style={{ ...yStyle, ...xStyle, backfaceVisibility: 'hidden' as const }}
+                        className="absolute inset-0 h-full w-full object-contain pointer-events-none"
+                      />
+                    )
+                  })}
                 </div>
-              </motion.div>
-              <motion.div style={{ opacity: chevronRight1 }}>
                 <div
-                  className={`${GLASS} relative overflow-hidden p-4 pl-5`}
-                  style={{ clipPath: 'url(#chevron-right)' }}
+                  className="absolute inset-0"
+                  style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                 >
-                  <FeatureItem {...SERVICE_FEATURES[0]} align="left" />
-                </div>
-              </motion.div>
-            </div>
-
-            {/* ── Imagen central sticky ── */}
-            <div
-              className="sticky top-0 z-20 mx-auto flex items-center justify-center py-2"
-              style={{ perspective: 1000 }}
-            >
-              <div className="relative h-[38vh] w-full max-w-[220px]">
-                <motion.div
-                  style={{ rotateY: flipRotateY, scale: labelScale, y: labelFinalY, transformStyle: 'preserve-3d' }}
-                  className="relative h-full w-full"
-                >
-                  {/* Cara frontal */}
-                  <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden' }}>
-                    {FRONT_LAYERS.map((layer, i) => {
-                      if (i === 0) {
-                        return (
-                          <motion.img
-                            key={layer.id}
-                            src={layer.src}
-                            alt={layer.alt}
-                            style={{ y: layer1Y, opacity: layer1Opacity, backfaceVisibility: 'hidden' as const }}
-                            className="absolute inset-0 h-full w-full object-contain pointer-events-none"
-                          />
-                        )
-                      }
-                      if (i === 1) {
-                        return (
-                          <motion.img
-                            key={layer.id}
-                            src={layer.src}
-                            alt={layer.alt}
-                            style={{ x: layer2X, opacity: layer2Opacity, backfaceVisibility: 'hidden' as const }}
-                            className="absolute inset-0 h-full w-full object-contain pointer-events-none"
-                          />
-                        )
-                      }
-                      return (
-                        <motion.img
-                          key={layer.id}
-                          src={layer.src}
-                          alt={layer.alt}
-                          style={{ x: layer3X, opacity: layer3Opacity, backfaceVisibility: 'hidden' as const }}
-                          className="absolute inset-0 h-full w-full object-contain pointer-events-none"
-                        />
-                      )
-                    })}
-                  </div>
-                  {/* Cara trasera */}
-                  <div
-                    className="absolute inset-0"
-                    style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-                  >
-                    <img
-                      src="/reverso-etiqueta.png"
-                      alt="Reverso de la etiqueta"
-                      className="h-full w-full object-contain pointer-events-none"
-                    />
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* ── Fila inferior: 2 chevrons ── */}
-            <div className="grid grid-cols-2 gap-2.5 mt-3">
-              <motion.div style={{ opacity: chevronLeft2 }}>
-                <div
-                  className={`${GLASS} relative overflow-hidden p-4 pr-5`}
-                  style={{ clipPath: 'url(#chevron-left)' }}
-                >
-                  <FeatureItem {...MATERIAL_FEATURES[1]} align="left" />
-                </div>
-              </motion.div>
-              <motion.div style={{ opacity: chevronRight2 }}>
-                <div
-                  className={`${GLASS} relative overflow-hidden p-4 pl-5`}
-                  style={{ clipPath: 'url(#chevron-right)' }}
-                >
-                  <FeatureItem {...SERVICE_FEATURES[1]} align="left" />
+                  <img
+                    src="/reverso-etiqueta.png"
+                    alt="Reverso de la etiqueta"
+                    className="h-full w-full object-contain pointer-events-none"
+                  />
                 </div>
               </motion.div>
             </div>
+          </div>
 
+          {/* Tarjetas de features apiladas verticalmente — z-index alto para pasar sobre la imagen */}
+          <div className="relative z-20 -mt-[40vh] flex flex-col gap-5 pb-24 sm:gap-6">
+            {ALL_FEATURES.map((feature, i) => (
+              <motion.div
+                key={feature.title}
+                style={{ opacity: featureOpacities[i] }}
+                className="flex justify-center"
+              >
+                <FeatureCard {...feature} />
+              </motion.div>
+            ))}
           </div>
         </div>
 
         {/* ════════════════════════════════════════════════════════════
-            ESCRITORIO — Grid 3 columnas original
+            ESCRITORIO — Grid 3 columnas original (sin cambios)
            ════════════════════════════════════════════════════════════ */}
 
         {/* Label animado (escritorio) */}
