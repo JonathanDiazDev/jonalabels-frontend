@@ -134,7 +134,7 @@ export default function Productos() {
 
                   <div className="mt-auto">
                     <Link
-                      to={`/cotizar`}
+                      to={`/cotizar?producto=${encodeURIComponent(title)}`}
                       className="block w-full rounded-full bg-stone-900 py-2 text-center text-xs font-semibold text-white transition-all duration-300 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
                     >
                       Cotizar este tipo

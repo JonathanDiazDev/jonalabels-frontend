@@ -1,4 +1,5 @@
 import { type FormEvent, useEffect, useState, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { apiUrl } from '../../api/http'
 import { useQuote } from '../../context/QuoteContext'
 
@@ -8,6 +9,7 @@ interface IFormState {
   email: string
   cantidad: string
   medidas: string
+  tipoProducto: string
 }
 
 const INITIAL_FORM: IFormState = {
@@ -16,6 +18,7 @@ const INITIAL_FORM: IFormState = {
   email: '',
   cantidad: '',
   medidas: '',
+  tipoProducto: '',
 }
 
 type FieldErrors = Partial<Record<keyof IFormState, string>>
@@ -39,7 +42,11 @@ function getFileValidationError(file: File): string | null {
 
 export default function QuoteForm() {
   const { labelType, logoFile, setLogoFile } = useQuote()
-  const [form, setForm] = useState<IFormState>(INITIAL_FORM)
+  const [searchParams] = useSearchParams()
+  const [form, setForm] = useState<IFormState>(() => ({
+    ...INITIAL_FORM,
+    tipoProducto: searchParams.get('producto') || '',
+  }))
   const [file, setFile] = useState<File | null>(null)
   const [dragging, setDragging] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -163,7 +170,7 @@ export default function QuoteForm() {
       const data = new FormData()
       data.append(
         'data',
-        new Blob([JSON.stringify({ nombre: form.nombre, whatsapp: form.whatsapp, email: form.email || null, cantidad, medidas: form.medidas || null })], {
+        new Blob([JSON.stringify({ nombre: form.nombre, whatsapp: form.whatsapp, email: form.email || null, cantidad, medidas: form.medidas || null, tipoProducto: form.tipoProducto || null })], {
           type: 'application/json',
         }),
       )
@@ -226,6 +233,26 @@ export default function QuoteForm() {
       )}
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="md:col-span-2">
+          <label htmlFor="qtipoProducto" className="mb-1.5 block text-sm font-medium text-stone-900 transition-colors duration-300 dark:text-stone-100">
+            Tipo de Producto
+          </label>
+          <input
+            id="qtipoProducto"
+            type="text"
+            readOnly={!!form.tipoProducto}
+            value={form.tipoProducto}
+            onChange={(e) => updateField('tipoProducto', e.target.value)}
+            className={`${INPUT_CLASS} ${form.tipoProducto ? 'cursor-default font-medium' : ''}`}
+            placeholder="Ej: Etiquetas de Satén Premium"
+            disabled={isSubmitting}
+          />
+          {form.tipoProducto && (
+            <p className="mt-1 text-xs text-stone-400 transition-colors duration-300 dark:text-stone-500">
+              Seleccionado desde el catálogo de productos
+            </p>
+          )}
+        </div>
         <div>
           <label htmlFor="qnombre" className="mb-1.5 block text-sm font-medium text-stone-900 transition-colors duration-300 dark:text-stone-100">
             Nombre Completo
