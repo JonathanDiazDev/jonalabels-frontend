@@ -94,19 +94,18 @@ export default function EditorialHero() {
             Cada etiqueta es una pequeña tarjeta de presentación que tu cliente guardará para siempre.
           </p>
 
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-10">
             {[
               { icon: '⭐', title: 'Atención personalizada', desc: 'Te acompañamos en cada paso para lograr la etiqueta perfecta.' },
               { icon: '📦', title: 'Envíos nacionales', desc: 'Entregamos en todo México de manera rápida y segura.' },
               { icon: '🏭', title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
               { icon: '🎯', title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
-              { icon: '💲', title: 'Precio de fábrica', desc: 'Calidad de lujo sin pagar de más. Directo del fabricante a ti.' },
             ].map(({ icon, title, desc }) => (
               <div key={title}>
-                <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">
-                  <span>{icon}</span> {title}
+                <h3 className="mb-3 flex items-center gap-3 text-xl font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">
+                  <span className="text-2xl">{icon}</span> {title}
                 </h3>
-                <p className="text-stone-600 transition-colors duration-300 dark:text-stone-400">{desc}</p>
+                <p className="text-base leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">{desc}</p>
               </div>
             ))}
           </div>
