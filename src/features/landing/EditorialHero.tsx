@@ -49,7 +49,7 @@ export default function EditorialHero() {
             La calidad de una prenda comienza por sus detalles.
           </h1>
 
-          <p className="mx-auto mb-10 max-w-2xl text-lg font-light leading-relaxed text-stone-300 transition-colors duration-300 md:text-xl">
+          <p className="mx-auto mb-10 max-w-2xl text-base font-light leading-relaxed text-stone-300 transition-colors duration-300 md:text-lg">
             En JonaLabels creamos etiquetas textiles premium para que cada prenda refleje el verdadero valor de tu marca.
           </p>
 
