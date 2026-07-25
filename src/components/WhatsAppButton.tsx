@@ -10,7 +10,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"
-      className="fixed bottom-6 left-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-shadow hover:shadow-[#25D366]/40 hover:shadow-xl"
+      className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-shadow hover:shadow-[#25D366]/40 hover:shadow-xl"
       animate={{ y: [0, -4, 0] }}
       transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
     >
