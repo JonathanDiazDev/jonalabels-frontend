@@ -26,12 +26,12 @@ const INPUT_CLASS =
 const INPUT_ERROR = INPUT_CLASS.replace('border-stone-200', 'border-red-400')
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024
-const ALLOWED_FILE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg', 'ai', 'pdf']
+const ALLOWED_FILE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg', 'ai', 'eps', 'pdf']
 
 function getFileValidationError(file: File): string | null {
   const extension = file.name.split('.').pop()?.toLowerCase()
   if (!extension || !ALLOWED_FILE_EXTENSIONS.includes(extension)) {
-    return 'Formato no permitido. Usa PNG, JPG, SVG, AI o PDF.'
+    return 'Formato no permitido. Usa PNG, JPG, SVG, AI, EPS o PDF.'
   }
   if (file.size > MAX_FILE_SIZE_BYTES) return 'El archivo no puede superar 10 MB.'
   return null
@@ -338,7 +338,7 @@ export default function QuoteForm() {
         <input
           ref={fileRef}
           type="file"
-          accept=".png,.jpg,.jpeg,.svg,.ai,.pdf"
+          accept=".png,.jpg,.jpeg,.svg,.ai,.eps,.pdf"
           onChange={handleFileChange}
           className="hidden"
           disabled={isSubmitting}
@@ -374,9 +374,12 @@ export default function QuoteForm() {
               <line x1="12" y1="3" x2="12" y2="15" />
             </svg>
             <p className="text-sm font-medium text-stone-600 transition-colors duration-300 dark:text-stone-400">
-              Arrastra tu logo aquí o haz clic para explorar
+              Envíanos tu logo/diseño
             </p>
-            <p className="mt-1 text-xs text-stone-400 transition-colors duration-300 dark:text-stone-500">PNG, JPG, AI, PDF</p>
+            <p className="mt-1 text-xs text-stone-400 transition-colors duration-300 dark:text-stone-500">
+              Si lo tienes vectorizado, si no lo podemos trabajar
+            </p>
+            <p className="mt-2 text-[10px] text-stone-400 transition-colors duration-300 dark:text-stone-500">PNG, JPG, AI, EPS, PDF</p>
           </>
         )}
       </div>

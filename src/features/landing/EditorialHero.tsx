@@ -101,7 +101,6 @@ export default function EditorialHero() {
               { icon: '🏭', title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
               { icon: '🎯', title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
               { icon: '💲', title: 'Precio de fábrica', desc: 'Calidad de lujo sin pagar de más. Directo del fabricante a ti.' },
-              { icon: '⭐', title: 'Satisfacción garantizada', desc: 'Si no estás satisfecho, trabajamos hasta que lo estés.' },
             ].map(({ icon, title, desc }) => (
               <div key={title}>
                 <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">
