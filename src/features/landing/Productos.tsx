@@ -89,7 +89,7 @@ export default function Productos() {
           </h2>
 
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
-            {CATEGORIES.map(({ title, slug, image, desc, features, popular }) => (
+            {CATEGORIES.map(({ title, image, desc, features, popular }) => (
               <div
                 key={title}
                 className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
