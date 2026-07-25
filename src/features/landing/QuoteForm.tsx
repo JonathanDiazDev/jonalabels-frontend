@@ -322,7 +322,7 @@ export default function QuoteForm() {
         className={`col-span-full cursor-pointer rounded-2xl border-2 border-dashed p-10 text-center transition-colors duration-300 ${
           isSubmitting ? 'cursor-default opacity-60' : ''
         } ${
-          dragging ? 'border-stone-900 bg-stone-100 dark:border-stone-300 dark:bg-stone-800' : 'border-stone-200 bg-stone-50 hover:border-stone-400 dark:border-stone-700 dark:bg-stone-800/50 dark:hover:border-stone-600'
+          dragging ? 'border-stone-900 bg-stone-100 dark:border-stone-300 dark:bg-stone-800' : 'border-stone-200 bg-stone-50 hover:border-stone-400 dark:border-stone-700 dark:bg-stone-900/40 dark:hover:border-stone-600'
         }`}
       >
         <input

@@ -68,7 +68,7 @@ export default function EditorialHero() {
             </Link>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3 sm:text-xs">
             {[
               'Calidad Premium',
               'Envíos a todo México',

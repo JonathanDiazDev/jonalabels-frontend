@@ -6,7 +6,7 @@ import WhatsAppButton from '../components/WhatsAppButton'
 
 export default function MainLayout() {
   return (
-    <div className="relative z-10 min-h-screen bg-[#FBFBFA] text-gray-900 transition-colors duration-500 dark:bg-stone-950 dark:text-gray-100">
+    <div className="relative z-10 min-h-screen bg-[#FBFBFA] text-gray-900 transition-colors duration-300 dark:bg-stone-950 dark:text-gray-100">
 
       <div className="relative z-10">
         <SharedNavbar />
