@@ -252,7 +252,7 @@ export default function QuoteForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 rounded-2xl border border-stone-200 bg-white p-5 transition-colors duration-300 dark:border-stone-800 dark:bg-stone-950 md:p-6"
+      className="mx-auto w-full max-w-2xl space-y-4 rounded-2xl border border-stone-200 bg-white p-5 transition-colors duration-300 dark:border-stone-800 dark:bg-stone-950 sm:p-6"
       noValidate
     >
       {logoFile && (
