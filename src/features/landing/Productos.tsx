@@ -1,61 +1,70 @@
+import { Link } from 'react-router-dom'
 import QuoteForm from './QuoteForm'
 
 const CATEGORIES = [
   {
+    title: 'Etiquetas de Satén Premium',
+    slug: 'etiquetas-internas',
+    image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=600&fit=crop',
+    desc: 'Acabado sedoso con brillo elegante que jamás irrita la piel.',
+    features: ['Alta definición', 'Bordes sellados', 'Resistente al lavado'],
+    popular: true,
+  },
+  {
+    title: 'Cartón Colgante',
+    slug: 'etiquetas-externas',
+    image: 'https://images.unsplash.com/photo-1528459105426-b9548367069b?w=600&h=600&fit=crop',
+    desc: 'Tu carta de presentación con acabados en relieve y detalles metalizados.',
+    features: ['Relieve', 'Textura mate', 'Metalizado'],
+    popular: true,
+  },
+  {
     title: 'Etiquetas Económicas',
     slug: 'etiquetas-economicas',
-    image: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=450&fit=crop',
-    desc: 'Soluciones de identidad accesibles sin sacrificar calidad. Ideales para marcas que están comenzando y buscan una presencia profesional.',
-    items: ['Papel estucado', 'Impresión offset', 'Acabado mate o brillante', 'Corte personalizado'],
-  },
-  {
-    title: 'Etiquetas Internas',
-    slug: 'etiquetas-internas',
-    image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=450&fit=crop',
-    desc: 'Satín de Alta Definición: El roce perfecto. Un acabado sedoso con brillo elegante que jamás irrita la piel. Ideal para alta costura y lencería. Bordes sellados impecables que no se deshilachan.',
-    items: ['Satín suave', 'Tejido de alta densidad', 'Tinta resistente al lavado', 'Impresión digital'],
-  },
-  {
-    title: 'Etiquetas Externas',
-    slug: 'etiquetas-externas',
-    image: 'https://images.unsplash.com/photo-1528459105426-b9548367069b?w=600&h=450&fit=crop',
-    desc: 'Cartón Colgante (Hang Tags): Tu carta de presentación. El primer contacto físico del cliente con tu identidad. Acabados en relieve, texturas mate y detalles metalizados para un unboxing inolvidable.',
-    items: ['Satín brillante', 'Damasco tejido', 'Bordado premium', 'Sellos en relieve'],
+    image: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=600&fit=crop',
+    desc: 'Soluciones accesibles sin sacrificar calidad profesional.',
+    features: ['Impresión offset', 'Acabado mate/brillante', 'Corte custom'],
+    popular: false,
   },
   {
     title: 'Etiquetas para Mezclilla',
     slug: 'etiquetas-mezclilla',
-    image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&h=450&fit=crop',
-    desc: 'Parches Sintéticos: Carácter y resistencia. Diseñados para envejecer con estilo junto al streetwear, soportando lavados intensivos sin perder el relieve de tu logotipo.',
-    items: ['Tejido resistente', 'Tinta impermeable', 'Bordes sellados', 'Colores industriales'],
+    image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&h=600&fit=crop',
+    desc: 'Parches resistentes diseñados para envejecer con estilo.',
+    features: ['Impermeable', 'Bordes sellados', 'Colores industriales'],
+    popular: false,
   },
   {
     title: 'Etiquetas para Bisutería',
     slug: 'etiquetas-bisuteria',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=450&fit=crop',
-    desc: 'Pequeñas, delicadas y elegantes. Perfectas para joyería, accesorios y piezas donde cada milímetro cuenta.',
-    items: ['Tamaño reducido', 'Impresión de alta resolución', 'Fondo metalizado', 'Acabado laminado'],
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=600&fit=crop',
+    desc: 'Pequeñas, delicadas y elegantes para joyería y accesorios.',
+    features: ['Tamaño reducido', 'Alta resolución', 'Fondo metalizado'],
+    popular: false,
   },
   {
     title: 'Etiquetas Adheribles',
     slug: 'etiquetas-adheribles',
-    image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=600&h=450&fit=crop',
-    desc: 'Adhesivo de alto rendimiento para pegarse directamente en packaging, cajas y superficies lisas sin necesidad de coser.',
-    items: ['Adhesivo permanente', 'Resina o vinilo', 'Corte a medida', 'Impermeables'],
+    image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=600&h=600&fit=crop',
+    desc: 'Adhesivo de alto rendimiento para packaging y superficies lisas.',
+    features: ['Adhesivo permanente', 'Resina o vinilo', 'Impermeables'],
+    popular: false,
   },
   {
     title: 'Bolsa Impresa',
     slug: 'bolsa-impresa',
-    image: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=450&fit=crop',
-    desc: 'Empaque que vende. Bolsas personalizadas que convierten cada compra en una experiencia de marca memorable.',
-    items: ['Papel kraft o coated', 'Impresión flexográfica', 'Asas de cordón o plana', 'Tamaños estándar y custom'],
+    image: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=600&fit=crop',
+    desc: 'Empaque que vende. Bolsas personalizadas de marca memorables.',
+    features: ['Kraft o coated', 'Flexográfica', 'Asas custom'],
+    popular: false,
   },
   {
     title: 'Avíos Textiles',
     slug: 'avios-textiles',
-    image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=450&fit=crop',
-    desc: 'El detalle final que completa tu producto. Botones, cierres, cordones y complementos textiles con tu marca.',
-    items: ['Botones personalizados', 'Cierres y cremalleras', 'Cordones tejidos', 'Hilos de colores'],
+    image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=600&fit=crop',
+    desc: 'Botones, cierres, cordones y complementos textiles con tu marca.',
+    features: ['Botones custom', 'Cierres', 'Cordones tejidos'],
+    popular: false,
   },
 ]
 
@@ -72,54 +81,80 @@ export default function Productos() {
         </div>
       </section>
 
-      {/* Catálogo */}
+      {/* Grid de Productos */}
       <section className="bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed px-4 py-16 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-20">
-        <div className="mx-auto max-w-6xl space-y-20 sm:space-y-28">
-          {CATEGORIES.map(({ title, slug, image, desc, items }, i) => {
-            const isEven = i % 2 === 0
+        <div className="mx-auto max-w-6xl">
+          <h2 className="mb-12 text-center text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
+            Nuestros Productos
+          </h2>
 
-            return (
-              <div key={title} id={slug} className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16">
-                {/* Texto */}
-                <div className={`flex flex-col justify-center px-4 md:px-12 lg:px-16 py-8 ${isEven ? '' : 'md:order-last'}`}>
-                  <p className="mb-6 text-2xl font-bold uppercase tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-white">
-                    {title}
-                  </p>
-                  <p className="mb-6 max-w-md text-base font-normal leading-relaxed text-stone-800 transition-colors duration-300 md:text-lg dark:text-stone-200">
-                    {desc}
-                  </p>
-                  <ul className="mb-8 space-y-3">
-                    {items.map((item) => (
-                      <li key={item} className="flex items-center text-base font-medium text-stone-900 transition-colors duration-300 md:text-lg dark:text-stone-100">
-                        <span className="mr-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-stone-400 dark:bg-stone-500" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+            {CATEGORIES.map(({ title, slug, image, desc, features, popular }) => (
+              <div
+                key={title}
+                className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                  popular
+                    ? 'border-stone-400 dark:border-stone-500'
+                    : 'border-stone-200 dark:border-stone-800'
+                } bg-white dark:bg-stone-950`}
+              >
+                {popular && (
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-stone-900 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white dark:bg-stone-100 dark:text-stone-900">
+                    Más popular
+                  </span>
+                )}
 
-                {/* Imagen */}
-                <div className={!isEven ? '' : 'md:order-last'}>
+                <div className="relative aspect-square overflow-hidden">
                   <img
                     src={image}
                     alt={title}
-                    className="w-full rounded-2xl object-cover shadow-sm transition-shadow duration-300 hover:shadow-md"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                </div>
+
+                <div className="flex flex-1 flex-col p-4 lg:p-5">
+                  <h3 className="mb-1.5 text-sm font-bold leading-tight text-stone-900 transition-colors duration-300 lg:text-base dark:text-stone-100">
+                    {title}
+                  </h3>
+                  <p className="mb-3 text-xs leading-relaxed text-stone-500 transition-colors duration-300 dark:text-stone-400">
+                    {desc}
+                  </p>
+
+                  <div className="mb-4 flex flex-wrap gap-1.5">
+                    {features.map((f) => (
+                      <span
+                        key={f}
+                        className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-medium text-stone-600 transition-colors duration-300 dark:bg-stone-800 dark:text-stone-400"
+                      >
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-auto">
+                    <Link
+                      to={`/cotizar`}
+                      className="block w-full rounded-full bg-stone-900 py-2 text-center text-xs font-semibold text-white transition-all duration-300 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
+                    >
+                      Cotizar este tipo
+                    </Link>
+                  </div>
                 </div>
               </div>
-            )
-          })}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Cotización */}
       <section className="bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
-          <div className="text-center mb-12">
+          <div className="mb-12 text-center">
             <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl lg:text-5xl dark:text-stone-100">
               Materialicemos tu visión.
             </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
               Sube tu diseño y nuestro equipo analizará las especificaciones para enviarte una cotización a medida en menos de 24 horas.
             </p>
           </div>

@@ -16,7 +16,7 @@ export default function SharedNavbar() {
   const { isDark, toggle } = useTheme()
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-stone-200 bg-white/90 backdrop-blur-md transition-colors duration-300 dark:border-stone-800 dark:bg-stone-950/90">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-stone-200/50 bg-white/80 backdrop-blur-md transition-colors duration-300 dark:border-stone-800/50 dark:bg-stone-950/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
         <Link to="/" className="text-xl font-bold tracking-tight text-stone-900 transition-colors duration-300 dark:text-stone-100">
@@ -72,7 +72,7 @@ export default function SharedNavbar() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-stone-200 bg-white px-4 pb-4 pt-2 transition-colors duration-300 dark:border-stone-800 dark:bg-stone-950 md:hidden">
+        <div className="border-t border-stone-200/50 bg-white/80 backdrop-blur-md px-4 pb-4 pt-2 transition-colors duration-300 dark:border-stone-800/50 dark:bg-stone-950/80 md:hidden">
           <nav className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <Link
