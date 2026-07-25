@@ -30,17 +30,6 @@ const INPUT_ERROR = INPUT_CLASS.replace('border-stone-200', 'border-red-400')
 
 const WHATSAPP_NUMBER = '523339472657'
 
-const PRODUCT_LABELS: Record<string, string> = {
-  'Etiquetas de Satén Premium': 'Etiquetas de Satén Premium',
-  'Cartón Colgante': 'Cartón Colgante',
-  'Etiquetas Económicas': 'Etiquetas Económicas',
-  'Etiquetas para Mezclilla': 'Etiquetas para Mezclilla',
-  'Etiquetas para Bisutería': 'Etiquetas para Bisutería',
-  'Etiquetas Adheribles': 'Etiquetas Adheribles',
-  'Bolsa Impresa': 'Bolsa Impresa',
-  'Avíos Textiles': 'Avíos Textiles',
-}
-
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024
 const ALLOWED_FILE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg', 'ai', 'eps', 'pdf']
 
