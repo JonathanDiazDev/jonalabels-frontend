@@ -156,6 +156,9 @@ export default function QuoteForm() {
 
     setIsSubmitting(true)
 
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 20000)
+
     try {
       const data = new FormData()
       data.append(
@@ -166,15 +169,22 @@ export default function QuoteForm() {
       )
       if (file) data.append('archivo', file)
 
-      const res = await fetch(apiUrl('/cotizaciones'), { method: 'POST', body: data })
+      const res = await fetch(apiUrl('/cotizaciones'), { method: 'POST', body: data, signal: controller.signal })
+
+      clearTimeout(timeoutId)
 
       if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`)
 
       setIsSuccess(true)
     } catch (err) {
       console.error('[QuoteForm] Error al enviar cotización:', err)
-      setError('No pudimos enviar tu solicitud. Verifica tu conexión e intenta de nuevo.')
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        setError('El servidor está despertando. Por favor, intenta de nuevo en unos segundos.')
+      } else {
+        setError('No pudimos enviar tu solicitud. Verifica tu conexión e intenta de nuevo.')
+      }
     } finally {
+      clearTimeout(timeoutId)
       setIsSubmitting(false)
     }
   }
