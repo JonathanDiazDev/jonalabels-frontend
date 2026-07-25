@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
+
 const CONTACT = {
-  whatsapp: 'https://wa.me/521XXXXXXXXXX',
+  whatsapp: 'https://wa.me/523339472657',
   email: 'mailto:hola@jonalabels.com',
   instagram: 'https://instagram.com/jonalabels',
 }
@@ -20,10 +22,12 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-stone-900 transition-colors duration-300 dark:text-stone-100">Navegación</h4>
             <ul className="mt-4 space-y-3">
-              <li><a href="#materiales" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Materiales</a></li>
-              <li><a href="#beneficios" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Beneficios</a></li>
-              <li><a href="#quote-form" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Cotizar</a></li>
-              <li><a href="/visualizar" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Visualizar diseño</a></li>
+              <li><Link to="/" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Inicio</Link></li>
+              <li><Link to="/productos" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Productos</Link></li>
+              <li><Link to="/nosotros" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Nosotros</Link></li>
+              <li><Link to="/blog" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Diario</Link></li>
+              <li><Link to="/cotizar" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Cotizar</Link></li>
+              <li><Link to="/visualizar" className="text-sm text-stone-500 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100">Visualizar diseño</Link></li>
             </ul>
           </div>
 
@@ -56,8 +60,8 @@ export default function Footer() {
         <div className="mt-8 flex flex-col items-center gap-2 border-t border-stone-200 pt-6 text-center text-xs text-stone-400 transition-colors duration-300 dark:border-stone-800 dark:text-stone-500 sm:flex-row sm:justify-between">
           <span>&copy; {new Date().getFullYear()} Jona Labels. Todos los derechos reservados.</span>
           <div className="flex gap-4">
-            <a href="/privacidad" className="transition-colors duration-300 hover:text-stone-600 dark:hover:text-stone-300">Privacidad</a>
-            <a href="/terminos" className="transition-colors duration-300 hover:text-stone-600 dark:hover:text-stone-300">Términos</a>
+            <Link to="/privacidad" className="transition-colors duration-300 hover:text-stone-600 dark:hover:text-stone-300">Privacidad</Link>
+            <Link to="/terminos" className="transition-colors duration-300 hover:text-stone-600 dark:hover:text-stone-300">Términos</Link>
           </div>
         </div>
       </div>
