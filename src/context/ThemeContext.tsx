@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
 interface ThemeContextType {
   isDark: boolean
@@ -22,10 +22,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('jona-theme', isDark ? 'dark' : 'light')
   }, [isDark])
 
-  const toggle = () => setIsDark((prev) => !prev)
+  const toggle = useCallback(() => setIsDark((prev) => !prev), [])
+
+  const value = useMemo(() => ({ isDark, toggle }), [isDark, toggle])
 
   return (
-    <ThemeContext.Provider value={{ isDark, toggle }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   )
