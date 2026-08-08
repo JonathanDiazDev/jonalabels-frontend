@@ -262,7 +262,7 @@ export default function QuoteForm() {
             value={form.tipoProducto}
             onChange={(e) => updateField('tipoProducto', e.target.value)}
             className={`${INPUT_CLASS} ${form.tipoProducto ? 'cursor-default font-medium' : ''}`}
-            placeholder="Ej: Etiquetas de Satén Premium"
+            placeholder="Ej: Etiquetas de Satín Premium"
             disabled={isSubmitting}
           />
         </div>

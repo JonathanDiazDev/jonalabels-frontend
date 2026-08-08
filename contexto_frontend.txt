@@ -177,7 +177,7 @@ const LAYER_STYLES = {
     container:
       'absolute -inset-6 flex items-center justify-center rounded-2xl border bg-gradient-to-br from-slate-100 to-slate-200 border-slate-300 shadow-xl',
     label: 'text-xs font-medium tracking-[0.2em] uppercase text-slate-500',
-    text: 'Satén Premium',
+    text: 'Satín Premium',
   },
   front: {
     container:
@@ -404,7 +404,7 @@ const INPUT_CLASS =
 const LABEL_CLASS = 'mb-1.5 block text-sm font-medium text-brand-blue'
 
 const MATERIAL_OPTIONS: { value: MaterialTipo; label: string }[] = [
-  { value: 'SATEN', label: 'Satén' },
+  { value: 'SATEN', label: 'Satín' },
   { value: 'DAMASCO', label: 'Damasco' },
   { value: 'ALGODON', label: 'Algodón' },
 ]

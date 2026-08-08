@@ -3,7 +3,7 @@ import QuoteForm from './QuoteForm'
 
 const CATEGORIES = [
   {
-    title: 'Etiquetas de Satén Premium',
+    title: 'Etiquetas de Satín Premium',
     slug: 'etiquetas-internas',
     image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=600&fit=crop',
     desc: 'Acabado sedoso con brillo elegante que jamás irrita la piel.',
