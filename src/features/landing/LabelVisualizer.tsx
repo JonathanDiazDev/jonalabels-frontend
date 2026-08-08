@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { memo, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion, useMotionValue, type MotionValue } from 'framer-motion'
 import { ArrowRight, CheckCircle2, Sparkles, Upload, X } from 'lucide-react'
 import { useQuote } from '../../context/QuoteContext'
 
@@ -19,10 +19,10 @@ const CHECKERED_OVERLAY =
 interface PreviewProps {
   previewUrl: string | null
   color: LabelColor
-  scale: number
+  scale: MotionValue<number>
 }
 
-function SatinPreview({ previewUrl, color, scale }: PreviewProps) {
+const SatinPreview = memo(function SatinPreview({ previewUrl, color, scale }: PreviewProps) {
   return (
     <div
       className={`relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border ${color.border} bg-gradient-to-br ${color.satinGradient} shadow-2xl shadow-stone-900/20`}
@@ -31,11 +31,11 @@ function SatinPreview({ previewUrl, color, scale }: PreviewProps) {
       {color.isDark && <div className={`absolute inset-0 opacity-[0.04] ${CHECKERED_OVERLAY}`} />}
       <div className="absolute inset-0 z-10 flex items-center justify-center px-10">
         {previewUrl ? (
-          <img
+          <motion.img
             src={previewUrl}
             alt="Diseño del cliente sobre etiqueta de satín"
             className={`max-h-48 w-11/12 object-contain ${color.isDark ? '' : 'mix-blend-multiply'}`}
-            style={{ transform: `scale(${scale})` }}
+            style={{ scale }}
           />
         ) : (
           <div className={`flex flex-col items-center gap-3 text-center ${color.textDark ? 'text-white/50' : 'text-slate-400'}`}>
@@ -49,9 +49,9 @@ function SatinPreview({ previewUrl, color, scale }: PreviewProps) {
       </span>
     </div>
   )
-}
+})
 
-function ColgantePreview({ previewUrl, color, scale }: PreviewProps) {
+const ColgantePreview = memo(function ColgantePreview({ previewUrl, color, scale }: PreviewProps) {
   return (
     <div className="relative mx-auto aspect-[3/4] w-full max-w-[18rem]">
       <div className="absolute -top-1 left-1/2 z-0 h-14 w-px -translate-x-1/2 bg-slate-400/70 dark:bg-slate-500/70" />
@@ -62,11 +62,11 @@ function ColgantePreview({ previewUrl, color, scale }: PreviewProps) {
         {color.isDark && <div className={`absolute inset-0 opacity-[0.04] ${CHECKERED_OVERLAY}`} />}
         <div className="absolute inset-0 z-10 flex items-center justify-center px-8 pt-4">
           {previewUrl ? (
-            <img
+            <motion.img
               src={previewUrl}
               alt="Diseño del cliente sobre etiqueta colgante"
               className={`max-h-48 w-11/12 object-contain ${color.isDark ? '' : 'mix-blend-multiply'}`}
-              style={{ transform: `scale(${scale})` }}
+              style={{ scale }}
             />
           ) : (
             <div className={`flex flex-col items-center gap-3 text-center ${color.textDark ? 'text-white/50' : 'text-amber-900/50'}`}>
@@ -81,6 +81,20 @@ function ColgantePreview({ previewUrl, color, scale }: PreviewProps) {
       </div>
     </div>
   )
+})
+
+function ZoomSlider({ scale }: { scale: MotionValue<number> }) {
+  return (
+    <input
+      type="range"
+      min="0.5"
+      max="2"
+      step="0.05"
+      defaultValue="0.75"
+      onChange={(e) => scale.set(Number(e.target.value))}
+      className="h-2.5 flex-1 cursor-pointer appearance-none rounded-full bg-stone-300 accent-stone-900 transition-colors duration-300 dark:bg-stone-700 dark:accent-stone-100"
+    />
+  )
 }
 
 export default function LabelVisualizer() {
@@ -88,7 +102,7 @@ export default function LabelVisualizer() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [labelColor, setLabelColor] = useState('beige')
-  const [designScale, setDesignScale] = useState(0.75)
+  const designScale = useMotionValue(0.75)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const activeColor = COLORS.find((c) => c.id === labelColor) ?? COLORS[1]
@@ -295,15 +309,7 @@ export default function LabelVisualizer() {
                 <span className="whitespace-nowrap text-xs font-medium text-stone-600 transition-colors duration-300 dark:text-stone-400">
                   Ajustar tamaño
                 </span>
-                <input
-                  type="range"
-                  min="0.5"
-                  max="2"
-                  step="0.05"
-                  value={designScale}
-                  onChange={(e) => setDesignScale(Number(e.target.value))}
-                  className="h-2.5 flex-1 cursor-pointer appearance-none rounded-full bg-stone-300 accent-stone-900 transition-colors duration-300 dark:bg-stone-700 dark:accent-stone-100"
-                />
+                <ZoomSlider scale={designScale} />
               </div>
             )}
 
