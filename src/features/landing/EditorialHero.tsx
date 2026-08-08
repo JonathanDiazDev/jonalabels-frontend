@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Check } from 'lucide-react'
+import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
 
 export default function EditorialHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -85,28 +85,31 @@ export default function EditorialHero() {
       </div>
 
       {/* Beneficios — fondo sólido cubre el video */}
-      <section className="relative z-10 -mt-[1px] bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <h2 className="mb-4 text-center text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
+      <section className="relative z-10 -mt-[1px] overflow-hidden bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
+        <div aria-hidden="true" className="absolute inset-0 bg-black/60" />
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+          <h2 className="mb-4 text-center text-3xl font-medium tracking-tight text-stone-50 transition-colors duration-300 md:text-4xl">
             ¿Por qué elegirnos?
           </h2>
-          <p className="mx-auto mb-16 max-w-2xl text-center text-lg text-stone-500 transition-colors duration-300 dark:text-stone-400">
+          <p className="mx-auto mb-16 max-w-2xl text-center text-lg text-stone-300 transition-colors duration-300">
             Cada etiqueta es una pequeña tarjeta de presentación que tu cliente guardará para siempre.
           </p>
 
           <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:gap-x-12 sm:gap-y-10">
             {[
-              { icon: '⭐', title: 'Atención personalizada', desc: 'Te acompañamos en cada paso para lograr la etiqueta perfecta.' },
-              { icon: '📦', title: 'Envíos nacionales', desc: 'Entregamos en todo México de manera rápida y segura.' },
-              { icon: '🏭', title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
-              { icon: '🎯', title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
-            ].map(({ icon, title, desc }) => (
+              { icon: MessageSquareText, title: 'Atención personalizada', desc: 'Te acompañamos en cada paso para lograr la etiqueta perfecta.' },
+              { icon: Truck, title: 'Envíos nacionales', desc: 'Entregamos en todo México de manera rápida y segura.' },
+              { icon: Factory, title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
+              { icon: Gem, title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
+            ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="flex flex-col items-center">
-                <span className="mb-3 text-3xl">{icon}</span>
-                <h3 className="mb-2 text-xl font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-white/10 backdrop-blur-sm">
+                  <Icon strokeWidth={1.5} className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300">
                   {title}
                 </h3>
-                <p className="text-base leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">{desc}</p>
+                <p className="text-base leading-relaxed text-stone-300">{desc}</p>
               </div>
             ))}
           </div>
