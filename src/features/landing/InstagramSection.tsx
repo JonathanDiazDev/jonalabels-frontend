@@ -1,5 +1,7 @@
 const PROFILE_URL = 'https://instagram.com/jonalabels'
 
+import FixedBackground from '../../components/FixedBackground'
+
 const instagramPosts = [
   { id: 1, imageUrl: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=400&h=400&fit=crop' },
   { id: 2, imageUrl: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=400&fit=crop' },
@@ -21,7 +23,8 @@ function InstagramIcon() {
 
 export default function InstagramSection() {
   return (
-    <section className="relative z-10 -mt-[1px] bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-16 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-20">
+    <section className="relative z-10 -mt-[1px] py-16 transition-colors duration-300 sm:py-20">
+      <FixedBackground />
       <div className="mx-auto max-w-5xl px-4">
 
         <h2 className="mb-10 text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-50">
@@ -48,9 +51,9 @@ export default function InstagramSection() {
               <div className="absolute bottom-0 left-0 flex w-full flex-col items-center p-8">
                 <InstagramIcon />
                 <h3 className="mt-4 text-2xl font-bold text-white">@jonalabels</h3>
-                <button className="mt-4 rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white transition-colors duration-300 hover:bg-black/70 dark:bg-white/10 dark:hover:bg-white/20">
+                <span className="mt-4 rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white transition-colors duration-300 group-hover:bg-black/70 dark:bg-white/10 dark:group-hover:bg-white/20">
                   Seguir
-                </button>
+                </span>
               </div>
             </a>
           ))}

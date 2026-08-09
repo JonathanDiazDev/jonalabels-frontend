@@ -63,8 +63,10 @@ export default function SharedNavbar() {
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
             className="flex h-10 w-10 items-center justify-center rounded-lg text-stone-700 transition-colors duration-300 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
-            aria-label="Abrir menú"
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -73,7 +75,7 @@ export default function SharedNavbar() {
 
       {mobileOpen && (
         <div className="border-t border-stone-200/50 bg-white/80 backdrop-blur-md px-4 pb-4 pt-2 transition-colors duration-300 dark:border-stone-800/50 dark:bg-stone-950/80 md:hidden">
-          <nav className="flex flex-col gap-1">
+          <nav id="mobile-menu" className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.label}
