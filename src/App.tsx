@@ -1,18 +1,25 @@
 import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import EditorialHero from './features/landing/EditorialHero'
-import SpecialtySection from './features/landing/SpecialtySection'
-import InstagramSection from './features/landing/InstagramSection'
-import TestimonialsSection from './features/landing/TestimonialsSection'
-import ProcessSection from './features/landing/ProcessSection'
-import QuoteSection from './features/landing/QuoteSection'
-import Productos from './features/landing/Productos'
-import Nosotros from './features/landing/Nosotros'
-import NotFound from './features/landing/NotFound'
-import PrivacyPolicy from './features/landing/PrivacyPolicy'
-import TermsOfService from './features/landing/TermsOfService'
 import Login from './features/auth/Login'
-import { LazyRoute, LabelVisualizer, Diario, AdminRoute } from './lazyRoutes'
+import Seo from './components/Seo'
+import {
+  LazyRoute,
+  LazySection,
+  LabelVisualizer,
+  Diario,
+  AdminRoute,
+  SpecialtySection,
+  ProcessSection,
+  InstagramSection,
+  TestimonialsSection,
+  QuoteSection,
+  Productos,
+  Nosotros,
+  PrivacyPolicy,
+  TermsOfService,
+  NotFound,
+} from './lazyRoutes'
 
 export const router = createBrowserRouter([
   {
@@ -21,26 +28,109 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <div className="relative">
-            <EditorialHero />
-            <SpecialtySection />
-            <ProcessSection />
-            <InstagramSection />
-            <TestimonialsSection />
-            <QuoteSection />
-          </div>
+          <>
+            <Seo path="/" />
+            <div className="relative">
+              <EditorialHero />
+              <LazySection component={SpecialtySection} />
+              <LazySection component={ProcessSection} />
+              <LazySection component={InstagramSection} />
+              <LazySection component={TestimonialsSection} />
+              <LazySection component={QuoteSection} />
+            </div>
+          </>
         ),
       },
-      { path: 'visualizar', element: <LazyRoute component={LabelVisualizer} /> },
-      { path: 'productos', element: <Productos /> },
-      { path: 'nosotros', element: <Nosotros /> },
-      { path: 'blog', element: <LazyRoute component={Diario} /> },
-      { path: 'cotizar', element: <QuoteSection /> },
-      { path: 'admin', element: <LazyRoute component={AdminRoute} /> },
-      { path: 'privacidad', element: <PrivacyPolicy /> },
-      { path: 'terminos', element: <TermsOfService /> },
-      { path: '*', element: <NotFound /> },
+      {
+        path: 'visualizar',
+        element: (
+          <>
+            <Seo title="Visualizador de etiquetas — Jona Labels" description="Diseña y visualiza tu etiqueta textil personalizada antes de cotizar." path="/visualizar" />
+            <LazyRoute component={LabelVisualizer} />
+          </>
+        ),
+      },
+      {
+        path: 'productos',
+        element: (
+          <>
+            <Seo title="Productos y materiales — Jona Labels" description="Etiquetas de satín, raso y algodón con estampado de alta definición para tu marca." path="/productos" />
+            <LazyRoute component={Productos} />
+          </>
+        ),
+      },
+      {
+        path: 'nosotros',
+        element: (
+          <>
+            <Seo title="Nosotros — Jona Labels" description="Conoce la historia de Jona Labels: etiquetas textiles que dan identidad a marcas de ropa." path="/nosotros" />
+            <LazyRoute component={Nosotros} />
+          </>
+        ),
+      },
+      {
+        path: 'blog',
+        element: (
+          <>
+            <Seo title="Diario — Jona Labels" description="Reflexiones sobre diseño, confección e identidad de marca en la alta costura." path="/blog" />
+            <LazyRoute component={Diario} />
+          </>
+        ),
+      },
+      {
+        path: 'cotizar',
+        element: (
+          <>
+            <Seo title="Cotizar etiquetas — Jona Labels" description="Solicita una cotización para tus etiquetas textiles personalizadas en minutos." path="/cotizar" />
+            <LazyRoute component={QuoteSection} />
+          </>
+        ),
+      },
+      {
+        path: 'admin',
+        element: (
+          <>
+            <Seo title="Panel de administración — Jona Labels" description="Panel de administración de Jona Labels." path="/admin" />
+            <LazyRoute component={AdminRoute} />
+          </>
+        ),
+      },
+      {
+        path: 'privacidad',
+        element: (
+          <>
+            <Seo title="Aviso de privacidad — Jona Labels" description="Aviso de privacidad de Jona Labels." path="/privacidad" />
+            <LazyRoute component={PrivacyPolicy} />
+          </>
+        ),
+      },
+      {
+        path: 'terminos',
+        element: (
+          <>
+            <Seo title="Términos y condiciones — Jona Labels" description="Términos y condiciones de Jona Labels." path="/terminos" />
+            <LazyRoute component={TermsOfService} />
+          </>
+        ),
+      },
+      {
+        path: '*',
+        element: (
+          <>
+            <Seo title="Página no encontrada — Jona Labels" description="La página que buscas no existe o fue movida." path="/404" />
+            <LazyRoute component={NotFound} />
+          </>
+        ),
+      },
     ],
   },
-  { path: 'login', element: <Login /> },
+  {
+    path: 'login',
+    element: (
+      <>
+        <Seo title="Iniciar sesión — Jona Labels" description="Accede al panel de administración de Jona Labels." path="/login" />
+        <Login />
+      </>
+    ),
+  },
 ])
