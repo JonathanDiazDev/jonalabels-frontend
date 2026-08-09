@@ -1,4 +1,5 @@
 import { Upload, FileText, Factory, Truck } from 'lucide-react'
+import FixedBackground from '../../components/FixedBackground'
 
 const STEPS = [
   {
@@ -29,7 +30,8 @@ const STEPS = [
 
 export default function ProcessSection() {
   return (
-    <section id="proceso" className="relative z-10 bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
+    <section id="proceso" className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
+      <FixedBackground />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-16 text-center">
           <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">

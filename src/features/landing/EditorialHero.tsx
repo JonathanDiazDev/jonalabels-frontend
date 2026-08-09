@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
+import FixedBackground from '../../components/FixedBackground'
 
 export default function EditorialHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -32,10 +33,10 @@ export default function EditorialHero() {
       <div className="pointer-events-none fixed inset-0 z-0">
         <video
           ref={videoRef}
-          autoPlay
           loop
           muted
           playsInline
+          preload="none"
           className="h-full w-full object-cover will-change-transform transform-gpu"
           src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
         />
@@ -85,7 +86,8 @@ export default function EditorialHero() {
       </div>
 
       {/* Beneficios — fondo sólido cubre el video */}
-      <section className="relative z-10 -mt-[1px] overflow-hidden bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed py-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:py-24">
+      <section className="relative z-10 -mt-[1px] overflow-hidden py-20 transition-colors duration-300 sm:py-24">
+        <FixedBackground />
         <div aria-hidden="true" className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="mb-4 text-center text-3xl font-medium tracking-tight text-stone-50 transition-colors duration-300 md:text-4xl">

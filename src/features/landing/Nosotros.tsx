@@ -1,5 +1,6 @@
-const PILARES = [
-  {
+import FixedBackground from '../../components/FixedBackground'
+
+const PILARES = [  {
     number: '01',
     title: 'El Propósito',
     subtitle: 'Misión',
@@ -21,7 +22,8 @@ const PILARES = [
 
 export default function Nosotros() {
   return (
-    <section className="bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed px-4 pt-32 pb-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:px-6 lg:px-8">
+    <section className="relative px-4 pt-32 pb-20 transition-colors duration-300 sm:px-6 lg:px-8">
+      <FixedBackground />
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
 

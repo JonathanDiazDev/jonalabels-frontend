@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState, useRef } from 'react'
+import { type FormEvent, useState, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { apiUrl } from '../../api/http'
 import { useQuote } from '../../context/QuoteContext'
@@ -49,7 +49,6 @@ export default function QuoteForm() {
     ...INITIAL_FORM,
     tipoProducto: searchParams.get('producto') || '',
   }))
-  const [file, setFile] = useState<File | null>(null)
   const [dragging, setDragging] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -60,9 +59,7 @@ export default function QuoteForm() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const fileRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    if (logoFile) setFile(logoFile)
-  }, [logoFile])
+  const file = logoFile
 
   const updateField = (name: keyof IFormState, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }))
@@ -95,9 +92,9 @@ export default function QuoteForm() {
     const f = e.dataTransfer.files?.[0]
     const validationError = f ? getFileValidationError(f) : null
     if (f && !validationError) {
-      setFile(f)
       setLogoFile(f)
       setFileError('')
+      if (fileRef.current) fileRef.current.value = ''
     } else if (validationError) {
       setFileError(validationError)
     }
@@ -108,17 +105,15 @@ export default function QuoteForm() {
     if (!f) return
     const validationError = getFileValidationError(f)
     if (validationError) {
-      setFile(null)
       setFileError(validationError)
+      if (fileRef.current) fileRef.current.value = ''
       return
     }
-    setFile(f)
     setLogoFile(f)
     setFileError('')
   }
 
   const handleRemoveFile = () => {
-    setFile(null)
     setLogoFile(null)
     setFileError('')
     if (fileRef.current) fileRef.current.value = ''
@@ -126,7 +121,6 @@ export default function QuoteForm() {
 
   const resetForm = () => {
     setForm(INITIAL_FORM)
-    setFile(null)
     setLogoFile(null)
     setIsSuccess(false)
     setError('')
@@ -138,6 +132,18 @@ export default function QuoteForm() {
   }
 
   const CANTIDAD_MIN = 5000
+
+  const buildFormData = (): FormData => {
+    const data = new FormData()
+    data.append(
+      'data',
+      new Blob([JSON.stringify({ nombre: form.nombre, whatsapp: form.whatsapp, email: form.email || null, cantidad: Number(form.cantidad) || null, medidas: form.medidas || null, tipoProducto: form.tipoProducto || null })], {
+        type: 'application/json',
+      }),
+    )
+    if (file) data.append('archivo', file)
+    return data
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -169,16 +175,7 @@ export default function QuoteForm() {
     const timeoutId = setTimeout(() => controller.abort(), 20000)
 
     try {
-      const data = new FormData()
-      data.append(
-        'data',
-        new Blob([JSON.stringify({ nombre: form.nombre, whatsapp: form.whatsapp, email: form.email || null, cantidad, medidas: form.medidas || null, tipoProducto: form.tipoProducto || null })], {
-          type: 'application/json',
-        }),
-      )
-      if (file) data.append('archivo', file)
-
-      const res = await fetch(apiUrl('/cotizaciones'), { method: 'POST', body: data, signal: controller.signal })
+      const res = await fetch(apiUrl('/cotizaciones'), { method: 'POST', body: buildFormData(), signal: controller.signal })
 
       clearTimeout(timeoutId)
 
@@ -198,11 +195,32 @@ export default function QuoteForm() {
     }
   }
 
+  const sendLeadToBackend = () => {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 15000)
+    fetch(apiUrl('/cotizaciones'), { method: 'POST', body: buildFormData(), signal: controller.signal })
+      .catch((err) => console.error('[QuoteForm] No se pudo capturar el lead de WhatsApp:', err))
+      .finally(() => clearTimeout(timeoutId))
+  }
+
   const handleWhatsAppClick = () => {
+    if (!form.nombre.trim() || !form.whatsapp.trim()) {
+      setError('Completa tu nombre y WhatsApp antes de contactarnos por WhatsApp.')
+      return
+    }
+    const telefono = form.whatsapp.replace(/\D/g, '')
+    if (!/^(?:52)?\d{10}$/.test(telefono)) {
+      setError('Ingresa un número de WhatsApp mexicano válido.')
+      return
+    }
+    setError('')
+
+    sendLeadToBackend()
+
     const lines = [
       'Hola, me interesa cotizar.',
       '',
-      `Nombre: ${form.nombre || 'No especificado'}`,
+      `Nombre: ${form.nombre}`,
       `Producto: ${form.tipoProducto || 'No especificado'}`,
       `Cantidad: ${form.cantidad ? Number(form.cantidad).toLocaleString() + ' piezas' : 'No especificada'}`,
       `Medidas: ${form.medidas || 'No especificadas'}`,
@@ -360,12 +378,12 @@ export default function QuoteForm() {
         </div>
       </div>
 
-      <div
+      <label
+        htmlFor="quote-logo-file"
         onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
         onDragLeave={() => setDragging(false)}
         onDrop={handleFileDrop}
-        onClick={() => !isSubmitting && fileRef.current?.click()}
-        className={`cursor-pointer rounded-xl border-2 border-dashed px-4 py-4 text-center transition-colors duration-300 ${
+        className={`block cursor-pointer rounded-xl border-2 border-dashed px-4 py-4 text-center transition-colors duration-300 focus-within:border-stone-900 focus-within:ring-1 focus-within:ring-stone-900/20 dark:focus-within:border-stone-300 ${
           isSubmitting ? 'cursor-default opacity-60' : ''
         } ${
           dragging ? 'border-stone-900 bg-stone-100 dark:border-stone-300 dark:bg-stone-800' : 'border-stone-200 bg-stone-50 hover:border-stone-400 dark:border-stone-700 dark:bg-stone-900/40 dark:hover:border-stone-600'
@@ -373,11 +391,12 @@ export default function QuoteForm() {
       >
         <input
           ref={fileRef}
+          id="quote-logo-file"
           type="file"
           accept=".png,.jpg,.jpeg,.svg,.ai,.eps,.pdf"
           onChange={handleFileChange}
-          className="hidden"
           disabled={isSubmitting}
+          className="sr-only"
         />
         {file ? (
           <div className="flex items-center justify-center gap-3" onClick={(e) => e.stopPropagation()}>
@@ -413,7 +432,7 @@ export default function QuoteForm() {
             <span className="text-[10px] text-stone-400 dark:text-stone-500">(PNG, JPG, AI, EPS, PDF — máx. 10 MB)</span>
           </div>
         )}
-      </div>
+      </label>
 
       {fileError && <p className="text-center text-xs text-red-500" role="alert">{fileError}</p>}
 
@@ -421,11 +440,11 @@ export default function QuoteForm() {
         <p className="text-center text-xs text-red-500" role="alert">{error}</p>
       )}
 
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className="flex flex-col gap-2.5">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex-1 cursor-pointer rounded-full bg-stone-900 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-200"
+          className="w-full cursor-pointer rounded-full bg-stone-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-200"
         >
           <span className="flex items-center justify-center gap-2">
             {isSubmitting && (
@@ -440,7 +459,7 @@ export default function QuoteForm() {
           type="button"
           onClick={handleWhatsAppClick}
           disabled={isSubmitting}
-          className="flex-1 cursor-pointer rounded-full border-2 border-[#25D366] bg-[#25D366]/10 px-6 py-2.5 text-sm font-semibold text-[#25D366] transition-all duration-300 hover:bg-[#25D366]/20 disabled:cursor-not-allowed disabled:opacity-70 dark:border-[#25D366] dark:bg-[#25D366]/10 dark:text-[#25D366] dark:hover:bg-[#25D366]/20"
+          className="w-full cursor-pointer rounded-full border border-[#25D366]/50 bg-[#25D366]/5 px-6 py-3 text-sm font-semibold text-[#1eb457] transition-all duration-300 hover:bg-[#25D366]/15 disabled:cursor-not-allowed disabled:opacity-70 dark:border-[#25D366]/40 dark:text-[#25D366]"
         >
           <span className="flex items-center justify-center gap-2">
             <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -449,6 +468,9 @@ export default function QuoteForm() {
             Enviar por WhatsApp
           </span>
         </button>
+        <p className="text-center text-[11px] text-stone-400 transition-colors duration-300 dark:text-stone-500">
+          ¿Prefieres respuesta inmediata? Escríbenos por WhatsApp.
+        </p>
       </div>
     </form>
   )

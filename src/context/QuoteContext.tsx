@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
 
 export type LabelType = 'SATIN' | 'COLGANTE'
 
@@ -15,9 +15,12 @@ export function QuoteProvider({ children }: { children: ReactNode }) {
   const [labelType, setLabelType] = useState<LabelType>('SATIN')
   const [logoFile, setLogoFile] = useState<File | null>(null)
 
+  const handleSetLabelType = useCallback((type: LabelType) => setLabelType(type), [])
+  const handleSetLogoFile = useCallback((file: File | null) => setLogoFile(file), [])
+
   const value = useMemo(
-    () => ({ labelType, logoFile, setLabelType, setLogoFile }),
-    [labelType, logoFile],
+    () => ({ labelType, logoFile, setLabelType: handleSetLabelType, setLogoFile: handleSetLogoFile }),
+    [labelType, logoFile, handleSetLabelType, handleSetLogoFile],
   )
 
   return (
