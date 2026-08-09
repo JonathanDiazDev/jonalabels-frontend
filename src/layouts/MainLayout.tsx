@@ -5,6 +5,7 @@ import SharedNavbar from '../components/SharedNavbar'
 import Footer from '../components/Footer'
 import WhatsAppButton from '../components/WhatsAppButton'
 import PullToRefresh from '../components/PullToRefresh'
+import PageBackground from '../components/PageBackground'
 
 function useIsTouchDevice(): boolean {
   const [isTouch, setIsTouch] = useState(() =>
@@ -65,7 +66,8 @@ export default function MainLayout() {
   )
 
   return (
-    <div className="relative z-10 min-h-screen bg-[#FBFBFA] text-gray-900 transition-colors duration-300 dark:bg-stone-950 dark:text-gray-100">
+    <div className="relative z-10 min-h-screen bg-stone-50 text-gray-900 transition-colors duration-300 dark:bg-stone-950 dark:text-gray-100">
+      <PageBackground />
       {isTouchDevice && isLanding ? (
         <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh>
       ) : (

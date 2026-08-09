@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import FixedBackground from '../../components/FixedBackground'
 
 const SPECIALTIES = [
   {
@@ -19,7 +18,6 @@ const SPECIALTIES = [
 export default function SpecialtySection() {
   return (
     <section className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
-      <FixedBackground />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
 
         <h2 className="text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">

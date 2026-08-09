@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import QuoteForm from './QuoteForm'
-import FixedBackground from '../../components/FixedBackground'
 
 const CATEGORIES = [
   {
@@ -74,7 +73,6 @@ export default function Productos() {
     <>
       {/* Hero */}
       <section className="relative flex min-h-[70vh] items-center justify-center px-4 py-24 transition-colors duration-300 sm:py-32 md:py-40">
-        <FixedBackground />
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-4xl font-light leading-tight tracking-tight text-stone-900 transition-colors duration-300 sm:text-5xl lg:text-6xl dark:text-stone-100">
             Todo lo que tu marca necesita: combina nuestras etiquetas para crear una experiencia de empaque{' '}
@@ -85,7 +83,6 @@ export default function Productos() {
 
       {/* Grid de Productos */}
       <section className="relative px-4 py-16 transition-colors duration-300 sm:py-20">
-        <FixedBackground />
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-12 text-center text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
             Nuestros Productos
@@ -152,7 +149,6 @@ export default function Productos() {
 
       {/* Cotización */}
       <section className="relative py-20 transition-colors duration-300 sm:py-24">
-        <FixedBackground />
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl lg:text-5xl dark:text-stone-100">

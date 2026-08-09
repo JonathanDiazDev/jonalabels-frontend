@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function TermsOfService() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-24">
+    <div className="mx-auto max-w-3xl bg-stone-50 px-6 py-24 transition-colors duration-300 dark:bg-stone-950">
       <Link to="/" className="mb-8 inline-flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600">
         ← Volver al inicio
       </Link>

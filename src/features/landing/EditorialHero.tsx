@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
-import FixedBackground from '../../components/FixedBackground'
 
 export default function EditorialHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -29,22 +28,23 @@ export default function EditorialHero() {
 
   return (
     <>
-      {/* Video — fixed, siempre queda detrás de todo */}
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <video
-          ref={videoRef}
-          loop
-          muted
-          playsInline
-          preload="none"
-          className="h-full w-full object-cover will-change-transform transform-gpu"
-          src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
-        />
-        <div className="absolute inset-0 bg-black/70" />
-      </div>
+      {/* Video — absoluto, confinado a la altura del hero */}
+      <section className="relative min-h-screen overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <video
+            ref={videoRef}
+            loop
+            muted
+            playsInline
+            preload="none"
+            className="h-full w-full object-cover will-change-transform transform-gpu"
+            src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
+          />
+          <div className="absolute inset-0 bg-black/70" />
+        </div>
 
-      {/* Texto — fluye normal, scrollea y desaparece */}
-      <div ref={heroRef} className="relative z-10 flex min-h-screen items-center justify-center px-4">
+        {/* Texto — fluye normal, scrollea y desaparece */}
+        <div ref={heroRef} className="relative z-10 flex min-h-screen items-center justify-center px-4">
         <div className="text-center">
           <h1 className="mb-6 max-w-4xl text-5xl font-normal leading-tight tracking-tighter text-stone-50 md:text-6xl lg:text-7xl">
             La calidad de una prenda comienza por sus detalles.
@@ -84,10 +84,10 @@ export default function EditorialHero() {
           </div>
         </div>
       </div>
+      </section>
 
-      {/* Beneficios — fondo sólido cubre el video */}
-      <section className="relative z-10 -mt-[1px] overflow-hidden py-20 transition-colors duration-300 sm:py-24">
-        <FixedBackground />
+      {/* Beneficios — fondo oscuro sobre el fondo de página */}
+      <section className="relative z-10 overflow-hidden py-20 transition-colors duration-300 sm:py-24">
         <div aria-hidden="true" className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="mb-4 text-center text-3xl font-medium tracking-tight text-stone-50 transition-colors duration-300 md:text-4xl">

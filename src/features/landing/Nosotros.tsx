@@ -1,5 +1,3 @@
-import FixedBackground from '../../components/FixedBackground'
-
 const PILARES = [  {
     number: '01',
     title: 'El Propósito',
@@ -23,7 +21,6 @@ const PILARES = [  {
 export default function Nosotros() {
   return (
     <section className="relative px-4 pt-32 pb-20 transition-colors duration-300 sm:px-6 lg:px-8">
-      <FixedBackground />
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
 

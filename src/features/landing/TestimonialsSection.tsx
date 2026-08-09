@@ -1,5 +1,3 @@
-import FixedBackground from '../../components/FixedBackground'
-
 const TESTIMONIALS = [  {
     text: 'La calidad de las etiquetas de satín superó nuestras expectativas. Tienen un brillo elegante y los bordes no se deshilachan. Le dieron el toque premium que nuestra colección necesitaba.',
     name: 'Valeria M.',
@@ -32,7 +30,6 @@ function Stars() {
 export default function TestimonialsSection() {
   return (
     <section className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
-      <FixedBackground />
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
 
         <h2 className="mb-16 text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">

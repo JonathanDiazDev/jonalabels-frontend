@@ -1,10 +1,8 @@
 import QuoteForm from './QuoteForm'
-import FixedBackground from '../../components/FixedBackground'
 
 export default function QuoteSection() {
   return (
     <section id="quote-form" className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
-      <FixedBackground />
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl lg:text-5xl dark:text-stone-100">

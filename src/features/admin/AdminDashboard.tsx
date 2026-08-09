@@ -198,7 +198,7 @@ const formatearFecha = (iso: string) => {
   }
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="bg-stone-50 py-24 transition-colors duration-300 md:py-32 dark:bg-stone-950">
       <div className="mx-auto max-w-6xl px-6">
         <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
           Cotizaciones

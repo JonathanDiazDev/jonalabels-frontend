@@ -1,5 +1,3 @@
-import FixedBackground from '../../components/FixedBackground'
-
 const MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 
 function formatDate(date: Date): string {
@@ -50,7 +48,6 @@ export default function Diario() {
 
   return (
     <section className="relative px-4 pt-32 pb-20 transition-colors duration-300 sm:px-6 lg:px-8">
-      <FixedBackground />
       <div className="mx-auto max-w-6xl">
 
         {/* Hero */}

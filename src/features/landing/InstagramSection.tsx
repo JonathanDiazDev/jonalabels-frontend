@@ -1,7 +1,5 @@
 const PROFILE_URL = 'https://instagram.com/jonalabels'
 
-import FixedBackground from '../../components/FixedBackground'
-
 const instagramPosts = [
   { id: 1, imageUrl: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=400&h=400&fit=crop' },
   { id: 2, imageUrl: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=400&h=400&fit=crop' },
@@ -23,8 +21,7 @@ function InstagramIcon() {
 
 export default function InstagramSection() {
   return (
-    <section className="relative z-10 -mt-[1px] py-16 transition-colors duration-300 sm:py-20">
-      <FixedBackground />
+    <section className="relative z-10 py-16 transition-colors duration-300 sm:py-20">
       <div className="mx-auto max-w-5xl px-4">
 
         <h2 className="mb-10 text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-50">
