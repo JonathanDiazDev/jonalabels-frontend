@@ -1,8 +1,25 @@
+import FixedBackground from '../../components/FixedBackground'
+
+const MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+
+function formatDate(date: Date): string {
+  return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`
+}
+
+function lastSundays(count: number): Date[] {
+  const now = new Date()
+  const daysSinceSunday = now.getDay()
+  const sunday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - daysSinceSunday)
+  return Array.from({ length: count }, (_, i) => new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() - 7 * i))
+}
+
+const [dateFeatured, dateSecond, dateThird] = lastSundays(3)
+
 const ARTICLES = [
   {
     id: 1,
     featured: true,
-    date: '16 Feb 2026',
+    date: formatDate(dateFeatured),
     category: 'Diseño',
     title: 'El renacimiento del satín en las colecciones de temporada',
     excerpt: 'Descubre cómo las marcas independientes están utilizando etiquetas de satín para elevar el valor percibido de sus prendas desde el primer contacto.',
@@ -11,7 +28,7 @@ const ARTICLES = [
   {
     id: 2,
     featured: false,
-    date: '09 Feb 2026',
+    date: formatDate(dateSecond),
     category: 'Técnica',
     title: 'Guía de costura: Integrando etiquetas en tejidos delicados sin alterar la caída',
     excerpt: 'La clave está en la selección del material y la técnica de insertado. Te enseñamos cómo lograr un etiquetado invisible al tacto pero presente en la identidad.',
@@ -20,7 +37,7 @@ const ARTICLES = [
   {
     id: 3,
     featured: false,
-    date: '02 Feb 2026',
+    date: formatDate(dateThird),
     category: 'Branding',
     title: 'Por qué el minimalismo sigue dominando el branding textil contemporáneo',
     excerpt: 'Menos ruido, más señal. El diseño de etiquetas minimalista no es tendencia pasajera: es la nueva norma del lujo contemporáneo.',
@@ -32,7 +49,8 @@ export default function Diario() {
   const [featured, ...rest] = ARTICLES
 
   return (
-    <section className="bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat bg-fixed px-4 pt-32 pb-20 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:px-6 lg:px-8">
+    <section className="relative px-4 pt-32 pb-20 transition-colors duration-300 sm:px-6 lg:px-8">
+      <FixedBackground />
       <div className="mx-auto max-w-6xl">
 
         {/* Hero */}
@@ -60,9 +78,6 @@ export default function Diario() {
             <p className="mb-4 max-w-xl text-stone-600 leading-relaxed transition-colors duration-300 dark:text-stone-400">
               {featured.excerpt}
             </p>
-            <a href="#" className="inline-block border-b border-stone-900 pb-0.5 text-sm font-semibold text-stone-900 transition-colors duration-300 hover:text-stone-600 dark:border-stone-100 dark:text-stone-100 dark:hover:text-stone-400">
-              Leer artículo
-            </a>
           </article>
 
           {/* Artículos secundarios */}
