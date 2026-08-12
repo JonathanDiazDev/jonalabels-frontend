@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { apiFetch } from '../api/http'
+import { apiFetch } from '../../api/http'
 
 interface Resena {
   id: number
@@ -45,7 +45,7 @@ export default function TestimonialsSection() {
 
   useEffect(() => {
     apiFetch('/resenas')
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((res: Response) => (res.ok ? res.json() : Promise.reject()))
       .then((resenas: Resena[]) => {
         if (resenas.length === 0) return
         setTestimonials(
