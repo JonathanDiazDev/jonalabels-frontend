@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import QuoteForm from './QuoteForm'
+import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
 
 const CATEGORIES = [
   {
@@ -73,24 +74,26 @@ export default function Productos() {
     <>
       {/* Hero */}
       <section className="relative flex min-h-[70vh] items-center justify-center px-4 py-24 transition-colors duration-300 sm:py-32 md:py-40">
-        <div className="mx-auto max-w-4xl text-center">
+        <FadeIn when="load" className="mx-auto max-w-4xl text-center">
           <h1 className="text-4xl font-light leading-tight tracking-tight text-stone-900 transition-colors duration-300 sm:text-5xl lg:text-6xl dark:text-stone-100">
             Todo lo que tu marca necesita: combina nuestras etiquetas para crear una experiencia de empaque{' '}
             <span className="italic text-stone-500 dark:text-stone-400">premium</span>
           </h1>
-        </div>
+        </FadeIn>
       </section>
 
       {/* Grid de Productos */}
       <section className="relative px-4 py-16 transition-colors duration-300 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-12 text-center text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
-            Nuestros Productos
-          </h2>
+          <FadeIn className="mb-12 text-center">
+            <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
+              Nuestros Productos
+            </h2>
+          </FadeIn>
 
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+          <Stagger stagger={0.06} className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
             {CATEGORIES.map(({ title, image, desc, features, popular }) => (
-              <div
+              <StaggerItem
                 key={title}
                 className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
                   popular
@@ -108,7 +111,8 @@ export default function Productos() {
                   <img
                     src={image}
                     alt={title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
@@ -141,25 +145,27 @@ export default function Productos() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
       {/* Cotización */}
       <section className="relative py-20 transition-colors duration-300 sm:py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
-          <div className="mb-12 text-center">
+          <FadeIn className="mb-12 text-center">
             <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl lg:text-5xl dark:text-stone-100">
               Materialicemos tu visión.
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
               Sube tu diseño y nuestro equipo analizará las especificaciones para enviarte una cotización a medida en menos de 24 horas.
             </p>
-          </div>
+          </FadeIn>
 
-          <QuoteForm />
+          <FadeIn delay={0.15}>
+            <QuoteForm />
+          </FadeIn>
         </div>
       </section>
     </>

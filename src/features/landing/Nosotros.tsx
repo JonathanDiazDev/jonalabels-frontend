@@ -1,4 +1,7 @@
-const PILARES = [  {
+import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
+
+const PILARES = [
+  {
     number: '01',
     title: 'El Propósito',
     subtitle: 'Misión',
@@ -23,16 +26,13 @@ export default function Nosotros() {
     <section className="relative px-4 pt-32 pb-20 transition-colors duration-300 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-
-          {/* Imagen */}
-          <div className="flex items-center justify-center">
+          <FadeIn delay={0.1} className="flex items-center justify-center">
             <div className="flex aspect-[4/5] w-full items-center justify-center rounded-2xl bg-stone-200 transition-colors duration-300 dark:bg-stone-800">
               <span className="text-sm text-stone-500 dark:text-stone-400">Imagen de estudio / satín</span>
             </div>
-          </div>
+          </FadeIn>
 
-          {/* Texto */}
-          <div>
+          <FadeIn>
             <h1 className="mb-6 text-4xl font-bold tracking-tight text-stone-900 transition-colors duration-300 md:text-5xl dark:text-stone-100">
               Nuestra Historia
             </h1>
@@ -49,14 +49,12 @@ export default function Nosotros() {
                 vanguardistas para asegurar que tu identidad de marca se comunique con total precisión.
               </p>
             </div>
-          </div>
-
+          </FadeIn>
         </div>
 
-        {/* Pilares */}
-        <div className="mt-32 mb-24 grid grid-cols-1 gap-12 md:grid-cols-3">
+        <Stagger stagger={0.12} className="mb-24 mt-32 grid grid-cols-1 gap-12 md:grid-cols-3">
           {PILARES.map(({ number, title, subtitle, desc }) => (
-            <div key={number}>
+            <StaggerItem key={number}>
               <span className="mb-4 block text-5xl font-light text-stone-300 transition-colors duration-300 dark:text-stone-700">
                 {number}
               </span>
@@ -69,10 +67,9 @@ export default function Nosotros() {
               <p className="leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">
                 {desc}
               </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
-
+        </Stagger>
       </div>
     </section>
   )

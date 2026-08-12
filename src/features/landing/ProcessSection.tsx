@@ -1,4 +1,5 @@
 import { Upload, FileText, Factory, Truck } from 'lucide-react'
+import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
 
 const STEPS = [
   {
@@ -31,18 +32,18 @@ export default function ProcessSection() {
   return (
     <section id="proceso" className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-16 text-center">
+        <FadeIn className="mb-16 text-center">
           <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
             Cómo funciona
           </h2>
           <p className="mt-4 text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
             De tu idea a tus prendas en 4 pasos simples.
           </p>
-        </div>
+        </FadeIn>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger stagger={0.1} className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step) => (
-            <div key={step.number} className="relative">
+            <StaggerItem key={step.number} className="relative">
               <span className="mb-4 block text-5xl font-extrabold text-stone-300 transition-colors duration-300 dark:text-stone-600">
                 {step.number}
               </span>
@@ -51,9 +52,9 @@ export default function ProcessSection() {
               </div>
               <h3 className="text-lg font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">{step.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">{step.desc}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   )

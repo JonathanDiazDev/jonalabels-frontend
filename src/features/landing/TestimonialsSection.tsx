@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { apiFetch } from '../../api/http'
+import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
 
 interface Resena {
   id: number
@@ -64,13 +65,15 @@ export default function TestimonialsSection() {
     <section className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
 
-        <h2 className="mb-16 text-center text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
-          Lo que dicen nuestros clientes
-        </h2>
+        <FadeIn className="mb-16 text-center">
+          <h2 className="text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
+            Lo que dicen nuestros clientes
+          </h2>
+        </FadeIn>
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
+        <Stagger stagger={0.12} className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
           {testimonials.map(({ text, name, role, rating }) => (
-            <div key={name} className="relative">
+            <StaggerItem key={name} className="relative">
               <span className="absolute -top-6 -left-2 text-6xl font-serif leading-none text-stone-300 transition-colors duration-300 dark:text-stone-600">&ldquo;</span>
               <Stars count={rating} />
               <p className="mt-4 text-sm leading-relaxed text-stone-600 italic transition-colors duration-300 md:text-base dark:text-stone-400">
@@ -80,9 +83,9 @@ export default function TestimonialsSection() {
                 <p className="font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">{name}</p>
                 <p className="text-sm text-stone-400 transition-colors duration-300 dark:text-stone-500">{role}</p>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   )
