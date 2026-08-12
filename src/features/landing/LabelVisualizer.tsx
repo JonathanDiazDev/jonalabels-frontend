@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AnimatePresence, motion, useMotionValue, type MotionValue, type Variants } from 'framer-motion'
+import { AnimatePresence, motion, useMotionValue, type MotionValue } from 'framer-motion'
 import { ArrowRight, CheckCircle2, Sparkles, Upload, X } from 'lucide-react'
 import { useQuote } from '../../context/QuoteContext'
 import { whatsAppUrl } from '../../config/constants'
@@ -107,12 +107,12 @@ function ZoomSlider({ scale }: { scale: MotionValue<number> }) {
   )
 }
 
-const controlVariants: Variants = {
+const controlVariants = {
   hidden: { opacity: 0, x: -20 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' as const },
+    transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' },
   }),
 }
 
