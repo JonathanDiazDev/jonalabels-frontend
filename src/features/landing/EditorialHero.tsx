@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
+import { Check, ChevronDown, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
+import { motion } from 'framer-motion'
+import SectionHeader from '../../components/SectionHeader'
 
 export default function EditorialHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -19,7 +21,7 @@ export default function EditorialHero() {
           video.pause()
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     )
 
     observer.observe(hero)
@@ -28,7 +30,6 @@ export default function EditorialHero() {
 
   return (
     <>
-      {/* Video — absoluto, confinado a la altura del hero */}
       <section className="relative min-h-screen overflow-hidden">
         <div className="pointer-events-none absolute inset-0 z-0">
           <video
@@ -40,78 +41,86 @@ export default function EditorialHero() {
             className="h-full w-full object-cover will-change-transform transform-gpu"
             src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
           />
-          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/65 to-black/85" />
         </div>
 
-        {/* Texto — fluye normal, scrollea y desaparece */}
-        <div ref={heroRef} className="relative z-10 flex min-h-screen items-center justify-center px-4">
-        <div className="text-center">
-          <h1 className="mb-6 max-w-4xl text-5xl font-normal leading-tight tracking-tighter text-stone-50 md:text-6xl lg:text-7xl">
-            La calidad de una prenda comienza por sus detalles.
-          </h1>
+        <div ref={heroRef} className="relative z-10 flex min-h-screen items-center justify-center px-4 pt-16">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+          >
+            <p className="section-eyebrow mb-6 text-stone-300">Etiquetas textiles premium</p>
 
-          <p className="mx-auto mb-10 max-w-2xl text-base font-light leading-relaxed text-stone-300 transition-colors duration-300 md:text-lg">
-            En JonaLabels creamos etiquetas textiles premium para que cada prenda refleje el verdadero valor de tu marca.
-          </p>
+            <h1 className="font-display mx-auto mb-6 max-w-5xl text-5xl leading-[1.05] tracking-tight text-stone-50 md:text-6xl lg:text-7xl">
+              La calidad de una prenda comienza por sus{' '}
+              <span className="italic text-stone-200">detalles</span>.
+            </h1>
 
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              to="/cotizar"
-              className="rounded-full bg-white px-10 py-4 text-sm font-semibold text-stone-900 transition-all duration-300 hover:bg-stone-100"
-            >
-              Cotiza ahora
-            </Link>
-            <Link
-              to="/productos"
-              className="rounded-full border border-white/30 bg-transparent px-10 py-4 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
-            >
-              Ver productos
-            </Link>
-          </div>
+            <p className="mx-auto mb-10 max-w-2xl text-base font-light leading-relaxed text-stone-300 md:text-lg">
+              En JonaLabels creamos etiquetas textiles premium para que cada prenda refleje el verdadero valor de tu marca.
+            </p>
 
-          <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3 sm:text-xs">
-            {[
-              'Calidad Premium',
-              'Envíos a todo México',
-              'Atención personalizada',
-              'Producción desde 5000 piezas',
-            ].map((item) => (
-              <span key={item} className="flex items-center gap-2 text-xs font-light text-stone-400">
-                <Check className="h-3.5 w-3.5 text-stone-500" />
-                {item}
-              </span>
-            ))}
-          </div>
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Link to="/cotizar" className="btn-primary min-w-[180px] bg-white text-stone-900 shadow-none hover:bg-stone-100">
+                Cotiza ahora
+              </Link>
+              <Link
+                to="/productos"
+                className="btn-secondary min-w-[180px] border-white/35 text-white hover:bg-white/10"
+              >
+                Ver productos
+              </Link>
+            </div>
+
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+              {[
+                'Calidad Premium',
+                'Envíos a todo México',
+                'Atención personalizada',
+                'Producción desde 5000 piezas',
+              ].map((item) => (
+                <span key={item} className="flex items-center gap-2 text-xs font-medium tracking-wide text-stone-400">
+                  <Check className="h-3.5 w-3.5 text-jona-orange" />
+                  {item}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
-      </div>
+
+        <div className="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-stone-400">
+          <ChevronDown className="h-6 w-6 animate-bounce" aria-hidden="true" />
+        </div>
       </section>
 
-      {/* Beneficios — fondo oscuro sobre el fondo de página */}
-      <section className="relative z-10 overflow-hidden py-20 transition-colors duration-300 sm:py-24">
-        <div aria-hidden="true" className="absolute inset-0 bg-black/60" />
+      <section className="relative z-10 overflow-hidden py-20 sm:py-24">
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/75 to-black/80" />
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-          <h2 className="mb-4 text-center text-3xl font-medium tracking-tight text-stone-50 transition-colors duration-300 md:text-4xl">
-            ¿Por qué elegirnos?
-          </h2>
-          <p className="mx-auto mb-16 max-w-2xl text-center text-lg text-stone-300 transition-colors duration-300">
-            Cada etiqueta es una pequeña tarjeta de presentación que tu cliente guardará para siempre.
-          </p>
+          <SectionHeader
+            eyebrow="Por qué elegirnos"
+            title="Cada etiqueta es una tarjeta de presentación"
+            subtitle="Cada etiqueta es una pequeña tarjeta de presentación que tu cliente guardará para siempre."
+            light
+          />
 
-          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:gap-x-12 sm:gap-y-10">
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2">
             {[
               { icon: MessageSquareText, title: 'Atención personalizada', desc: 'Te acompañamos en cada paso para lograr la etiqueta perfecta.' },
               { icon: Truck, title: 'Envíos nacionales', desc: 'Entregamos en todo México de manera rápida y segura.' },
               { icon: Factory, title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
               { icon: Gem, title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
             ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex flex-col items-center">
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-white/10 backdrop-blur-sm">
-                  <Icon strokeWidth={1.5} className="h-7 w-7 text-white" />
+              <div
+                key={title}
+                className="glass-panel rounded-3xl p-8 text-center transition-transform duration-300 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
+              >
+                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/15">
+                  <Icon strokeWidth={1.5} className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300">
-                  {title}
-                </h3>
-                <p className="text-base leading-relaxed text-stone-300">{desc}</p>
+                <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
+                <p className="text-sm leading-relaxed text-stone-300">{desc}</p>
               </div>
             ))}
           </div>

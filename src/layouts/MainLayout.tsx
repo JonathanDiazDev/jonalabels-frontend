@@ -66,7 +66,7 @@ export default function MainLayout() {
   )
 
   return (
-    <div className="relative z-10 min-h-screen bg-stone-50 text-gray-900 transition-colors duration-300 dark:bg-stone-950 dark:text-gray-100">
+    <div className="page-scrim relative z-10 min-h-screen bg-stone-50/80 text-gray-900 transition-colors duration-300 dark:bg-stone-950/80 dark:text-gray-100">
       <PageBackground />
       {isTouchDevice && isLanding ? (
         <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh>

@@ -1,4 +1,5 @@
 import { Upload, FileText, Factory, Truck } from 'lucide-react'
+import SectionHeader from '../../components/SectionHeader'
 
 const STEPS = [
   {
@@ -29,28 +30,33 @@ const STEPS = [
 
 export default function ProcessSection() {
   return (
-    <section id="proceso" className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
+    <section id="proceso" className="relative z-10 py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="mb-16 text-center">
-          <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
-            Cómo funciona
-          </h2>
-          <p className="mt-4 text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
-            De tu idea a tus prendas en 4 pasos simples.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Proceso"
+          title="Cómo funciona"
+          subtitle="De tu idea a tus prendas en 4 pasos simples."
+        />
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div
+            aria-hidden="true"
+            className="absolute left-[12.5%] right-[12.5%] top-10 hidden h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent lg:block dark:via-stone-700"
+          />
+
           {STEPS.map((step) => (
-            <div key={step.number} className="relative">
-              <span className="mb-4 block text-5xl font-extrabold text-stone-300 transition-colors duration-300 dark:text-stone-600">
+            <div
+              key={step.number}
+              className="glass-panel relative rounded-3xl p-6 transition-transform duration-300 hover:-translate-y-1"
+            >
+              <span className="mb-3 block font-display text-4xl text-stone-300 dark:text-stone-600">
                 {step.number}
               </span>
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-stone-900 text-white transition-colors duration-300 dark:bg-stone-100 dark:text-stone-900">
-                <step.icon className="h-6 w-6" />
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-jona-blue text-white">
+                <step.icon className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">{step.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">{step.desc}</p>
+              <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100">{step.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">{step.desc}</p>
             </div>
           ))}
         </div>

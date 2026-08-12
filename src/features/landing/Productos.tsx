@@ -74,8 +74,9 @@ export default function Productos() {
       {/* Hero */}
       <section className="relative flex min-h-[70vh] items-center justify-center px-4 py-24 transition-colors duration-300 sm:py-32 md:py-40">
         <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl font-light leading-tight tracking-tight text-stone-900 transition-colors duration-300 sm:text-5xl lg:text-6xl dark:text-stone-100">
-            Todo lo que tu marca necesita: combina nuestras etiquetas para crear una experiencia de empaque{' '}
+          <p className="section-eyebrow mb-4 text-jona-orange">Catálogo</p>
+          <h1 className="font-display text-4xl leading-tight tracking-tight text-stone-900 sm:text-5xl lg:text-6xl dark:text-stone-100">
+            Todo lo que tu marca necesita para crear una experiencia de empaque{' '}
             <span className="italic text-stone-500 dark:text-stone-400">premium</span>
           </h1>
         </div>
