@@ -1,6 +1,18 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
 import FadeIn, { MotionLinkButton, Stagger, StaggerItem } from '../../components/FadeIn'
+import { GlassCard, SectionHeading } from '../../components/editorial'
+
+function MexicanFlagIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 16" className={className} aria-hidden="true">
+      <rect width="8" height="16" fill="#006847" />
+      <rect x="8" width="8" height="16" fill="#FFFFFF" />
+      <rect x="16" width="8" height="16" fill="#CE1126" />
+      <ellipse cx="12" cy="8" rx="2.2" ry="2" fill="#8B4513" opacity="0.85" />
+    </svg>
+  )
+}
 
 export default function EditorialHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -36,6 +48,7 @@ export default function EditorialHero() {
             muted
             playsInline
             preload="none"
+            poster="https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg"
             className="h-full w-full object-cover will-change-transform transform-gpu"
             src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
           />
@@ -65,6 +78,12 @@ export default function EditorialHero() {
                   Cotiza ahora
                 </MotionLinkButton>
                 <MotionLinkButton
+                  to="/visualizar"
+                  className="rounded-full border border-white/35 bg-white/10 px-10 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-white/15"
+                >
+                  Visualiza tu etiqueta
+                </MotionLinkButton>
+                <MotionLinkButton
                   to="/productos"
                   className="rounded-full border border-white/30 bg-transparent px-10 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-white/10"
                 >
@@ -92,32 +111,46 @@ export default function EditorialHero() {
         </div>
       </section>
 
-      <section className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
+      <section className="relative z-10 py-20 sm:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <FadeIn className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
-              ¿Por qué elegirnos?
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
-              Cada etiqueta es una pequeña tarjeta de presentación que tu cliente guardará para siempre.
-            </p>
+          <FadeIn>
+            <SectionHeading
+              eyebrow="Ventajas"
+              title="¿Por qué elegirnos?"
+              subtitle="Cada etiqueta es una pequeña tarjeta de presentación de tu prenda a tus clientes y forma segura de encontrarte de nuevo."
+            />
           </FadeIn>
 
-          <Stagger stagger={0.12} className="mx-auto grid max-w-3xl grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:gap-x-12 sm:gap-y-10">
-            {[
-              { icon: MessageSquareText, title: 'Atención personalizada', desc: 'Te acompañamos en cada paso para lograr la etiqueta perfecta.' },
-              { icon: Truck, title: 'Envíos nacionales', desc: 'Entregamos en todo México de manera rápida y segura.' },
-              { icon: Factory, title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
-              { icon: Gem, title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
-            ].map(({ icon: Icon, title, desc }) => (
-              <StaggerItem key={title} className="flex flex-col items-center">
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-stone-200 bg-stone-100 transition-colors duration-300 dark:border-stone-700 dark:bg-stone-800">
-                  <Icon strokeWidth={1.5} className="h-7 w-7 text-stone-900 dark:text-stone-100" />
-                </div>
-                <h3 className="mb-2 text-xl font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">
-                  {title}
-                </h3>
-                <p className="text-base leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">{desc}</p>
+          <Stagger stagger={0.12} className="mx-auto grid max-w-4xl grid-cols-1 gap-6 text-center sm:grid-cols-2">
+            {([
+              { id: 'atencion', icon: MessageSquareText, title: 'Atención personalizada', desc: 'Te acompañamos en cada paso para lograr la etiqueta perfecta.' },
+              {
+                id: 'envios',
+                icon: Truck,
+                title: (
+                  <>
+                    Envíos a todo el{' '}
+                    <span className="inline-flex items-center gap-1">
+                      país
+                      <MexicanFlagIcon className="h-3.5 w-5 shrink-0 rounded-sm shadow-sm ring-1 ring-stone-900/10" />
+                    </span>
+                  </>
+                ),
+                desc: 'Entregas personales en algunos puntos de Guadalajara',
+              },
+              { id: 'fabricantes', icon: Factory, title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
+              { id: 'calidad', icon: Gem, title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
+            ] satisfies { id: string; icon: typeof MessageSquareText; title: ReactNode; desc: string }[]).map((item) => (
+              <StaggerItem key={item.id}>
+                <GlassCard className="flex h-full flex-col items-center text-center">
+                  <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-stone-200/80 bg-white/60 dark:border-stone-700 dark:bg-stone-800/60">
+                    <item.icon strokeWidth={1.5} className="h-7 w-7 text-stone-900 dark:text-stone-100" />
+                  </div>
+                  <h3 className="mb-2 text-xl font-semibold text-stone-900 dark:text-stone-100">
+                    {item.title}
+                  </h3>
+                  <p className="text-base leading-relaxed text-stone-600 dark:text-stone-400">{item.desc}</p>
+                </GlassCard>
               </StaggerItem>
             ))}
           </Stagger>

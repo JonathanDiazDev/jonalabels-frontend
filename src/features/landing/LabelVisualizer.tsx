@@ -1,32 +1,129 @@
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { AnimatePresence, motion, useMotionValue, type MotionValue } from 'framer-motion'
-import { ArrowRight, CheckCircle2, Sparkles, Upload, X } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Pipette, Sparkles, Upload, X } from 'lucide-react'
 import { useQuote } from '../../context/QuoteContext'
 import { whatsAppUrl } from '../../config/constants'
+import { SectionEyebrow } from '../../components/editorial'
 
-const COLORS = [
-  { id: 'white', label: 'Blanco', bg: 'bg-white', border: 'border-gray-200', textDark: false, satinGradient: 'from-white to-gray-50', isDark: false },
-  { id: 'beige', label: 'Crema', bg: 'bg-[#f3f0e6]', border: 'border-gray-200', textDark: false, satinGradient: 'from-white/90 to-[#f3f0e6]', isDark: false },
-  { id: 'black', label: 'Negro', bg: 'bg-slate-900', border: 'border-slate-700', textDark: true, satinGradient: 'from-slate-800 to-slate-900', isDark: true },
-  { id: 'navy', label: 'Azul marino', bg: 'bg-[#1B2A4A]', border: 'border-[#1B2A4A]/50', textDark: true, satinGradient: 'from-[#1e3259] to-[#1B2A4A]', isDark: true },
+const PRESET_COLORS = [
+  { id: 'white', label: 'Blanco', hex: '#FFFFFF' },
+  { id: 'beige', label: 'Crema', hex: '#F3F0E6' },
+  { id: 'gray', label: 'Gris', hex: '#9CA3AF' },
+  { id: 'black', label: 'Negro', hex: '#1E293B' },
+  { id: 'navy', label: 'Azul marino', hex: '#1B2A4A' },
+  { id: 'burgundy', label: 'Vino', hex: '#722F37' },
+  { id: 'gold', label: 'Dorado', hex: '#C5A572' },
+  { id: 'forest', label: 'Verde bosque', hex: '#2D4A3E' },
 ] as const
 
-type LabelColor = (typeof COLORS)[number]
+type PresetId = (typeof PRESET_COLORS)[number]['id']
+
+export interface ResolvedLabelColor {
+  id: string
+  label: string
+  hex: string
+  isDark: boolean
+  textDark: boolean
+  borderClass: string
+  gradientStyle: CSSProperties
+}
 
 const ACCEPTED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg']
 const CHECKERED_OVERLAY =
   "[background:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiLz4KPC9zdmc+')] [background-size:4px_4px]"
 
+function clampChannel(value: number) {
+  return Math.max(0, Math.min(255, Math.round(value)))
+}
+
+function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+  const normalized = normalizeHex(hex)
+  if (!normalized) return null
+  const value = normalized.slice(1)
+  return {
+    r: parseInt(value.slice(0, 2), 16),
+    g: parseInt(value.slice(2, 4), 16),
+    b: parseInt(value.slice(4, 6), 16),
+  }
+}
+
+function rgbToHex(r: number, g: number, b: number) {
+  return `#${[r, g, b].map((c) => clampChannel(c).toString(16).padStart(2, '0')).join('').toUpperCase()}`
+}
+
+function normalizeHex(input: string): string | null {
+  const raw = input.trim().replace(/^#/, '')
+  if (/^[0-9A-Fa-f]{3}$/.test(raw)) {
+    const expanded = raw.split('').map((c) => c + c).join('')
+    return `#${expanded.toUpperCase()}`
+  }
+  if (/^[0-9A-Fa-f]{6}$/.test(raw)) {
+    return `#${raw.toUpperCase()}`
+  }
+  return null
+}
+
+function relativeLuminance(hex: string) {
+  const rgb = hexToRgb(hex)
+  if (!rgb) return 1
+  const channels = [rgb.r, rgb.g, rgb.b].map((c) => {
+    const s = c / 255
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
+  })
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
+}
+
+function adjustHex(hex: string, amount: number) {
+  const rgb = hexToRgb(hex)
+  if (!rgb) return hex
+  return rgbToHex(rgb.r + amount, rgb.g + amount, rgb.b + amount)
+}
+
+function buildGradientStyle(hex: string): CSSProperties {
+  const lighter = adjustHex(hex, 18)
+  const darker = adjustHex(hex, -22)
+  return { background: `linear-gradient(to bottom right, ${lighter}, ${hex} 55%, ${darker})` }
+}
+
+function resolveLabelColor(presetId: PresetId | 'custom', customHex: string): ResolvedLabelColor {
+  if (presetId !== 'custom') {
+    const preset = PRESET_COLORS.find((color) => color.id === presetId) ?? PRESET_COLORS[1]
+    const isDark = relativeLuminance(preset.hex) < 0.35
+    return {
+      id: preset.id,
+      label: preset.label,
+      hex: preset.hex,
+      isDark,
+      textDark: isDark,
+      borderClass: isDark ? 'border-stone-700' : 'border-stone-200',
+      gradientStyle: buildGradientStyle(preset.hex),
+    }
+  }
+
+  const hex = normalizeHex(customHex) ?? '#F3F0E6'
+  const isDark = relativeLuminance(hex) < 0.35
+  return {
+    id: 'custom',
+    label: hex,
+    hex,
+    isDark,
+    textDark: isDark,
+    borderClass: isDark ? 'border-stone-700' : 'border-stone-200',
+    gradientStyle: buildGradientStyle(hex),
+  }
+}
+
 interface PreviewProps {
   previewUrl: string | null
-  color: LabelColor
+  color: ResolvedLabelColor
   scale: MotionValue<number>
 }
 
 const SatinPreview = memo(function SatinPreview({ previewUrl, color, scale }: PreviewProps) {
   return (
     <div
-      className={`relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border ${color.border} bg-gradient-to-br ${color.satinGradient} shadow-2xl shadow-stone-900/20`}
+      className={`relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border ${color.borderClass} shadow-2xl shadow-stone-900/20`}
+      style={color.gradientStyle}
     >
       <div className="absolute inset-0 opacity-30 [background:repeating-linear-gradient(0deg,transparent_0,transparent_9px,rgba(148,163,184,.35)_10px)]" />
       {color.isDark && <div className={`absolute inset-0 opacity-[0.04] ${CHECKERED_OVERLAY}`} />}
@@ -57,7 +154,8 @@ const ColgantePreview = memo(function ColgantePreview({ previewUrl, color, scale
     <div className="relative mx-auto aspect-[3/4] w-full max-w-[18rem]">
       <div className="absolute -top-1 left-1/2 z-0 h-14 w-px -translate-x-1/2 bg-slate-400/70 dark:bg-slate-500/70" />
       <div
-        className={`relative aspect-[3/4] overflow-hidden rounded-2xl border ${color.border} bg-gradient-to-br ${color.satinGradient} shadow-xl shadow-stone-900/25`}
+        className={`relative aspect-[3/4] overflow-hidden rounded-2xl border ${color.borderClass} shadow-xl shadow-stone-900/25`}
+        style={color.gradientStyle}
       >
         <div className="absolute top-3 left-1/2 z-20 h-3 w-3 -translate-x-1/2 rounded-full bg-stone-100 shadow-inner dark:bg-[#1a1816]" />
         {color.isDark && <div className={`absolute inset-0 opacity-[0.04] ${CHECKERED_OVERLAY}`} />}
@@ -92,6 +190,7 @@ function ZoomSlider({ scale }: { scale: MotionValue<number> }) {
       max="2"
       step="0.05"
       defaultValue="0.75"
+      aria-label="Ajustar tamaño del diseño"
       onChange={(e) => scale.set(Number(e.target.value))}
       className="h-2.5 flex-1 cursor-pointer appearance-none rounded-full bg-stone-300 accent-stone-900 transition-colors duration-300 dark:bg-stone-700 dark:accent-stone-100"
     />
@@ -102,11 +201,18 @@ export default function LabelVisualizer() {
   const { labelType, logoFile, setLabelType, setLogoFile } = useQuote()
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [error, setError] = useState('')
-  const [labelColor, setLabelColor] = useState('beige')
+  const [presetId, setPresetId] = useState<PresetId | 'custom'>('beige')
+  const [customHex, setCustomHex] = useState('#F3F0E6')
+  const [hexInput, setHexInput] = useState('F3F0E6')
+  const [hexError, setHexError] = useState('')
   const designScale = useMotionValue(0.75)
   const inputRef = useRef<HTMLInputElement>(null)
+  const colorPickerRef = useRef<HTMLInputElement>(null)
 
-  const activeColor = COLORS.find((c) => c.id === labelColor) ?? COLORS[1]
+  const activeColor = useMemo(
+    () => resolveLabelColor(presetId, customHex),
+    [presetId, customHex],
+  )
 
   useEffect(() => {
     if (!logoFile) {
@@ -117,6 +223,42 @@ export default function LabelVisualizer() {
     setPreviewUrl(url)
     return () => URL.revokeObjectURL(url)
   }, [logoFile])
+
+  const selectPreset = (id: PresetId) => {
+    setPresetId(id)
+    setHexError('')
+    const preset = PRESET_COLORS.find((color) => color.id === id)
+    if (preset) {
+      setCustomHex(preset.hex)
+      setHexInput(preset.hex.replace('#', ''))
+    }
+  }
+
+  const selectCustomMode = () => {
+    setPresetId('custom')
+    setHexError('')
+  }
+
+  const applyHexInput = (raw: string) => {
+    setHexInput(raw.replace('#', '').toUpperCase())
+    const normalized = normalizeHex(raw)
+    if (!normalized) {
+      setHexError('Usa un hex válido, por ejemplo F3F0E6 o #FFF')
+      return
+    }
+    setHexError('')
+    setCustomHex(normalized)
+    setPresetId('custom')
+  }
+
+  const handleColorPicker = (value: string) => {
+    const normalized = normalizeHex(value)
+    if (!normalized) return
+    setCustomHex(normalized)
+    setHexInput(normalized.replace('#', ''))
+    setPresetId('custom')
+    setHexError('')
+  }
 
   const handleLogo = (file?: File) => {
     if (!file) return
@@ -140,7 +282,7 @@ export default function LabelVisualizer() {
 
   const goToWhatsApp = () => {
     const material = labelType === 'SATIN' ? 'Satín' : 'Colgante'
-    const colorLabel = activeColor.label
+    const colorLabel = presetId === 'custom' ? activeColor.hex : activeColor.label
     const tieneDiseno = logoFile ? 'Sí, archivo adjunto en breve' : 'No'
 
     const message = `Hola Jona Labels, me gustaría cotizar una producción. Estuve probando el visualizador con las siguientes características:\n- Material: ${material}\n- Color de fondo: ${colorLabel}\n- ¿Tiene diseño propio?: ${tieneDiseno}\n\nA continuación les envío el archivo de mi diseño para que lo revisen.`
@@ -148,20 +290,13 @@ export default function LabelVisualizer() {
     window.open(whatsAppUrl(message), '_blank')
   }
 
+  const isCustomActive = presetId === 'custom'
+
   return (
-    <section className="relative overflow-hidden bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784921587/pexels-sandra-filipe-64798-7087672_dmpspn.jpg')] bg-cover bg-center bg-no-repeat px-4 pb-20 pt-28 transition-colors duration-300 dark:bg-[url('https://res.cloudinary.com/oisispbh/image/upload/v1784920003/pexels-laurachouette-21926652_b5bp1b.jpg')] sm:px-6 lg:px-8">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-stone-50/70 transition-colors duration-300 dark:bg-stone-950/75"
-      />
-
-      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12">
-
-        {/* Columna izquierda — Controles */}
+    <section className="relative z-10 px-4 pb-20 pt-28 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-5">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 transition-colors duration-300 dark:text-stone-500">
-            Visualizador
-          </p>
+          <SectionEyebrow>Visualizador</SectionEyebrow>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-stone-900 transition-colors duration-300 md:text-5xl dark:text-stone-100">
             Visualiza tu marca
           </h1>
@@ -169,7 +304,6 @@ export default function LabelVisualizer() {
             Sube tu diseño, elige un formato y obtén una referencia visual antes de cotizar.
           </p>
 
-          {/* Selectores de Material */}
           <div className="mb-8 inline-flex gap-6 border-b border-stone-200 transition-colors duration-300 dark:border-stone-800">
             {(['SATIN', 'COLGANTE'] as const).map((type) => {
               const selected = labelType === type
@@ -197,46 +331,123 @@ export default function LabelVisualizer() {
             })}
           </div>
 
-          {/* Selectores de Color */}
-          <div className="mb-8 flex items-center gap-3">
-            <span className="text-xs font-medium uppercase tracking-wider text-stone-400 transition-colors duration-300 dark:text-stone-500">
-              Color
+          <div className="mb-8">
+            <span className="mb-3 block text-xs font-medium uppercase tracking-wider text-stone-400 transition-colors duration-300 dark:text-stone-500">
+              Color de fondo
             </span>
-            <div className="flex items-center gap-3">
-              {COLORS.map((color) => {
-                const selected = labelColor === color.id
+
+            <div className="flex flex-wrap items-center gap-2.5">
+              {PRESET_COLORS.map((color) => {
+                const selected = presetId === color.id
+                const isDark = relativeLuminance(color.hex) < 0.35
                 return (
                   <motion.button
                     key={color.id}
                     type="button"
-                    onClick={() => setLabelColor(color.id)}
+                    onClick={() => selectPreset(color.id)}
                     aria-label={color.label}
                     aria-pressed={selected}
-                    whileHover={{ scale: 1.1 }}
+                    title={color.label}
+                    whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`relative h-10 w-10 rounded-full border transition-colors duration-200 ${color.bg} ${
+                    className={`relative h-9 w-9 rounded-full border transition-colors duration-200 ${
                       selected
                         ? 'scale-110 border-stone-900 ring-2 ring-stone-900 ring-offset-2 ring-offset-stone-50 dark:border-white dark:ring-white dark:ring-offset-stone-950'
                         : 'border-stone-300 dark:border-stone-600'
                     }`}
+                    style={{ backgroundColor: color.hex }}
                   >
                     {selected && (
                       <motion.span
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ duration: 0.2, ease: 'backOut' }}
-                        className={`absolute inset-0 grid place-items-center ${color.textDark ? 'text-white' : 'text-stone-900'}`}
+                        className={`absolute inset-0 grid place-items-center ${isDark ? 'text-white' : 'text-stone-900'}`}
                       >
-                        <CheckCircle2 className="h-4 w-4" />
+                        <CheckCircle2 className="h-3.5 w-3.5" />
                       </motion.span>
                     )}
                   </motion.button>
                 )
               })}
+
+              <motion.button
+                type="button"
+                onClick={selectCustomMode}
+                aria-label="Color personalizado"
+                aria-pressed={isCustomActive}
+                title="Color personalizado"
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                className={`relative flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-200 ${
+                  isCustomActive
+                    ? 'border-stone-900 ring-2 ring-stone-900 ring-offset-2 ring-offset-stone-50 dark:border-white dark:ring-white dark:ring-offset-stone-950'
+                    : 'border-dashed border-stone-400 dark:border-stone-500'
+                }`}
+                style={{ backgroundColor: isCustomActive ? activeColor.hex : undefined }}
+              >
+                {!isCustomActive && <Pipette className="h-4 w-4 text-stone-500 dark:text-stone-400" />}
+                {isCustomActive && (
+                  <CheckCircle2 className={`h-3.5 w-3.5 ${activeColor.isDark ? 'text-white' : 'text-stone-900'}`} />
+                )}
+              </motion.button>
+            </div>
+
+            <p className="mt-2 text-xs text-stone-500 dark:text-stone-400">
+              Seleccionado: <span className="font-medium text-stone-700 dark:text-stone-300">{activeColor.label}</span>
+            </p>
+
+            <div className="mt-4 rounded-xl border border-stone-200 bg-white/80 p-3 dark:border-stone-700 dark:bg-stone-900/70">
+              <p className="mb-2 text-xs font-medium text-stone-600 dark:text-stone-400">Color personalizado</p>
+              <div className="flex items-center gap-2">
+                <label className="relative shrink-0 cursor-pointer">
+                  <span className="sr-only">Selector gráfico de color</span>
+                  <input
+                    ref={colorPickerRef}
+                    type="color"
+                    value={activeColor.hex}
+                    onChange={(e) => handleColorPicker(e.target.value)}
+                    className="h-10 w-10 cursor-pointer rounded-lg border border-stone-300 bg-transparent p-0.5 dark:border-stone-600"
+                  />
+                </label>
+                <div className="flex min-w-0 flex-1 items-center rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-700 dark:bg-stone-800">
+                  <span className="pl-3 text-sm text-stone-400">#</span>
+                  <input
+                    type="text"
+                    value={hexInput}
+                    maxLength={6}
+                    spellCheck={false}
+                    aria-label="Código hexadecimal del color"
+                    placeholder="F3F0E6"
+                    onFocus={selectCustomMode}
+                    onChange={(e) => {
+                      const next = e.target.value.replace(/[^0-9A-Fa-f]/g, '').toUpperCase()
+                      setHexInput(next)
+                      if (next.length === 3 || next.length === 6) applyHexInput(next)
+                      else setHexError('')
+                    }}
+                    onBlur={() => {
+                      if (hexInput.length > 0) applyHexInput(hexInput)
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') applyHexInput(hexInput)
+                    }}
+                    className="w-full bg-transparent py-2.5 pr-3 text-sm uppercase text-stone-900 outline-none placeholder:text-stone-400 dark:text-stone-100"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => colorPickerRef.current?.click()}
+                  className="shrink-0 rounded-lg border border-stone-200 px-3 py-2.5 text-xs font-medium text-stone-600 transition hover:bg-stone-100 dark:border-stone-600 dark:text-stone-300 dark:hover:bg-stone-800"
+                >
+                  Elegir
+                </button>
+              </div>
+              {hexError && (
+                <p className="mt-2 text-xs text-red-500" role="alert">{hexError}</p>
+              )}
             </div>
           </div>
 
-          {/* Botón Subir Diseño */}
           <input
             ref={inputRef}
             type="file"
@@ -280,14 +491,13 @@ export default function LabelVisualizer() {
           )}
         </div>
 
-        {/* Columna derecha — Previsualización */}
         <div className="lg:col-span-7">
           <div className="flex h-full flex-col">
             <div className="mx-auto aspect-[4/5] w-full max-w-lg overflow-hidden rounded-2xl bg-white/60 p-6 shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm transition-colors duration-300 dark:bg-stone-900/60 dark:ring-white/5 sm:p-10 md:aspect-square">
               <div className="flex h-full w-full items-center justify-center">
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={labelType}
+                    key={`${labelType}-${activeColor.hex}`}
                     initial={{ opacity: 0, scale: 0.96, y: 6 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.96, y: -6 }}
@@ -304,7 +514,6 @@ export default function LabelVisualizer() {
               </div>
             </div>
 
-            {/* Zoom slider */}
             {previewUrl && (
               <div className="mt-5 flex items-center gap-3 px-1">
                 <span className="whitespace-nowrap text-xs font-medium text-stone-600 transition-colors duration-300 dark:text-stone-400">
@@ -314,7 +523,6 @@ export default function LabelVisualizer() {
               </div>
             )}
 
-            {/* CTA */}
             <motion.button
               type="button"
               onClick={goToWhatsApp}
@@ -327,7 +535,6 @@ export default function LabelVisualizer() {
             </motion.button>
           </div>
         </div>
-
       </div>
     </section>
   )

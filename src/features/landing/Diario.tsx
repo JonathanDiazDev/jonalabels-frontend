@@ -1,3 +1,5 @@
+import { GlassCard, PageHeader, PageSection } from '../../components/editorial'
+
 const MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 
 function formatDate(date: Date): string {
@@ -47,55 +49,53 @@ export default function Diario() {
   const [featured, ...rest] = ARTICLES
 
   return (
-    <section className="relative px-4 pt-32 pb-20 transition-colors duration-300 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+    <PageSection className="pt-32">
+      <PageHeader
+        eyebrow="Blog"
+        align="left"
+        title="Diario"
+        subtitle="Reflexiones sobre diseño, confección y la identidad de marca en la alta costura."
+      />
 
-        {/* Hero */}
-        <div className="mb-16">
-          <h1 className="mb-4 text-5xl font-light tracking-tighter text-stone-900 transition-colors duration-300 md:text-7xl dark:text-stone-100">
-            Diario
-          </h1>
-          <p className="text-xl text-stone-500 transition-colors duration-300 dark:text-stone-400">
-            Reflexiones sobre diseño, confección y la identidad de marca en la alta costura.
-          </p>
-        </div>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
+        <article className="md:col-span-8">
+          <GlassCard padding="p-0" className="overflow-hidden">
+            <div className={`${featured.imageAspect} bg-stone-200 dark:bg-stone-800`} />
+            <div className="p-6 sm:p-8">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+                {featured.date} · {featured.category}
+              </p>
+              <h2 className="mb-4 text-3xl font-bold text-stone-900 dark:text-stone-100">
+                {featured.title}
+              </h2>
+              <p className="max-w-xl leading-relaxed text-stone-600 dark:text-stone-400">
+                {featured.excerpt}
+              </p>
+            </div>
+          </GlassCard>
+        </article>
 
-        {/* Grid asimétrico */}
-        <div className="grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-12">
-
-          {/* Artículo destacado */}
-          <article className="md:col-span-8">
-            <div className={`mb-6 overflow-hidden ${featured.imageAspect} bg-stone-200 transition-colors duration-300 dark:bg-stone-800`} />
-            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-stone-500 transition-colors duration-300 dark:text-stone-400">
-              {featured.date} · {featured.category}
-            </p>
-            <h2 className="mb-4 text-3xl font-bold text-stone-900 transition-colors duration-300 dark:text-stone-100">
-              {featured.title}
-            </h2>
-            <p className="mb-4 max-w-xl text-stone-600 leading-relaxed transition-colors duration-300 dark:text-stone-400">
-              {featured.excerpt}
-            </p>
-          </article>
-
-          {/* Artículos secundarios */}
+        <div className="flex flex-col gap-8 md:col-span-4">
           {rest.map(({ id, date, category, title, excerpt, imageAspect }) => (
-            <article key={id} className="md:col-span-4">
-              <div className={`mb-4 overflow-hidden ${imageAspect} bg-stone-200 transition-colors duration-300 dark:bg-stone-800`} />
-              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-stone-500 transition-colors duration-300 dark:text-stone-400">
-                {date} · {category}
-              </p>
-              <h3 className="mb-2 text-xl font-bold text-stone-900 transition-colors duration-300 dark:text-stone-100">
-                {title}
-              </h3>
-              <p className="text-sm leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">
-                {excerpt}
-              </p>
+            <article key={id}>
+              <GlassCard padding="p-0" className="overflow-hidden">
+                <div className={`${imageAspect} bg-stone-200 dark:bg-stone-800`} />
+                <div className="p-5">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
+                    {date} · {category}
+                  </p>
+                  <h3 className="mb-2 text-xl font-bold text-stone-900 dark:text-stone-100">
+                    {title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">
+                    {excerpt}
+                  </p>
+                </div>
+              </GlassCard>
             </article>
           ))}
-
         </div>
-
       </div>
-    </section>
+    </PageSection>
   )
 }

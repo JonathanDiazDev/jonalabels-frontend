@@ -1,6 +1,7 @@
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
+import { SectionHeading } from '../../components/editorial'
 
-const PROFILE_URL = 'https://instagram.com/jonalabels'
+const PROFILE_URL = 'https://www.instagram.com/jonalabels.mx/'
 
 const instagramPosts = [
   { id: 1, imageUrl: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=400&h=400&fit=crop' },
@@ -23,22 +24,20 @@ function InstagramIcon() {
 
 export default function InstagramSection() {
   return (
-    <section className="relative z-10 py-16 transition-colors duration-300 sm:py-20">
+    <section className="relative z-10 py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-4">
-        <FadeIn className="mb-10 text-center">
-          <h2 className="text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-50">
-            Nuestro Instagram
-          </h2>
+        <FadeIn>
+          <SectionHeading eyebrow="Redes sociales" title="Nuestro Instagram" />
         </FadeIn>
 
-        <Stagger stagger={0.08} className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Stagger stagger={0.08} className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {instagramPosts.map(({ id, imageUrl }) => (
             <StaggerItem key={id}>
               <a
                 href={PROFILE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative block aspect-square overflow-hidden rounded-3xl"
+                className="group relative block aspect-square overflow-hidden rounded-2xl shadow-lg shadow-stone-900/10 ring-1 ring-stone-900/5 dark:ring-white/5"
               >
                 <img
                   src={imageUrl}
@@ -51,7 +50,7 @@ export default function InstagramSection() {
 
                 <div className="absolute bottom-0 left-0 flex w-full flex-col items-center p-8">
                   <InstagramIcon />
-                  <h3 className="mt-4 text-2xl font-bold text-white">@jonalabels</h3>
+                  <h3 className="mt-4 text-2xl font-bold text-white">@jonalabels.mx</h3>
                   <span className="mt-4 rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white transition-all duration-300 group-hover:scale-105 group-hover:bg-black/70 dark:bg-white/10 dark:group-hover:bg-white/20">
                     Seguir
                   </span>

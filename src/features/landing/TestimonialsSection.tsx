@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { apiFetch } from '../../api/http'
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
+import { GlassCard, SectionHeading } from '../../components/editorial'
 
 interface Resena {
   id: number
@@ -62,27 +63,26 @@ export default function TestimonialsSection() {
   }, [])
 
   return (
-    <section className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
+    <section className="relative z-10 py-20 sm:py-24">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
-
-        <FadeIn className="mb-16 text-center">
-          <h2 className="text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
-            Lo que dicen nuestros clientes
-          </h2>
+        <FadeIn>
+          <SectionHeading eyebrow="Testimonios" title="Lo que dicen nuestros clientes" />
         </FadeIn>
 
-        <Stagger stagger={0.12} className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
+        <Stagger stagger={0.12} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {testimonials.map(({ text, name, role, rating }) => (
-            <StaggerItem key={name} className="relative">
-              <span className="absolute -top-6 -left-2 text-6xl font-serif leading-none text-stone-300 transition-colors duration-300 dark:text-stone-600">&ldquo;</span>
-              <Stars count={rating} />
-              <p className="mt-4 text-sm leading-relaxed text-stone-600 italic transition-colors duration-300 md:text-base dark:text-stone-400">
-                {text}
-              </p>
-              <div className="mt-6">
-                <p className="font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">{name}</p>
-                <p className="text-sm text-stone-400 transition-colors duration-300 dark:text-stone-500">{role}</p>
-              </div>
+            <StaggerItem key={name}>
+              <GlassCard className="relative h-full">
+                <span className="absolute -top-2 -left-1 text-5xl font-serif leading-none text-stone-300 dark:text-stone-600">&ldquo;</span>
+                <Stars count={rating} />
+                <p className="mt-4 text-sm leading-relaxed text-stone-600 italic md:text-base dark:text-stone-400">
+                  {text}
+                </p>
+                <div className="mt-6">
+                  <p className="font-semibold text-stone-900 dark:text-stone-100">{name}</p>
+                  <p className="text-sm text-stone-400 dark:text-stone-500">{role}</p>
+                </div>
+              </GlassCard>
             </StaggerItem>
           ))}
         </Stagger>

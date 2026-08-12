@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
+import { SectionHeading } from '../../components/editorial'
 
 const SPECIALTIES = [
   {
@@ -18,19 +19,17 @@ const SPECIALTIES = [
 
 export default function SpecialtySection() {
   return (
-    <section className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
+    <section className="relative z-10 py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <FadeIn className="text-center">
-          <h2 className="text-3xl font-medium text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
-            Nuestra Especialidad
-          </h2>
+        <FadeIn>
+          <SectionHeading eyebrow="Especialidades" title="Nuestra Especialidad" />
         </FadeIn>
 
-        <Stagger stagger={0.14} className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Stagger stagger={0.14} className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {SPECIALTIES.map(({ title, image }) => (
             <StaggerItem
               key={title}
-              className="group relative h-[450px] overflow-hidden rounded-3xl"
+              className="group relative h-[450px] overflow-hidden rounded-2xl shadow-lg shadow-stone-900/10 ring-1 ring-stone-900/5 backdrop-blur-sm dark:ring-white/5"
             >
               <img
                 src={image}

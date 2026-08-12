@@ -1,4 +1,5 @@
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
+import { GlassCard, PageHeader, PageSection, SectionEyebrow } from '../../components/editorial'
 
 const PILARES = [
   {
@@ -23,54 +24,58 @@ const PILARES = [
 
 export default function Nosotros() {
   return (
-    <section className="relative px-4 pt-32 pb-20 transition-colors duration-300 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <FadeIn delay={0.1} className="flex items-center justify-center">
-            <div className="flex aspect-[4/5] w-full items-center justify-center rounded-2xl bg-stone-200 transition-colors duration-300 dark:bg-stone-800">
-              <span className="text-sm text-stone-500 dark:text-stone-400">Imagen de estudio / satín</span>
-            </div>
-          </FadeIn>
+    <PageSection className="pt-32">
+      <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <FadeIn delay={0.1} className="flex items-center justify-center">
+          <GlassCard padding="p-0" className="relative aspect-[4/5] w-full overflow-hidden">
+            <img
+              src="https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg"
+              alt="Detalle de etiqueta textil de satín en producción"
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          </GlassCard>
+        </FadeIn>
 
-          <FadeIn>
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-stone-900 transition-colors duration-300 md:text-5xl dark:text-stone-100">
-              Nuestra Historia
-            </h1>
+        <FadeIn>
+          <PageHeader
+            eyebrow="Nosotros"
+            align="left"
+            title="Nuestra Historia"
+          />
 
-            <div className="space-y-6 text-lg leading-relaxed text-stone-700 transition-colors duration-300 dark:text-stone-300">
-              <p>
-                Nacimos con una convicción clara: cada prenda merece una firma a la altura de su diseño.
-                Entendemos que el empaque y el etiquetado no son un paso final, sino la primera experiencia
-                táctil de tu cliente.
-              </p>
-              <p>
-                A lo largo de nuestra trayectoria, nos hemos especializado en la creación de etiquetas
-                personalizadas de alta gama, perfeccionando técnicas sobre satín, algodón y materiales
-                vanguardistas para asegurar que tu identidad de marca se comunique con total precisión.
-              </p>
-            </div>
-          </FadeIn>
-        </div>
+          <div className="space-y-6 text-lg leading-relaxed text-stone-700 dark:text-stone-300">
+            <p>
+              Nacimos con una convicción clara: cada prenda merece una firma a la altura de su diseño.
+              Entendemos que el empaque y el etiquetado no son un paso final, sino la primera experiencia
+              táctil de tu cliente.
+            </p>
+            <p>
+              A lo largo de nuestra trayectoria, nos hemos especializado en la creación de etiquetas
+              personalizadas de alta gama, perfeccionando técnicas sobre satín, algodón y materiales
+              vanguardistas para asegurar que tu identidad de marca se comunique con total precisión.
+            </p>
+          </div>
+        </FadeIn>
+      </div>
 
-        <Stagger stagger={0.12} className="mb-24 mt-32 grid grid-cols-1 gap-12 md:grid-cols-3">
-          {PILARES.map(({ number, title, subtitle, desc }) => (
-            <StaggerItem key={number}>
-              <span className="mb-4 block text-5xl font-light text-stone-300 transition-colors duration-300 dark:text-stone-700">
+      <Stagger stagger={0.12} className="mt-32 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {PILARES.map(({ number, title, subtitle, desc }) => (
+          <StaggerItem key={number}>
+            <GlassCard className="h-full">
+              <span className="mb-4 block text-5xl font-light text-stone-300 dark:text-stone-600">
                 {number}
               </span>
-              <h2 className="mb-3 text-xl font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">
+              <SectionEyebrow>{subtitle}</SectionEyebrow>
+              <h2 className="mb-3 text-xl font-semibold text-stone-900 dark:text-stone-100">
                 {title}
               </h2>
-              <p className="mb-3 text-sm font-medium uppercase tracking-wide text-stone-400 transition-colors duration-300 dark:text-stone-500">
-                {subtitle}
-              </p>
-              <p className="leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">
-                {desc}
-              </p>
-            </StaggerItem>
-          ))}
-        </Stagger>
-      </div>
-    </section>
+              <p className="leading-relaxed text-stone-600 dark:text-stone-400">{desc}</p>
+            </GlassCard>
+          </StaggerItem>
+        ))}
+      </Stagger>
+    </PageSection>
   )
 }

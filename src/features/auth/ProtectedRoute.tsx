@@ -19,8 +19,8 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
 
   if (checking) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-slate-900" role="status" aria-live="polite">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#1E3A5F] border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center bg-stone-50 dark:bg-stone-950" role="status" aria-live="polite">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-jona-blue border-t-transparent" />
         <span className="sr-only">Verificando sesión…</span>
       </div>
     )

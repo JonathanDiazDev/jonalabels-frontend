@@ -1,12 +1,18 @@
 import { Link } from 'react-router-dom'
 import QuoteForm from './QuoteForm'
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
+import { GlassCard, PageHeader, PageSection, SectionHeading } from '../../components/editorial'
+const CLOUDINARY = {
+  satin: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg',
+  colgante: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921824/pexels-ron-lach-9594081_x9fu4i.jpg',
+  bordado: 'https://res.cloudinary.com/oisispbh/image/upload/v1784922414/wmremove-transformed_cnwfot.png',
+}
 
 const CATEGORIES = [
   {
     title: 'Etiquetas de Satín Premium',
     slug: 'etiquetas-internas',
-    image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=600&fit=crop',
+    image: CLOUDINARY.satin,
     desc: 'Acabado sedoso con brillo elegante que jamás irrita la piel.',
     features: ['Alta definición', 'Bordes sellados', 'Resistente al lavado'],
     popular: true,
@@ -14,7 +20,7 @@ const CATEGORIES = [
   {
     title: 'Cartón Colgante',
     slug: 'etiquetas-externas',
-    image: 'https://images.unsplash.com/photo-1528459105426-b9548367069b?w=600&h=600&fit=crop',
+    image: CLOUDINARY.colgante,
     desc: 'Tu carta de presentación con acabados en relieve y detalles metalizados.',
     features: ['Relieve', 'Textura mate', 'Metalizado'],
     popular: true,
@@ -22,7 +28,7 @@ const CATEGORIES = [
   {
     title: 'Etiquetas Económicas',
     slug: 'etiquetas-economicas',
-    image: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=600&fit=crop',
+    image: CLOUDINARY.satin,
     desc: 'Soluciones accesibles sin sacrificar calidad profesional.',
     features: ['Impresión offset', 'Acabado mate/brillante', 'Corte custom'],
     popular: false,
@@ -38,7 +44,7 @@ const CATEGORIES = [
   {
     title: 'Etiquetas para Bisutería',
     slug: 'etiquetas-bisuteria',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=600&fit=crop',
+    image: CLOUDINARY.bordado,
     desc: 'Pequeñas, delicadas y elegantes para joyería y accesorios.',
     features: ['Tamaño reducido', 'Alta resolución', 'Fondo metalizado'],
     popular: false,
@@ -54,7 +60,7 @@ const CATEGORIES = [
   {
     title: 'Bolsa Impresa',
     slug: 'bolsa-impresa',
-    image: 'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=600&h=600&fit=crop',
+    image: CLOUDINARY.colgante,
     desc: 'Empaque que vende. Bolsas personalizadas de marca memorables.',
     features: ['Kraft o coated', 'Flexográfica', 'Asas custom'],
     popular: false,
@@ -62,7 +68,7 @@ const CATEGORIES = [
   {
     title: 'Avíos Textiles',
     slug: 'avios-textiles',
-    image: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=600&h=600&fit=crop',
+    image: CLOUDINARY.bordado,
     desc: 'Botones, cierres, cordones y complementos textiles con tu marca.',
     features: ['Botones custom', 'Cierres', 'Cordones tejidos'],
     popular: false,
@@ -72,34 +78,34 @@ const CATEGORIES = [
 export default function Productos() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative flex min-h-[70vh] items-center justify-center px-4 py-24 transition-colors duration-300 sm:py-32 md:py-40">
-        <FadeIn when="load" className="mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl font-light leading-tight tracking-tight text-stone-900 transition-colors duration-300 sm:text-5xl lg:text-6xl dark:text-stone-100">
-            Todo lo que tu marca necesita: combina nuestras etiquetas para crear una experiencia de empaque{' '}
-            <span className="italic text-stone-500 dark:text-stone-400">premium</span>
-          </h1>
+      <PageSection className="flex min-h-[50vh] items-center pt-32">
+        <FadeIn when="load" className="mx-auto max-w-4xl">
+          <PageHeader
+            eyebrow="Catálogo"
+            align="center"
+            title={
+              <>
+                Todo lo que tu marca necesita para una experiencia de empaque{' '}
+                <span className="italic font-normal text-stone-500 dark:text-stone-400">premium</span>
+              </>
+            }
+          />
         </FadeIn>
-      </section>
+      </PageSection>
 
-      {/* Grid de Productos */}
-      <section className="relative px-4 py-16 transition-colors duration-300 sm:py-20">
-        <div className="mx-auto max-w-6xl">
-          <FadeIn className="mb-12 text-center">
-            <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
-              Nuestros Productos
-            </h2>
-          </FadeIn>
+      <PageSection>
+        <FadeIn>
+          <SectionHeading eyebrow="Productos" title="Nuestros Productos" />
+        </FadeIn>
 
-          <Stagger stagger={0.06} className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
-            {CATEGORIES.map(({ title, image, desc, features, popular }) => (
-              <StaggerItem
-                key={title}
-                className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
-                  popular
-                    ? 'border-stone-400 dark:border-stone-500'
-                    : 'border-stone-200 dark:border-stone-800'
-                } bg-white dark:bg-stone-950`}
+        <Stagger stagger={0.06} className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+          {CATEGORIES.map(({ title, image, desc, features, popular }) => (
+            <StaggerItem key={title}>
+              <GlassCard
+                padding="p-0"
+                className={`group relative flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+                  popular ? 'ring-stone-400/30 dark:ring-stone-500/30' : ''
+                }`}
               >
                 {popular && (
                   <span className="absolute left-3 top-3 z-10 rounded-full bg-stone-900 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white dark:bg-stone-100 dark:text-stone-900">
@@ -139,35 +145,31 @@ export default function Productos() {
                   <div className="mt-auto">
                     <Link
                       to={`/cotizar?producto=${encodeURIComponent(title)}`}
-                      className="block w-full rounded-full bg-stone-900 py-2 text-center text-xs font-semibold text-white transition-all duration-300 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
+                      className="block w-full rounded-xl bg-brand-orange py-2 text-center text-xs font-semibold text-white shadow-md shadow-brand-orange/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-orange/30"
                     >
                       Cotizar este tipo
                     </Link>
                   </div>
                 </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+              </GlassCard>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </PageSection>
 
-      {/* Cotización */}
-      <section className="relative py-20 transition-colors duration-300 sm:py-24">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6">
-          <FadeIn className="mb-12 text-center">
-            <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl lg:text-5xl dark:text-stone-100">
-              Materialicemos tu visión.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
-              Sube tu diseño y nuestro equipo analizará las especificaciones para enviarte una cotización a medida en menos de 24 horas.
-            </p>
-          </FadeIn>
+      <PageSection>
+        <FadeIn>
+          <SectionHeading
+            eyebrow="Cotización"
+            title="Materialicemos tu visión."
+            subtitle="Sube tu diseño y nuestro equipo analizará las especificaciones para enviarte una cotización a medida en menos de 24 horas."
+          />
+        </FadeIn>
 
-          <FadeIn delay={0.15}>
-            <QuoteForm />
-          </FadeIn>
-        </div>
-      </section>
+        <FadeIn delay={0.15}>
+          <QuoteForm />
+        </FadeIn>
+      </PageSection>
     </>
   )
 }
