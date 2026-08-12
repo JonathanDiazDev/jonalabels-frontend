@@ -11,15 +11,14 @@ export default function PageBackground() {
         src={LIGHT_BG_URL}
         alt=""
         decoding="async"
-        className="h-full w-full scale-105 object-cover dark:hidden"
+        className="h-full w-full object-cover dark:hidden"
       />
       <img
         src={DARK_BG_URL}
         alt=""
         decoding="async"
-        className="hidden h-full w-full scale-105 object-cover dark:block"
+        className="hidden h-full w-full object-cover dark:block"
       />
-      <div className="absolute inset-0 bg-stone-50/55 dark:bg-stone-950/70" />
     </div>
   )
 }

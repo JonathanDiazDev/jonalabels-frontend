@@ -1,19 +1,19 @@
 import QuoteForm from './QuoteForm'
-import SectionHeader from '../../components/SectionHeader'
 
 export default function QuoteSection() {
   return (
-    <section id="quote-form" className="relative z-10 py-20 sm:py-24">
+    <section id="quote-form" className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <SectionHeader
-          eyebrow="Cotización"
-          title="Materialicemos tu visión"
-          subtitle="Sube tu diseño y nuestro equipo analizará las especificaciones para enviarte una cotización a medida en menos de 24 horas."
-        />
-
-        <div className="glass-panel rounded-[2rem] p-6 sm:p-8">
-          <QuoteForm />
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl lg:text-5xl dark:text-stone-100">
+            Materialicemos tu visión.
+          </h2>
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
+            Sube tu diseño y nuestro equipo analizará las especificaciones para enviarte una cotización a medida en menos de 24 horas.
+          </p>
         </div>
+
+        <QuoteForm />
       </div>
     </section>
   )

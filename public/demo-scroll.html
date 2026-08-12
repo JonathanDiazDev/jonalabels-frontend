@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Etiqueta satin armándose en scroll</title>
+<style>
+  :root{
+    --bg: #efece6;
+    --ink: #2b2a35;
+    --muted: #837f78;
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; background:var(--bg); font-family: Georgia, 'Times New Roman', serif; color:var(--ink); }
+
+  .filler{
+    height: 90vh;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding: 0 2rem;
+  }
+  .filler h1{ font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight:600; max-width: 30ch; }
+  .filler p{ color:var(--muted); font-size: 0.95rem; letter-spacing: 0.03em; }
+
+  .stage-wrap{
+    height: 260vh; /* scroll distance to drive the animation */
+    position: relative;
+  }
+  .stage{
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .label{
+    position: relative;
+    width: min(38vw, 340px);
+    aspect-ratio: 600 / 800;
+  }
+  .label img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    will-change: transform, opacity, filter;
+  }
+  #layer-base{ z-index:1; }
+  #layer-logo{ z-index:2; }
+  #layer-det { z-index:3; }
+
+  .progress{
+    position: fixed;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    font-size: 0.72rem; letter-spacing: 0.12em; color: var(--muted);
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+  <div class="filler">
+    <div>
+      <h1>Jonalabels — etiquetas satin</h1>
+      <p>Desplázate hacia abajo para ver cómo se arma la etiqueta, capa por capa.</p>
+    </div>
+  </div>
+
+  <div class="stage-wrap" id="stageWrap">
+    <div class="stage">
+      <div class="label">
+        <img id="layer-base" src="base-etiqueta.png" alt="Base de tela satin">
+        <img id="layer-logo" src="logo-impresion.png" alt="Logotipo impreso">
+        <img id="layer-det"  src="detalles-costura.png" alt="Sombras, pliegue y costuras">
+      </div>
+    </div>
+  </div>
+
+  <div class="filler">
+    <div>
+      <h1>Producto terminado</h1>
+      <p>Las tres capas comparten exactamente el mismo lienzo, por eso encajan sin desajustes al superponerse.</p>
+    </div>
+  </div>
+
+  <div class="progress" id="progressLabel">0%</div>
+
+<script>
+  const wrap = document.getElementById('stageWrap');
+  const base = document.getElementById('layer-base');
+  const logo = document.getElementById('layer-logo');
+  const det  = document.getElementById('layer-det');
+  const progressLabel = document.getElementById('progressLabel');
+
+  // Remaps a value from one range to another, clamped.
+  function map(v, inMin, inMax, outMin, outMax){
+    const t = Math.min(1, Math.max(0, (v - inMin) / (inMax - inMin)));
+    return outMin + t * (outMax - outMin);
+  }
+
+  function update(){
+    const rect = wrap.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    const scrolled = -rect.top;
+    const progress = Math.min(1, Math.max(0, scrolled / total));
+
+    // Layer 1: base fabric settles in first (0 -> 0.35)
+    const baseOpacity = map(progress, 0.00, 0.30, 0, 1);
+    const baseY = map(progress, 0.00, 0.35, 40, 0);
+    const baseScale = map(progress, 0.00, 0.35, 0.94, 1);
+    base.style.opacity = baseOpacity;
+    base.style.transform = `translateY(${baseY}px) scale(${baseScale})`;
+
+    // Layer 2: the print lands on top (0.30 -> 0.65)
+    const logoOpacity = map(progress, 0.32, 0.62, 0, 1);
+    const logoY = map(progress, 0.32, 0.62, 24, 0);
+    logo.style.opacity = logoOpacity;
+    logo.style.transform = `translateY(${logoY}px)`;
+
+    // Layer 3: shadows, fold and stitching seal the piece (0.60 -> 1.0)
+    const detOpacity = map(progress, 0.60, 0.95, 0, 1);
+    det.style.opacity = detOpacity;
+    det.style.filter = `brightness(${map(progress, 0.60, 0.80, 1.6, 1)})`;
+
+    progressLabel.textContent = Math.round(progress * 100) + '%';
+  }
+
+  document.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+</script>
+
+</body>
+</html>

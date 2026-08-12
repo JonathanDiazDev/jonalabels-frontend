@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap");
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -11,13 +10,6 @@ body {
 html {
   font-size: 20px;
   background-color: #fafaf9;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .dark html,
@@ -25,150 +17,21 @@ body {
   background-color: #0c0a09;
 }
 
-::selection {
-  background-color: color-mix(in srgb, var(--color-jona-orange) 35%, transparent);
-  color: inherit;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 @theme {
-  --color-brand-blue: #1b2a4a;
-  --color-brand-orange: #ff6b35;
-  --color-brand-light: #fdf8f5;
-  --color-jona-blue: #11317b;
-  --color-jona-orange: #ff6b00;
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-}
-
-.font-display {
-  font-family: var(--font-display);
-}
-
-.section-eyebrow {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.glass-panel {
-  border: 1px solid color-mix(in srgb, white 40%, transparent);
-  background: color-mix(in srgb, white 72%, transparent);
-  backdrop-filter: blur(16px);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, white 60%, transparent) inset,
-    0 20px 50px -24px color-mix(in srgb, black 18%, transparent);
-}
-
-.dark .glass-panel {
-  border-color: color-mix(in srgb, white 8%, transparent);
-  background: color-mix(in srgb, #0c0a09 78%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, white 6%, transparent) inset,
-    0 24px 60px -30px color-mix(in srgb, black 55%, transparent);
-}
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  background: var(--color-jona-blue);
-  padding: 0.875rem 2rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: white;
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 12px 30px -16px color-mix(in srgb, var(--color-jona-blue) 80%, transparent);
-}
-
-.btn-primary:hover {
-  background: color-mix(in srgb, var(--color-jona-blue) 88%, black);
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
-  background: transparent;
-  padding: 0.875rem 2rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-@keyframes satin-shimmer {
-  0% {
-    transform: translateX(-120%) skewX(-12deg);
-  }
-  100% {
-    transform: translateX(220%) skewX(-12deg);
-  }
-}
-
-@keyframes float-soft {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.satin-shimmer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    105deg,
-    transparent 35%,
-    color-mix(in srgb, white 45%, transparent) 50%,
-    transparent 65%
-  );
-  animation: satin-shimmer 3.5s ease-in-out infinite;
-}
-
-.preview-float {
-  animation: float-soft 5s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .satin-shimmer::after,
-  .preview-float {
-    animation: none;
-  }
-}
-
-.page-scrim::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(to bottom, color-mix(in srgb, #fafaf9 8%, transparent), color-mix(in srgb, #fafaf9 55%, transparent) 18%, color-mix(in srgb, #fafaf9 72%, transparent) 100%);
-}
-
-.dark .page-scrim::before {
-  background:
-    linear-gradient(to bottom, color-mix(in srgb, #0c0a09 10%, transparent), color-mix(in srgb, #0c0a09 60%, transparent) 20%, color-mix(in srgb, #0c0a09 82%, transparent) 100%);
+  --color-brand-blue: #1B2A4A;
+  --color-brand-orange: #FF6B35;
+  --color-brand-light: #FDF8F5;
+  --color-jona-blue: #11317B;
+  --color-jona-orange: #FF6B00;
 }
