@@ -21,5 +21,12 @@ describe('Seo', () => {
     expect(document.title).toBe(DEFAULT_TITLE)
     expect(document.querySelector('meta[name="description"]')?.getAttribute('content')).toBe(DEFAULT_DESCRIPTION)
     expect(document.querySelector('meta[property="og:url"]')?.getAttribute('content')).toBe(`${SITE_URL}/`)
+    expect(document.querySelector('meta[property="og:image"]')?.getAttribute('content')).toContain('/og-image.png')
+  })
+
+  it('aplica noindex cuando se solicita', () => {
+    render(<Seo path="/admin" noindex />)
+
+    expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe('noindex, nofollow')
   })
 })

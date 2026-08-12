@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
+import { whatsAppUrl } from '../config/constants'
 
-const PHONE = '523339472657'
-const MESSAGE = encodeURIComponent('Hola, vengo de la página web y me gustaría cotizar etiquetas personalizadas para mi marca.')
+const MESSAGE = 'Hola, vengo de la página web y me gustaría cotizar etiquetas personalizadas para mi marca.'
 
 export default function WhatsAppButton() {
   return (
     <motion.a
-      href={`https://wa.me/${PHONE}?text=${MESSAGE}`}
+      href={whatsAppUrl(MESSAGE)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"

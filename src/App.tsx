@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
         path: 'admin',
         element: (
           <>
-            <Seo title="Panel de administración — Jona Labels" description="Panel de administración de Jona Labels." path="/admin" />
+            <Seo title="Panel de administración — Jona Labels" description="Panel de administración de Jona Labels." path="/admin" noindex />
             <LazyRoute component={AdminRoute} />
           </>
         ),

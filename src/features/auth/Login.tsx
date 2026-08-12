@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { apiUrl } from '../../api/http'
+import { apiFetch } from '../../api/http'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -16,10 +16,9 @@ export default function Login() {
 
     const payload = { email, password }
     try {
-      const res = await fetch(apiUrl('/auth/login'), {
+      const res = await apiFetch('/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify(payload),
       })
 

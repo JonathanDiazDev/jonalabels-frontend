@@ -2,6 +2,7 @@ import { memo, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValue, type MotionValue } from 'framer-motion'
 import { ArrowRight, CheckCircle2, Sparkles, Upload, X } from 'lucide-react'
 import { useQuote } from '../../context/QuoteContext'
+import { whatsAppUrl } from '../../config/constants'
 
 const COLORS = [
   { id: 'white', label: 'Blanco', bg: 'bg-white', border: 'border-gray-200', textDark: false, satinGradient: 'from-white to-gray-50', isDark: false },
@@ -144,7 +145,7 @@ export default function LabelVisualizer() {
 
     const message = `Hola Jona Labels, me gustaría cotizar una producción. Estuve probando el visualizador con las siguientes características:\n- Material: ${material}\n- Color de fondo: ${colorLabel}\n- ¿Tiene diseño propio?: ${tieneDiseno}\n\nA continuación les envío el archivo de mi diseño para que lo revisen.`
 
-    window.open(`https://wa.me/523339472657?text=${encodeURIComponent(message)}`, '_blank')
+    window.open(whatsAppUrl(message), '_blank')
   }
 
   return (

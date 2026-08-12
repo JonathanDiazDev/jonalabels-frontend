@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
+import { WHATSAPP_NUMBER } from '../config/constants'
 
 const CONTACT = {
-  whatsapp: 'https://wa.me/523339472657',
+  whatsapp: `https://wa.me/${WHATSAPP_NUMBER}`,
   email: 'mailto:jonalabels.mx@gmail.com',
   instagram: 'https://www.instagram.com/jonalabels.mx/',
 }

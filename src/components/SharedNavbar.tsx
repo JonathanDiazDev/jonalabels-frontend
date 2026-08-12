@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu, X, Sun, Moon } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
+import { WHATSAPP_NUMBER } from '../config/constants'
 
 const NAV_LINKS = [
   { label: 'Inicio', to: '/' },
@@ -44,7 +45,7 @@ export default function SharedNavbar() {
             {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
           <a
-            href="https://wa.me/523339472657"
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-stone-300 bg-white px-5 py-2 text-sm font-semibold text-stone-900 transition-all duration-300 hover:bg-stone-50 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100 dark:hover:bg-stone-700"
@@ -87,7 +88,7 @@ export default function SharedNavbar() {
               </Link>
             ))}
             <a
-              href="https://wa.me/523339472657"
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 rounded-full border border-stone-300 bg-white px-5 py-2.5 text-center text-sm font-semibold text-stone-900 transition-all duration-300 hover:bg-stone-50 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100 dark:hover:bg-stone-700"

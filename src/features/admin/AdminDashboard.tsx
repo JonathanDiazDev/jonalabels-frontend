@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { apiFetch } from '../../api/http'
 
 type Estado = 'NUEVO' | 'CONTACTADO' | 'COTIZADO' | 'CERRADO'
@@ -51,6 +51,7 @@ function Badge({ estado }: { estado: Estado }) {
 }
 
 export default function AdminDashboard() {
+  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const [cotizaciones, setCotizaciones] = useState<Cotizacion[]>([])
   const [loading, setLoading] = useState(true)
@@ -144,7 +145,7 @@ const formatearFecha = (iso: string) => {
     setIsExporting(true)
     setError('')
     const params = new URLSearchParams()
-    if (busqueda) params.set('busqueda', busqueda)
+    if (busquedaDebounced) params.set('busqueda', busquedaDebounced)
     if (filtroEstado !== 'TODOS') params.set('estado', filtroEstado)
 
     try {
@@ -189,6 +190,14 @@ const formatearFecha = (iso: string) => {
     }
   }
 
+  const handleLogout = async () => {
+    try {
+      await apiFetch('/auth/logout', { method: 'POST' })
+    } finally {
+      navigate('/login', { replace: true })
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -200,13 +209,24 @@ const formatearFecha = (iso: string) => {
   return (
     <section className="bg-stone-50 py-24 transition-colors duration-300 md:py-32 dark:bg-stone-950">
       <div className="mx-auto max-w-6xl px-6">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Cotizaciones
-        </h1>
-        <p className="text-gray-500 dark:text-slate-400">
-          {totalElementos} prospecto{totalElementos !== 1 && 's'}
-          {totalPaginas > 1 && ` — Página ${paginaActual + 1} de ${totalPaginas}`}
-        </p>
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+              Cotizaciones
+            </h1>
+            <p className="text-gray-500 dark:text-slate-400">
+              {totalElementos} prospecto{totalElementos !== 1 && 's'}
+              {totalPaginas > 1 && ` — Página ${paginaActual + 1} de ${totalPaginas}`}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="self-start rounded-xl border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+          >
+            Cerrar sesión
+          </button>
+        </div>
 
         {error && (
           <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">

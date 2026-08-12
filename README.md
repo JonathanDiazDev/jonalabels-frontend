@@ -20,50 +20,24 @@ Plataforma web de alta conversión para marcas de ropa que buscan cotizar y orde
 
 ```
 frontend/
-├── public/                          # Estáticos: logos, fotos, favicon, manifest
+├── public/                          # Estáticos, robots.txt, sitemap.xml
+├── scripts/prerender.mjs            # Post-build SEO con Playwright
 ├── src/
-│   ├── api/
-│   │   └── http.ts                  # apiFetch (credentials: include) + apiUrl
-│   ├── components/
-│   │   ├── Navbar.tsx               # Nav sticky con logo dinámico (claro/oscuro)
-│   │   ├── Footer.tsx               # Footer 3 columnas con links de contacto
-│   │   ├── FloatingThemeToggle.tsx  # Botón flotante dark/light mode
-│   │   └── WhatsAppButton.tsx       # Botón flotante de WhatsApp con bounce
-│   ├── context/
-│   │   ├── ThemeContext.tsx          # Provider de dark mode (clase .dark en <html>)
-│   │   └── QuoteContext.tsx          # Estado compartido: tipo de etiqueta + archivo
+│   ├── api/http.ts                  # apiFetch + apiUrl (cookies incluidas)
+│   ├── config/constants.ts          # WhatsApp, SITE_URL, helpers
+│   ├── components/                  # SharedNavbar, Footer, Seo, WhatsAppButton, etc.
+│   ├── context/                     # ThemeContext, QuoteContext
 │   ├── features/
-│   │   ├── landing/                 # Secciones de la landing page
-│   │   │   ├── Hero.tsx             # Hero 2 columnas con CTA
-│   │   │   ├── ScrollytellingLabel.tsx  # Animación scroll 300vh con capas
-│   │   │   ├── ValueProposition.tsx  # 3 tarjetas de beneficios
-│   │   │   ├── ProcessSection.tsx   # Cómo funciona (4 pasos)
-│   │   │   ├── ProductShowcase.tsx  # Grid de fotos de producto
-│   │   │   ├── TestimonialsSection.tsx  # Testimonios de clientes
-│   │   │   ├── QuoteSection.tsx     # Formulario de cotización + upload
-│   │   │   ├── LabelVisualizer.tsx  # Visualizador interactivo de etiquetas
-│   │   │   ├── PrivacyPolicy.tsx    # Política de privacidad (/privacidad)
-│   │   │   ├── TermsOfService.tsx   # Términos de servicio (/terminos)
-│   │   │   └── NotFound.tsx         # Página 404
-│   │   ├── auth/
-│   │   │   ├── Login.tsx            # Formulario de login (standalone)
-│   │   │   └── ProtectedRoute.tsx   # Gate de autenticación vía refresh
-│   │   └── admin/
-│   │       ├── AdminRoute.tsx       # Wrapper lazy + ProtectedRoute
-│   │       └── AdminDashboard.tsx   # Dashboard de cotizaciones
-│   ├── layouts/
-│   │   └── MainLayout.tsx           # Layout principal con glow + transiciones
-│   ├── lib/
-│   │   └── axios.ts                 # Instancia axios (alternativa a apiFetch)
-│   ├── test/
-│   │   └── setup.ts                 # Configuración de Vitest + mocks
-│   ├── App.tsx                      # Definición de rutas
-│   ├── main.tsx                     # Entry point con providers
+│   │   ├── landing/                 # EditorialHero, QuoteForm, LabelVisualizer, etc.
+│   │   ├── auth/                    # Login, ProtectedRoute
+│   │   └── admin/                   # AdminRoute, AdminDashboard
+│   ├── layouts/MainLayout.tsx
+│   ├── lazyRoutes.tsx               # Code splitting
+│   ├── App.tsx                      # Rutas
 │   └── index.css                    # Tailwind v4 + tokens de marca
-├── index.html                       # Meta SEO + JSON-LD + favicons
-├── vite.config.ts                   # Proxy /api → localhost:8080
-├── tsconfig.json                    # Configuración TypeScript
-└── package.json
+├── index.html                       # Meta SEO + JSON-LD
+├── vercel.json                      # Deploy en Vercel
+└── vite.config.ts                   # Proxy /api → localhost:8080
 ```
 
 ## Requisitos Previos

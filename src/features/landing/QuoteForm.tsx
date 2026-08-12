@@ -1,6 +1,7 @@
 import { type FormEvent, useState, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { apiUrl } from '../../api/http'
+import { apiFetch } from '../../api/http'
+import { whatsAppUrl } from '../../config/constants'
 import { useQuote } from '../../context/QuoteContext'
 
 interface IFormState {
@@ -28,7 +29,6 @@ const INPUT_CLASS =
 
 const INPUT_ERROR = INPUT_CLASS.replace('border-stone-200', 'border-red-400')
 
-const WHATSAPP_NUMBER = '523339472657'
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024
 const ALLOWED_FILE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg', 'ai', 'eps', 'pdf']
@@ -175,7 +175,7 @@ export default function QuoteForm() {
     const timeoutId = setTimeout(() => controller.abort(), 20000)
 
     try {
-      const res = await fetch(apiUrl('/cotizaciones'), { method: 'POST', body: buildFormData(), signal: controller.signal })
+      const res = await apiFetch('/cotizaciones', { method: 'POST', body: buildFormData(), signal: controller.signal })
 
       clearTimeout(timeoutId)
 
@@ -198,8 +198,8 @@ export default function QuoteForm() {
   const sendLeadToBackend = () => {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 15000)
-    fetch(apiUrl('/cotizaciones'), { method: 'POST', body: buildFormData(), signal: controller.signal })
-      .catch((err) => console.error('[QuoteForm] No se pudo capturar el lead de WhatsApp:', err))
+    apiFetch('/cotizaciones', { method: 'POST', body: buildFormData(), signal: controller.signal })
+      .catch(() => {})
       .finally(() => clearTimeout(timeoutId))
   }
 
@@ -229,7 +229,7 @@ export default function QuoteForm() {
     lines.push('', 'Quedo al pendiente de su respuesta. Gracias.')
 
     const text = lines.join('\n')
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank')
+    window.open(whatsAppUrl(text), '_blank')
   }
 
   if (isSuccess) {
