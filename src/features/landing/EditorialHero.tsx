@@ -92,14 +92,13 @@ export default function EditorialHero() {
         </div>
       </section>
 
-      <section className="relative z-10 overflow-hidden py-20 transition-colors duration-300 sm:py-24">
-        <div aria-hidden="true" className="absolute inset-0 bg-black/60" />
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="relative z-10 py-20 transition-colors duration-300 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <FadeIn className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-medium tracking-tight text-stone-50 transition-colors duration-300 md:text-4xl">
+            <h2 className="mb-4 text-3xl font-medium tracking-tight text-stone-900 transition-colors duration-300 md:text-4xl dark:text-stone-100">
               ¿Por qué elegirnos?
             </h2>
-            <p className="mx-auto max-w-2xl text-lg text-stone-300 transition-colors duration-300">
+            <p className="mx-auto max-w-2xl text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
               Cada etiqueta es una pequeña tarjeta de presentación que tu cliente guardará para siempre.
             </p>
           </FadeIn>
@@ -112,13 +111,13 @@ export default function EditorialHero() {
               { icon: Gem, title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
             ].map(({ icon: Icon, title, desc }) => (
               <StaggerItem key={title} className="flex flex-col items-center">
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-white/15 bg-white/10 backdrop-blur-sm">
-                  <Icon strokeWidth={1.5} className="h-7 w-7 text-white" />
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-stone-200 bg-stone-100 transition-colors duration-300 dark:border-stone-700 dark:bg-stone-800">
+                  <Icon strokeWidth={1.5} className="h-7 w-7 text-stone-900 dark:text-stone-100" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold text-white transition-colors duration-300">
+                <h3 className="mb-2 text-xl font-semibold text-stone-900 transition-colors duration-300 dark:text-stone-100">
                   {title}
                 </h3>
-                <p className="text-base leading-relaxed text-stone-300">{desc}</p>
+                <p className="text-base leading-relaxed text-stone-600 transition-colors duration-300 dark:text-stone-400">{desc}</p>
               </StaggerItem>
             ))}
           </Stagger>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { apiFetch } from '../../api/http'
+import { apiFetchAdmin } from '../../api/http'
 
 type Estado = 'NUEVO' | 'CONTACTADO' | 'COTIZADO' | 'CERRADO'
 
@@ -93,7 +93,7 @@ export default function AdminDashboard() {
     if (busquedaDebounced) params.set('busqueda', busquedaDebounced)
     if (filtroEstado !== 'TODOS') params.set('estado', filtroEstado)
 
-    apiFetch(`${API_BASE}?${params}`)
+    apiFetchAdmin(`${API_BASE}?${params}`)
       .then((res) => {
         if (!res.ok) throw new Error('No fue posible cargar las cotizaciones.')
         return res.json()
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
   }, [fetchCotizaciones])
 
   useEffect(() => {
-    apiFetch(`${API_BASE}/metricas`)
+    apiFetchAdmin(`${API_BASE}/metricas`)
       .then((res) => {
         if (!res.ok) throw new Error('No fue posible cargar las métricas.')
         return res.json()
@@ -149,7 +149,7 @@ const formatearFecha = (iso: string) => {
     if (filtroEstado !== 'TODOS') params.set('estado', filtroEstado)
 
     try {
-      const res = await apiFetch(`${API_BASE}/exportar?${params}`)
+      const res = await apiFetchAdmin(`${API_BASE}/exportar?${params}`)
       if (!res.ok) throw new Error('No fue posible exportar los prospectos.')
       const blob = await res.blob()
       const url = window.URL.createObjectURL(blob)
@@ -176,7 +176,7 @@ const formatearFecha = (iso: string) => {
     )
 
     try {
-      const res = await apiFetch(`${API_BASE}/${id}/estado?estado=${nuevoEstado}`, { method: 'PATCH' })
+      const res = await apiFetchAdmin(`${API_BASE}/${id}/estado?estado=${nuevoEstado}`, { method: 'PATCH' })
       if (!res.ok) throw new Error('No fue posible actualizar el estado.')
     } catch {
       setCotizaciones(previas)
@@ -192,7 +192,7 @@ const formatearFecha = (iso: string) => {
 
   const handleLogout = async () => {
     try {
-      await apiFetch('/auth/logout', { method: 'POST' })
+      await apiFetchAdmin('/auth/logout', { method: 'POST' })
     } finally {
       navigate('/login', { replace: true })
     }

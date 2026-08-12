@@ -1,13 +1,13 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { apiFetch } from '../../api/http'
+import { apiFetchAdmin } from '../../api/http'
 
 export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const navigate = useNavigate()
   const [checking, setChecking] = useState(true)
 
   useEffect(() => {
-    apiFetch('/auth/refresh', { method: 'POST' })
+    apiFetchAdmin('/auth/refresh', { method: 'POST' })
       .then((res) => {
         if (!res.ok) throw new Error('No autorizado')
         setChecking(false)
