@@ -6,7 +6,7 @@ import SectionHeader from '../../components/SectionHeader'
 
 export default function EditorialHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const heroRef = useRef<HTMLElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const video = videoRef.current
@@ -29,22 +29,22 @@ export default function EditorialHero() {
   }, [])
 
   return (
-    <div className="relative isolate overflow-hidden">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <video
-          ref={videoRef}
-          loop
-          muted
-          playsInline
-          preload="none"
-          className="h-full w-full object-cover will-change-transform transform-gpu"
-          src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/72 to-black/88" />
-      </div>
+    <>
+      <section className="relative min-h-screen overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <video
+            ref={videoRef}
+            loop
+            muted
+            playsInline
+            preload="none"
+            className="h-full w-full object-cover will-change-transform transform-gpu"
+            src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/65 to-black/85" />
+        </div>
 
-      <section ref={heroRef} className="relative z-10 min-h-screen">
-        <div className="flex min-h-screen items-center justify-center px-4 pt-16">
+        <div ref={heroRef} className="relative z-10 flex min-h-screen items-center justify-center px-4 pt-16">
           <motion.div
             className="text-center"
             initial={{ opacity: 0, y: 24 }}
@@ -95,8 +95,9 @@ export default function EditorialHero() {
         </div>
       </section>
 
-      <section className="relative z-10 py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section className="relative z-10 overflow-hidden py-20 sm:py-24">
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/75 to-black/80" />
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
           <SectionHeader
             eyebrow="Por qué elegirnos"
             title="Cada etiqueta es una tarjeta de presentación"
@@ -125,6 +126,6 @@ export default function EditorialHero() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   )
 }
