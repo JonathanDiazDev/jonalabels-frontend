@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useMotionValue, type MotionValue } from 'frame
 import { ArrowRight, CheckCircle2, Pipette, Sparkles, Upload, X } from 'lucide-react'
 import { useQuote } from '../../context/QuoteContext'
 import { whatsAppUrl } from '../../config/constants'
-import { SectionEyebrow } from '../../components/editorial'
+import { SectionEyebrow, btnPrimaryClass } from '../../components/editorial'
 
 const PRESET_COLORS = [
   { id: 'white', label: 'Blanco', hex: '#FFFFFF' },
@@ -122,7 +122,7 @@ interface PreviewProps {
 const SatinPreview = memo(function SatinPreview({ previewUrl, color, scale }: PreviewProps) {
   return (
     <div
-      className={`relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border ${color.borderClass} shadow-2xl shadow-stone-900/20`}
+      className={`relative mx-auto aspect-[4/5] w-full max-w-[330px] overflow-hidden rounded-lg border ${color.borderClass} shadow-2xl shadow-stone-900/20`}
       style={color.gradientStyle}
     >
       <div className="absolute inset-0 opacity-30 [background:repeating-linear-gradient(0deg,transparent_0,transparent_9px,rgba(148,163,184,.35)_10px)]" />
@@ -151,7 +151,7 @@ const SatinPreview = memo(function SatinPreview({ previewUrl, color, scale }: Pr
 
 const ColgantePreview = memo(function ColgantePreview({ previewUrl, color, scale }: PreviewProps) {
   return (
-    <div className="relative mx-auto aspect-[3/4] w-full max-w-[18rem]">
+    <div className="relative mx-auto aspect-[3/4] w-full max-w-[300px]">
       <div className="absolute -top-1 left-1/2 z-0 h-14 w-px -translate-x-1/2 bg-slate-400/70 dark:bg-slate-500/70" />
       <div
         className={`relative aspect-[3/4] overflow-hidden rounded-2xl border ${color.borderClass} shadow-xl shadow-stone-900/25`}
@@ -293,18 +293,18 @@ export default function LabelVisualizer() {
   const isCustomActive = presetId === 'custom'
 
   return (
-    <section className="relative z-10 px-4 pb-20 pt-28 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12">
-        <div className="lg:col-span-5">
+    <section className="relative z-10 px-4 pb-8 pt-24 sm:px-6 lg:pb-10">
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center lg:gap-10 xl:gap-12">
+        <div className="w-full max-w-md text-center lg:max-w-sm lg:flex-1 lg:text-left xl:max-w-md">
           <SectionEyebrow>Visualizador</SectionEyebrow>
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-stone-900 transition-colors duration-300 md:text-5xl dark:text-stone-100">
+          <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-jona-blue md:text-4xl dark:text-blue-300">
             Visualiza tu marca
           </h1>
-          <p className="mb-10 text-lg text-stone-600 transition-colors duration-300 dark:text-stone-400">
+          <p className="mb-5 text-base text-stone-600 dark:text-stone-400">
             Sube tu diseño, elige un formato y obtén una referencia visual antes de cotizar.
           </p>
 
-          <div className="mb-8 inline-flex gap-6 border-b border-stone-200 transition-colors duration-300 dark:border-stone-800">
+          <div className="mb-5 inline-flex gap-5 border-b border-stone-200 dark:border-stone-800">
             {(['SATIN', 'COLGANTE'] as const).map((type) => {
               const selected = labelType === type
               return (
@@ -314,15 +314,15 @@ export default function LabelVisualizer() {
                   onClick={() => setLabelType(type)}
                   className={`relative pb-3 text-sm font-medium transition-colors duration-300 ${
                     selected
-                      ? 'text-stone-900 dark:text-white'
-                      : 'text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300'
+                      ? 'text-jona-blue dark:text-blue-300'
+                      : 'text-stone-400 hover:text-jona-orange dark:text-stone-500 dark:hover:text-jona-orange'
                   }`}
                 >
                   {type === 'SATIN' ? 'Satín' : 'Colgante'}
                   {selected && (
                     <motion.span
                       layoutId="material-underline"
-                      className="absolute inset-x-0 -bottom-px h-0.5 bg-stone-900 transition-colors duration-300 dark:bg-white"
+                      className="absolute inset-x-0 -bottom-px h-0.5 bg-jona-orange"
                       transition={{ duration: 0.25, ease: 'easeOut' }}
                     />
                   )}
@@ -331,12 +331,12 @@ export default function LabelVisualizer() {
             })}
           </div>
 
-          <div className="mb-8">
-            <span className="mb-3 block text-xs font-medium uppercase tracking-wider text-stone-400 transition-colors duration-300 dark:text-stone-500">
+          <div className="mb-5">
+            <span className="mb-2 block text-xs font-medium uppercase tracking-wider text-stone-400 dark:text-stone-500">
               Color de fondo
             </span>
 
-            <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
               {PRESET_COLORS.map((color) => {
                 const selected = presetId === color.id
                 const isDark = relativeLuminance(color.hex) < 0.35
@@ -350,7 +350,7 @@ export default function LabelVisualizer() {
                     title={color.label}
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`relative h-9 w-9 rounded-full border transition-colors duration-200 ${
+                    className={`relative h-8 w-8 rounded-full border transition-colors duration-200 ${
                       selected
                         ? 'scale-110 border-stone-900 ring-2 ring-stone-900 ring-offset-2 ring-offset-stone-50 dark:border-white dark:ring-white dark:ring-offset-stone-950'
                         : 'border-stone-300 dark:border-stone-600'
@@ -378,7 +378,7 @@ export default function LabelVisualizer() {
                 title="Color personalizado"
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
-                className={`relative flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-200 ${
+                className={`relative flex h-8 w-8 items-center justify-center rounded-full border transition-colors duration-200 ${
                   isCustomActive
                     ? 'border-stone-900 ring-2 ring-stone-900 ring-offset-2 ring-offset-stone-50 dark:border-white dark:ring-white dark:ring-offset-stone-950'
                     : 'border-dashed border-stone-400 dark:border-stone-500'
@@ -396,8 +396,8 @@ export default function LabelVisualizer() {
               Seleccionado: <span className="font-medium text-stone-700 dark:text-stone-300">{activeColor.label}</span>
             </p>
 
-            <div className="mt-4 rounded-xl border border-stone-200 bg-white/80 p-3 dark:border-stone-700 dark:bg-stone-900/70">
-              <p className="mb-2 text-xs font-medium text-stone-600 dark:text-stone-400">Color personalizado</p>
+            <div className="mt-3 rounded-xl border border-stone-200 bg-white/80 p-2.5 dark:border-stone-700 dark:bg-stone-900/70">
+              <p className="mb-1.5 text-xs font-medium text-stone-600 dark:text-stone-400">Color personalizado</p>
               <div className="flex items-center gap-2">
                 <label className="relative shrink-0 cursor-pointer">
                   <span className="sr-only">Selector gráfico de color</span>
@@ -406,11 +406,11 @@ export default function LabelVisualizer() {
                     type="color"
                     value={activeColor.hex}
                     onChange={(e) => handleColorPicker(e.target.value)}
-                    className="h-10 w-10 cursor-pointer rounded-lg border border-stone-300 bg-transparent p-0.5 dark:border-stone-600"
+                    className="h-8 w-8 cursor-pointer rounded-lg border border-stone-300 bg-transparent p-0.5 dark:border-stone-600"
                   />
                 </label>
                 <div className="flex min-w-0 flex-1 items-center rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-700 dark:bg-stone-800">
-                  <span className="pl-3 text-sm text-stone-400">#</span>
+                  <span className="pl-2.5 text-sm text-stone-400">#</span>
                   <input
                     type="text"
                     value={hexInput}
@@ -431,13 +431,13 @@ export default function LabelVisualizer() {
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') applyHexInput(hexInput)
                     }}
-                    className="w-full bg-transparent py-2.5 pr-3 text-sm uppercase text-stone-900 outline-none placeholder:text-stone-400 dark:text-stone-100"
+                    className="w-full bg-transparent py-2 pr-2.5 text-sm uppercase text-stone-900 outline-none placeholder:text-stone-400 dark:text-stone-100"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => colorPickerRef.current?.click()}
-                  className="shrink-0 rounded-lg border border-stone-200 px-3 py-2.5 text-xs font-medium text-stone-600 transition hover:bg-stone-100 dark:border-stone-600 dark:text-stone-300 dark:hover:bg-stone-800"
+                  className="shrink-0 rounded-lg border border-stone-200 px-2.5 py-2 text-xs font-medium text-stone-600 transition hover:bg-stone-100 dark:border-stone-600 dark:text-stone-300 dark:hover:bg-stone-800"
                 >
                   Elegir
                 </button>
@@ -459,9 +459,9 @@ export default function LabelVisualizer() {
             type="button"
             onClick={() => inputRef.current?.click()}
             whileTap={{ scale: 0.98 }}
-            className="group inline-flex items-center gap-2 rounded-xl border border-stone-300 bg-white px-5 py-3 text-sm font-medium text-stone-700 shadow-sm transition-all duration-300 hover:border-stone-400 hover:shadow-md dark:border-stone-700 dark:bg-stone-800/70 dark:text-stone-300 dark:hover:border-stone-600"
+            className="group mx-auto inline-flex items-center gap-2 rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 shadow-sm transition-all duration-300 hover:border-stone-400 hover:shadow-md dark:border-stone-700 dark:bg-stone-800/70 dark:text-stone-300 dark:hover:border-stone-600 lg:mx-0"
           >
-            <Upload className="h-5 w-5 text-stone-400 transition-transform duration-300 group-hover:-translate-y-0.5 dark:text-stone-500" />
+            <Upload className="h-4 w-4 text-stone-400 transition-transform duration-300 group-hover:-translate-y-0.5 dark:text-stone-500" />
             {logoFile ? 'Cambiar diseño' : 'Subir diseño'}
           </motion.button>
 
@@ -480,7 +480,7 @@ export default function LabelVisualizer() {
             </div>
           )}
           {!logoFile && (
-            <p className="mt-3 text-xs text-stone-500 transition-colors duration-300 dark:text-stone-400">
+            <p className="mt-2 text-xs text-stone-500 dark:text-stone-400">
               Sube tu diseño con fondo transparente para un mejor resultado.
             </p>
           )}
@@ -491,9 +491,9 @@ export default function LabelVisualizer() {
           )}
         </div>
 
-        <div className="lg:col-span-7">
-          <div className="flex h-full flex-col">
-            <div className="mx-auto aspect-[4/5] w-full max-w-lg overflow-hidden rounded-2xl bg-white/60 p-6 shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm transition-colors duration-300 dark:bg-stone-900/60 dark:ring-white/5 sm:p-10 md:aspect-square">
+        <div className="flex w-full max-w-[480px] shrink-0 flex-col items-center lg:max-w-[460px] xl:max-w-[480px]">
+          <div className="flex w-full flex-col items-center">
+            <div className="aspect-square w-full overflow-hidden rounded-2xl bg-white/60 p-4 shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm dark:bg-stone-900/60 dark:ring-white/5 sm:p-5">
               <div className="flex h-full w-full items-center justify-center">
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -515,7 +515,7 @@ export default function LabelVisualizer() {
             </div>
 
             {previewUrl && (
-              <div className="mt-5 flex items-center gap-3 px-1">
+              <div className="mt-4 flex w-full items-center gap-3 px-1">
                 <span className="whitespace-nowrap text-xs font-medium text-stone-600 transition-colors duration-300 dark:text-stone-400">
                   Ajustar tamaño
                 </span>
@@ -528,7 +528,7 @@ export default function LabelVisualizer() {
               onClick={goToWhatsApp}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-4 text-sm font-semibold tracking-wide text-white shadow-lg shadow-brand-orange/25 transition-all duration-300 hover:shadow-xl hover:shadow-brand-orange/30"
+              className={`group mt-5 flex w-full items-center justify-center gap-2 ${btnPrimaryClass}`}
             >
               Cotizar etiquetas
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

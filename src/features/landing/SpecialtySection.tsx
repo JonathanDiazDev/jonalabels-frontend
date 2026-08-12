@@ -44,7 +44,7 @@ export default function SpecialtySection() {
                 <h3 className="mb-4 text-2xl font-bold text-white">{title}</h3>
                 <Link
                   to="/productos"
-                  className="rounded-full border border-white/20 bg-black/50 px-6 py-2 text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-black/70 dark:bg-white/10 dark:hover:bg-white/20"
+                  className="rounded-full border border-jona-orange/40 bg-jona-orange/90 px-6 py-2 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-jona-orange"
                 >
                   Ver más
                 </Link>

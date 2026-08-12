@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import QuoteForm from './QuoteForm'
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
 import { GlassCard, PageHeader, PageSection, SectionHeading } from '../../components/editorial'
+
 const CLOUDINARY = {
   satin: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg',
   colgante: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921824/pexels-ron-lach-9594081_x9fu4i.jpg',
@@ -78,27 +79,26 @@ const CATEGORIES = [
 export default function Productos() {
   return (
     <>
-      <PageSection className="flex min-h-[50vh] items-center pt-32">
-        <FadeIn when="load" className="mx-auto max-w-4xl">
+      <PageSection className="!pb-10 !pt-28 sm:!pb-12">
+        <FadeIn when="load" className="mx-auto max-w-3xl">
           <PageHeader
             eyebrow="Catálogo"
             align="center"
+            className="!mb-0"
             title={
               <>
                 Todo lo que tu marca necesita para una experiencia de empaque{' '}
-                <span className="italic font-normal text-stone-500 dark:text-stone-400">premium</span>
+                <span className="font-serif italic text-jona-orange">premium</span>
               </>
             }
           />
         </FadeIn>
-      </PageSection>
 
-      <PageSection>
-        <FadeIn>
-          <SectionHeading eyebrow="Productos" title="Nuestros Productos" />
+        <FadeIn className="mt-12 sm:mt-14">
+          <SectionHeading title="Nuestros Productos" className="!mb-8" />
         </FadeIn>
 
-        <Stagger stagger={0.06} className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+        <Stagger stagger={0.06} className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
           {CATEGORIES.map(({ title, image, desc, features, popular }) => (
             <StaggerItem key={title}>
               <GlassCard
@@ -108,7 +108,7 @@ export default function Productos() {
                 }`}
               >
                 {popular && (
-                  <span className="absolute left-3 top-3 z-10 rounded-full bg-stone-900 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white dark:bg-stone-100 dark:text-stone-900">
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-jona-blue px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
                     Más popular
                   </span>
                 )}
@@ -124,10 +124,10 @@ export default function Productos() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-4 lg:p-5">
-                  <h3 className="mb-1.5 text-sm font-bold leading-tight text-stone-900 transition-colors duration-300 lg:text-base dark:text-stone-100">
+                  <h3 className="mb-1.5 text-sm font-bold leading-tight text-stone-900 lg:text-base dark:text-stone-100">
                     {title}
                   </h3>
-                  <p className="mb-3 text-xs leading-relaxed text-stone-500 transition-colors duration-300 dark:text-stone-400">
+                  <p className="mb-3 text-xs leading-relaxed text-stone-500 dark:text-stone-400">
                     {desc}
                   </p>
 
@@ -135,7 +135,7 @@ export default function Productos() {
                     {features.map((f) => (
                       <span
                         key={f}
-                        className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-medium text-stone-600 transition-colors duration-300 dark:bg-stone-800 dark:text-stone-400"
+                        className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-medium text-stone-600 dark:bg-stone-800 dark:text-stone-400"
                       >
                         {f}
                       </span>
@@ -145,7 +145,7 @@ export default function Productos() {
                   <div className="mt-auto">
                     <Link
                       to={`/cotizar?producto=${encodeURIComponent(title)}`}
-                      className="block w-full rounded-xl bg-brand-orange py-2 text-center text-xs font-semibold text-white shadow-md shadow-brand-orange/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-orange/30"
+                      className="block w-full rounded-xl bg-jona-orange py-2 text-center text-xs font-semibold text-white shadow-md shadow-jona-orange/20 transition-all duration-300 hover:shadow-lg hover:shadow-jona-orange/30"
                     >
                       Cotizar este tipo
                     </Link>
@@ -157,12 +157,13 @@ export default function Productos() {
         </Stagger>
       </PageSection>
 
-      <PageSection>
+      <PageSection className="!py-12 sm:!py-16">
         <FadeIn>
           <SectionHeading
             eyebrow="Cotización"
             title="Materialicemos tu visión."
             subtitle="Sube tu diseño y nuestro equipo analizará las especificaciones para enviarte una cotización a medida en menos de 24 horas."
+            className="!mb-8"
           />
         </FadeIn>
 

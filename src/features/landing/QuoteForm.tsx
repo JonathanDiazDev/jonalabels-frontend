@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { apiFetch } from '../../api/http'
 import { whatsAppUrl } from '../../config/constants'
 import { useQuote } from '../../context/QuoteContext'
+import { btnPrimaryClass, inputBrandClass } from '../../components/editorial'
 
 interface IFormState {
   nombre: string
@@ -24,10 +25,9 @@ const INITIAL_FORM: IFormState = {
 
 type FieldErrors = Partial<Record<keyof IFormState, string>>
 
-const INPUT_CLASS =
-  'w-full rounded-xl border border-stone-200/80 bg-white/60 px-3 py-2.5 text-sm text-stone-900 outline-none transition-colors duration-300 backdrop-blur-sm focus:border-stone-900 focus:ring-1 focus:ring-stone-900/10 placeholder:text-stone-400 dark:border-stone-700/80 dark:bg-stone-900/50 dark:text-stone-100 dark:focus:border-stone-300 dark:focus:ring-stone-300/10 dark:placeholder:text-stone-500'
+const INPUT_CLASS = inputBrandClass
 
-const INPUT_ERROR = INPUT_CLASS.replace('border-stone-200', 'border-red-400')
+const INPUT_ERROR = inputBrandClass.replace('border-stone-200/80', 'border-red-400').replace('focus:border-jona-blue', 'focus:border-red-500').replace('focus:ring-jona-blue/20', 'focus:ring-red-500/20')
 
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024
@@ -451,7 +451,7 @@ export default function QuoteForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full cursor-pointer rounded-full bg-stone-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-200"
+          className={`w-full cursor-pointer rounded-xl ${btnPrimaryClass}`}
         >
           <span className="flex items-center justify-center gap-2">
             {isSubmitting && (

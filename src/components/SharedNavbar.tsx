@@ -20,13 +20,13 @@ function isActivePath(pathname: string, to: string) {
 
 const linkClass = (active: boolean) =>
   active
-    ? 'text-sm font-semibold text-stone-900 dark:text-stone-100'
-    : 'text-sm font-medium text-stone-600 transition-colors duration-300 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100'
+    ? 'text-sm font-semibold text-jona-blue dark:text-blue-300'
+    : 'text-sm font-medium text-stone-600 transition-colors duration-300 hover:text-jona-orange dark:text-stone-400'
 
 const mobileLinkClass = (active: boolean) =>
   active
-    ? 'rounded-lg bg-stone-100 px-3 py-2.5 text-sm font-semibold text-stone-900 dark:bg-stone-800 dark:text-stone-100'
-    : 'rounded-lg px-3 py-2.5 text-sm font-medium text-stone-600 transition-colors duration-300 hover:bg-stone-50 hover:text-stone-900 dark:text-stone-400 dark:hover:bg-stone-800 dark:hover:text-stone-100'
+    ? 'rounded-lg bg-jona-blue/10 px-3 py-2.5 text-sm font-semibold text-jona-blue dark:bg-blue-950/40 dark:text-blue-300'
+    : 'rounded-lg px-3 py-2.5 text-sm font-medium text-stone-600 transition-colors duration-300 hover:bg-jona-blue/5 hover:text-jona-orange dark:text-stone-400 dark:hover:bg-stone-800'
 
 export default function SharedNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -59,7 +59,7 @@ export default function SharedNavbar() {
             alt=""
             className="h-8 w-8 dark:invert"
           />
-          <span className="text-lg font-bold tracking-tight text-stone-900 transition-colors duration-300 dark:text-stone-100">
+          <span className="text-lg font-bold tracking-tight text-jona-blue dark:text-blue-300">
             Jona Labels
           </span>
         </Link>
@@ -92,7 +92,7 @@ export default function SharedNavbar() {
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-stone-300 bg-white px-5 py-2 text-sm font-semibold text-stone-900 transition-all duration-300 hover:bg-stone-50 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100 dark:hover:bg-stone-700"
+            className="rounded-full bg-jona-orange px-5 py-2 text-sm font-semibold text-white shadow-md shadow-jona-orange/20 transition-all duration-300 hover:bg-jona-orange/90"
           >
             WhatsApp
           </a>
@@ -139,7 +139,7 @@ export default function SharedNavbar() {
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 rounded-full border border-stone-300 bg-white px-5 py-2.5 text-center text-sm font-semibold text-stone-900 transition-all duration-300 hover:bg-stone-50 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100 dark:hover:bg-stone-700"
+              className="mt-2 rounded-full bg-jona-orange px-5 py-2.5 text-center text-sm font-semibold text-white shadow-md shadow-jona-orange/20 transition-all duration-300 hover:bg-jona-orange/90"
             >
               WhatsApp
             </a>

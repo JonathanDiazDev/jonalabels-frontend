@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import { GlassCard, PageHeader, PageSection } from '../../components/editorial'
+import { GlassCard, PageHeader, PageSection, linkBrandClass } from '../../components/editorial'
 
 export default function PrivacyPolicy() {
   return (
     <PageSection className="pt-32">
       <GlassCard className="mx-auto max-w-3xl">
-        <Link to="/" className="mb-8 inline-flex items-center gap-1 text-sm font-medium text-brand-orange hover:text-brand-orange/80">
+        <Link to="/" className={`mb-8 inline-flex items-center gap-1 ${linkBrandClass}`}>
           ← Volver al inicio
         </Link>
         <PageHeader

@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
 import FadeIn, { MotionLinkButton, Stagger, StaggerItem } from '../../components/FadeIn'
-import { GlassCard, SectionHeading } from '../../components/editorial'
+import { GlassCard, SectionHeading, AccentIcon, brandAccentAt, brandAccentTitle } from '../../components/editorial'
 
 function MexicanFlagIcon({ className = '' }: { className?: string }) {
   return (
@@ -58,7 +58,7 @@ export default function EditorialHero() {
         <div ref={heroRef} className="relative z-10 flex min-h-screen items-center justify-center px-4">
           <Stagger when="load" stagger={0.12} className="text-center">
             <StaggerItem>
-              <h1 className="mb-6 max-w-4xl text-5xl font-normal leading-tight tracking-tighter text-stone-50 md:text-6xl lg:text-7xl">
+              <h1 className="mb-6 max-w-4xl text-5xl font-normal leading-tight tracking-tighter text-jona-blue transition-colors duration-300 md:text-6xl lg:text-7xl dark:text-blue-300">
                 La calidad de una prenda comienza por sus detalles.
               </h1>
             </StaggerItem>
@@ -73,7 +73,7 @@ export default function EditorialHero() {
               <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
                 <MotionLinkButton
                   to="/cotizar"
-                  className="rounded-full bg-white px-10 py-4 text-sm font-semibold text-stone-900 transition-colors duration-300 hover:bg-stone-100"
+                  className="rounded-full bg-jona-orange px-10 py-4 text-sm font-semibold text-white shadow-lg shadow-jona-orange/25 transition-all duration-300 hover:shadow-xl hover:shadow-jona-orange/30"
                 >
                   Cotiza ahora
                 </MotionLinkButton>
@@ -101,7 +101,7 @@ export default function EditorialHero() {
                   'Producción desde 5000 piezas',
                 ].map((item) => (
                   <span key={item} className="flex items-center gap-2 text-xs font-light text-stone-400">
-                    <Check className="h-3.5 w-3.5 text-stone-500" />
+                    <Check className="h-3.5 w-3.5 text-jona-orange" />
                     {item}
                   </span>
                 ))}
@@ -140,19 +140,21 @@ export default function EditorialHero() {
               },
               { id: 'fabricantes', icon: Factory, title: 'Fabricantes directos', desc: 'Somos el taller. Sin intermediarios, con control total de calidad.' },
               { id: 'calidad', icon: Gem, title: 'Calidad premium', desc: 'Materiales de primera y acabados que elevan tu marca.' },
-            ] satisfies { id: string; icon: typeof MessageSquareText; title: ReactNode; desc: string }[]).map((item) => (
+            ] satisfies { id: string; icon: typeof MessageSquareText; title: ReactNode; desc: string }[]).map((item, index) => {
+              const accent = brandAccentAt(index)
+              return (
               <StaggerItem key={item.id}>
                 <GlassCard className="flex h-full flex-col items-center text-center">
-                  <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-stone-200/80 bg-white/60 dark:border-stone-700 dark:bg-stone-800/60">
-                    <item.icon strokeWidth={1.5} className="h-7 w-7 text-stone-900 dark:text-stone-100" />
+                  <div className="mb-5">
+                    <AccentIcon accent={accent} icon={item.icon} className="mx-auto h-16 w-16 rounded-full" />
                   </div>
-                  <h3 className="mb-2 text-xl font-semibold text-stone-900 dark:text-stone-100">
+                  <h3 className={`mb-2 text-xl font-bold ${brandAccentTitle[accent]}`}>
                     {item.title}
                   </h3>
                   <p className="text-base leading-relaxed text-stone-600 dark:text-stone-400">{item.desc}</p>
                 </GlassCard>
               </StaggerItem>
-            ))}
+            )})}
           </Stagger>
         </div>
       </section>
