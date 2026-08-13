@@ -70,13 +70,15 @@ export default function MainLayout() {
       <PageBackground />
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-[1] bg-stone-50/70 transition-colors duration-300 dark:bg-stone-950/75"
+        className="pointer-events-none fixed inset-0 z-0 bg-stone-50/40 transition-colors duration-300 dark:bg-stone-950/50"
       />
-      {isTouchDevice && isLanding ? (
-        <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh>
-      ) : (
-        <div className="relative z-10">{content}</div>
-      )}
+      <div className="relative z-10">
+        {isTouchDevice && isLanding ? (
+          <PullToRefresh onRefresh={handleRefresh}>{content}</PullToRefresh>
+        ) : (
+          content
+        )}
+      </div>
     </div>
   )
 }
