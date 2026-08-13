@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { apiFetch } from '../../api/http'
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
-import { GlassCard, SectionHeading } from '../../components/editorial'
+import { GlassCard, SectionHeading, pageMaxWidthNarrowClass } from '../../components/editorial'
 
 interface Resena {
   id: number
@@ -64,7 +64,7 @@ export default function TestimonialsSection() {
 
   return (
     <section className="relative z-10 py-20 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <div className={`mx-auto ${pageMaxWidthNarrowClass} px-4 sm:px-6`}>
         <FadeIn>
           <SectionHeading eyebrow="Testimonios" title="Lo que dicen nuestros clientes" />
         </FadeIn>

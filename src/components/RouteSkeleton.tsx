@@ -1,6 +1,8 @@
+import { pageMaxWidthClass } from './editorial'
+
 export default function RouteSkeleton() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 pb-24 pt-28 sm:px-6 lg:px-8" role="status" aria-label="Cargando contenido">
+    <div className={`mx-auto w-full ${pageMaxWidthClass} px-4 pb-24 pt-28 sm:px-6 lg:px-8`} role="status" aria-label="Cargando contenido">
       <div className="mb-10 animate-pulse">
         <div className="mb-3 h-3 w-24 rounded-full bg-stone-200 dark:bg-stone-700" />
         <div className="h-8 w-3/4 rounded-lg bg-stone-200 dark:bg-stone-700 sm:w-1/2" />

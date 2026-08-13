@@ -27,7 +27,7 @@ const PILARES = [
 export default function Nosotros() {
   return (
     <PageSection className="pt-24">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-4">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-4">
         <FadeIn delay={0.1} className="shrink-0">
           <GlassCard padding="p-0" className="relative aspect-[4/5] w-[min(100%,26.2rem)] overflow-hidden sm:w-[27.625rem] lg:w-[25.45rem]">
             <img

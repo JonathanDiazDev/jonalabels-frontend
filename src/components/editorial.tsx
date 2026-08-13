@@ -171,6 +171,15 @@ export function GlassPanel({
   )
 }
 
+/** 90% of max-w-6xl — main content width on all public pages */
+export const pageMaxWidthClass = 'max-w-[64.8rem]'
+
+/** 90% of max-w-5xl — narrower sections (testimonials, visualizer, etc.) */
+export const pageMaxWidthNarrowClass = 'max-w-[57.6rem]'
+
+/** 90% of max-w-2xl — quote / cotización form */
+export const quoteFormMaxWidthClass = 'max-w-[37.8rem]'
+
 export function PageSection({
   children,
   className = '',
@@ -182,7 +191,7 @@ export function PageSection({
 }) {
   return (
     <section id={id} className={`relative z-10 px-4 py-20 sm:px-6 sm:py-24 ${className}`}>
-      <div className="mx-auto max-w-6xl">{children}</div>
+      <div className={`mx-auto ${pageMaxWidthClass}`}>{children}</div>
     </section>
   )
 }

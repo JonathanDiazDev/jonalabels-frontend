@@ -1,5 +1,5 @@
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
-import { SectionHeading } from '../../components/editorial'
+import { SectionHeading, pageMaxWidthNarrowClass } from '../../components/editorial'
 
 const PROFILE_URL = 'https://www.instagram.com/jonalabels.mx/'
 
@@ -25,7 +25,7 @@ function InstagramIcon() {
 export default function InstagramSection() {
   return (
     <section className="relative z-10 py-16 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4">
+      <div className={`mx-auto ${pageMaxWidthNarrowClass} px-4`}>
         <FadeIn>
           <SectionHeading eyebrow="Redes sociales" title="Nuestro Instagram" />
         </FadeIn>

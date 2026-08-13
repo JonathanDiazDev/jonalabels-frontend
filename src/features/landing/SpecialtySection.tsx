@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
-import { SectionHeading } from '../../components/editorial'
+import { SectionHeading, pageMaxWidthClass } from '../../components/editorial'
 
 const SPECIALTIES = [
   {
@@ -20,7 +20,7 @@ const SPECIALTIES = [
 export default function SpecialtySection() {
   return (
     <section className="relative z-10 py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className={`mx-auto ${pageMaxWidthClass} px-4 sm:px-6`}>
         <FadeIn>
           <SectionHeading eyebrow="Especialidades" title="Nuestra Especialidad" />
         </FadeIn>

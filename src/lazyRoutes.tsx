@@ -1,5 +1,6 @@
 import { lazy, Suspense, type ComponentType } from 'react'
 import RouteSkeleton from './components/RouteSkeleton'
+import { pageMaxWidthClass } from './components/editorial'
 
 const LabelVisualizer = lazy(() => import('./features/landing/LabelVisualizer'))
 const Diario = lazy(() => import('./features/landing/Diario'))
@@ -27,7 +28,7 @@ export function LazyRoute({ component: Component }: { component: ComponentType }
 function SectionFallback() {
   return (
     <div className="px-4 py-16 sm:px-6" aria-hidden="true">
-      <div className="mx-auto max-w-6xl animate-pulse space-y-4">
+      <div className={`mx-auto ${pageMaxWidthClass} animate-pulse space-y-4`}>
         <div className="mx-auto h-8 w-48 rounded-lg bg-stone-200 dark:bg-stone-800" />
         <div className="mx-auto h-4 w-72 rounded-lg bg-stone-200 dark:bg-stone-800" />
         <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">

@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react'
 import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
 import FadeIn, { MotionLinkButton, Stagger, StaggerItem } from '../../components/FadeIn'
-import { GlassCard, SectionHeading, AccentIcon, brandAccentAt, brandAccentTitle } from '../../components/editorial'
+import { GlassCard, SectionHeading, AccentIcon, brandAccentAt, brandAccentTitle, pageMaxWidthClass } from '../../components/editorial'
 
 function MexicanFlagIcon({ className = '' }: { className?: string }) {
   return (
@@ -93,15 +93,18 @@ export default function EditorialHero() {
             </StaggerItem>
 
             <StaggerItem>
-              <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-2 text-xs sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3 sm:text-xs">
+              <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-2.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3">
                 {[
                   'Calidad Premium',
                   'Envíos a todo México',
                   'Atención personalizada',
                   'Producción desde 5000 piezas',
                 ].map((item) => (
-                  <span key={item} className="flex items-center gap-2 text-xs font-light text-stone-400">
-                    <Check className="h-3.5 w-3.5 text-jona-orange" />
+                  <span
+                    key={item}
+                    className="flex items-center gap-2 text-xs font-normal text-stone-200/90 drop-shadow-sm sm:text-sm"
+                  >
+                    <Check className="h-3.5 w-3.5 shrink-0 text-jona-orange sm:h-4 sm:w-4" />
                     {item}
                   </span>
                 ))}
@@ -112,7 +115,7 @@ export default function EditorialHero() {
       </section>
 
       <section className="relative z-10 py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className={`mx-auto ${pageMaxWidthClass} px-4 sm:px-6`}>
           <FadeIn>
             <SectionHeading
               eyebrow="Ventajas"

@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { apiFetch } from '../../api/http'
 import { whatsAppUrl } from '../../config/constants'
 import { useQuote } from '../../context/QuoteContext'
-import { btnPrimaryClass, inputBrandClass } from '../../components/editorial'
+import { btnPrimaryClass, inputBrandClass, quoteFormMaxWidthClass } from '../../components/editorial'
 
 interface IFormState {
   nombre: string
@@ -234,7 +234,7 @@ export default function QuoteForm() {
 
   if (isSuccess) {
     return (
-      <div className="mx-auto w-full max-w-2xl rounded-2xl bg-white/60 p-6 text-center shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm dark:bg-stone-900/60 dark:ring-white/5 md:p-8">
+      <div className={`mx-auto w-full ${quoteFormMaxWidthClass} rounded-2xl bg-white/60 p-4 text-center shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm dark:bg-stone-900/60 dark:ring-white/5 sm:p-5 md:p-7`}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mx-auto mb-4 h-12 w-12 text-stone-900 transition-colors duration-300 dark:text-stone-100">
           <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
           <polyline points="22 4 12 14.01 9 11.01" />
@@ -259,7 +259,7 @@ export default function QuoteForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto w-full max-w-2xl space-y-4 rounded-2xl bg-white/60 p-5 shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm dark:bg-stone-900/60 dark:ring-white/5 sm:p-6"
+      className={`mx-auto w-full ${quoteFormMaxWidthClass} space-y-3.5 rounded-2xl bg-white/60 p-4 shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm dark:bg-stone-900/60 dark:ring-white/5 sm:space-y-4 sm:p-5`}
       noValidate
     >
       {logoFile && (

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Sun, Moon } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { WHATSAPP_NUMBER } from '../config/constants'
+import { pageMaxWidthClass } from './editorial'
 
 const NAV_LINKS = [
   { label: 'Inicio', to: '/' },
@@ -52,19 +53,14 @@ export default function SharedNavbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-stone-200/50 bg-white/80 backdrop-blur-md transition-colors duration-300 dark:border-stone-800/50 dark:bg-stone-950/80">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2.5">
-          <img
-            src="/logo-impresion.svg"
-            alt=""
-            className="h-8 w-8 dark:invert"
-          />
-          <span className="text-lg font-bold tracking-tight text-jona-blue dark:text-blue-300">
+      <div className={`mx-auto flex h-16 w-full ${pageMaxWidthClass} items-center px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center`}>
+        <Link to="/" className="flex shrink-0 items-center lg:justify-self-start">
+          <span className="text-xl font-bold tracking-tight text-jona-blue dark:text-blue-300">
             Jona Labels
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex" aria-label="Principal">
+        <nav className="hidden shrink-0 items-center gap-6 lg:flex lg:justify-self-center" aria-label="Principal">
           {NAV_LINKS.map((link) => {
             const active = isActivePath(pathname, link.to)
             return (
@@ -80,41 +76,43 @@ export default function SharedNavbar() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <button
-            onClick={toggle}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-stone-500 transition-colors duration-300 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-800"
-            aria-label={isDark ? 'Activar modo claro' : 'Activar modo oscuro'}
-          >
-            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-jona-orange px-5 py-2 text-sm font-semibold text-white shadow-md shadow-jona-orange/20 transition-all duration-300 hover:bg-jona-orange/90"
-          >
-            WhatsApp
-          </a>
-        </div>
+        <div className="ml-auto flex shrink-0 items-center gap-3 lg:ml-0 lg:justify-self-end">
+          <div className="hidden items-center gap-3 md:flex">
+            <button
+              onClick={toggle}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-stone-500 transition-colors duration-300 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-800"
+              aria-label={isDark ? 'Activar modo claro' : 'Activar modo oscuro'}
+            >
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#25D366] px-5 py-2 text-sm font-semibold text-white shadow-md shadow-[#25D366]/25 transition-all duration-300 hover:bg-[#1DA851]"
+            >
+              WhatsApp
+            </a>
+          </div>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <button
-            onClick={toggle}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-stone-500 transition-colors duration-300 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-800"
-            aria-label={isDark ? 'Activar modo claro' : 'Activar modo oscuro'}
-          >
-            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-stone-700 transition-colors duration-300 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={toggle}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-stone-500 transition-colors duration-300 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-800"
+              aria-label={isDark ? 'Activar modo claro' : 'Activar modo oscuro'}
+            >
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-stone-700 transition-colors duration-300 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -139,7 +137,7 @@ export default function SharedNavbar() {
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 rounded-full bg-jona-orange px-5 py-2.5 text-center text-sm font-semibold text-white shadow-md shadow-jona-orange/20 transition-all duration-300 hover:bg-jona-orange/90"
+              className="mt-2 rounded-full bg-[#25D366] px-5 py-2.5 text-center text-sm font-semibold text-white shadow-md shadow-[#25D366]/25 transition-all duration-300 hover:bg-[#1DA851]"
             >
               WhatsApp
             </a>

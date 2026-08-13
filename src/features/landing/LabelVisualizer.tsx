@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useMotionValue, type MotionValue } from 'frame
 import { ArrowRight, CheckCircle2, Pipette, Sparkles, Upload, X } from 'lucide-react'
 import { useQuote } from '../../context/QuoteContext'
 import { whatsAppUrl } from '../../config/constants'
-import { SectionEyebrow, btnPrimaryClass } from '../../components/editorial'
+import { SectionEyebrow, btnPrimaryClass, pageMaxWidthNarrowClass } from '../../components/editorial'
 
 const PRESET_COLORS = [
   { id: 'white', label: 'Blanco', hex: '#FFFFFF' },
@@ -294,7 +294,7 @@ export default function LabelVisualizer() {
 
   return (
     <section className="relative z-10 px-4 pb-8 pt-24 sm:px-6 lg:pb-10">
-      <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center lg:gap-10 xl:gap-12">
+      <div className={`mx-auto flex ${pageMaxWidthNarrowClass} flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center lg:gap-10 xl:gap-12`}>
         <div className="w-full max-w-md text-center lg:max-w-sm lg:flex-1 lg:text-left xl:max-w-md">
           <SectionEyebrow>Visualizador</SectionEyebrow>
           <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-jona-blue md:text-4xl dark:text-blue-300">
