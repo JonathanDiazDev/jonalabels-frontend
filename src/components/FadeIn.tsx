@@ -136,7 +136,7 @@ export function MotionLinkButton({ children, className, ...rest }: LinkProps) {
 
   return (
     <motion.div
-      className="inline-block"
+      className="w-full sm:w-auto"
       whileHover={{ scale: 1.03, y: -1 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.2, ease: 'easeOut' as const }}

@@ -70,22 +70,22 @@ export default function EditorialHero() {
             </StaggerItem>
 
             <StaggerItem>
-              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <div className="mx-auto flex w-full max-w-sm flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center sm:gap-4">
                 <MotionLinkButton
                   to="/cotizar"
-                  className="rounded-full bg-jona-orange px-10 py-4 text-sm font-semibold text-white shadow-lg shadow-jona-orange/25 transition-all duration-300 hover:shadow-xl hover:shadow-jona-orange/30"
+                  className="block w-full rounded-full bg-jona-orange px-10 py-4 text-center text-sm font-semibold text-white shadow-lg shadow-jona-orange/25 transition-all duration-300 hover:shadow-xl hover:shadow-jona-orange/30 sm:w-auto"
                 >
                   Cotiza ahora
                 </MotionLinkButton>
                 <MotionLinkButton
                   to="/visualizar"
-                  className="rounded-full border border-white/35 bg-white/10 px-10 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-white/15"
+                  className="block w-full rounded-full border border-white/35 bg-white/10 px-10 py-4 text-center text-sm font-semibold text-white transition-colors duration-300 hover:bg-white/15 sm:w-auto"
                 >
                   Visualiza tu etiqueta
                 </MotionLinkButton>
                 <MotionLinkButton
                   to="/productos"
-                  className="rounded-full border border-white/30 bg-transparent px-10 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-white/10"
+                  className="block w-full rounded-full border border-white/30 bg-transparent px-10 py-4 text-center text-sm font-semibold text-white transition-colors duration-300 hover:bg-white/10 sm:w-auto"
                 >
                   Ver productos
                 </MotionLinkButton>
