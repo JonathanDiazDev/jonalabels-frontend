@@ -1,5 +1,6 @@
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
 import { GlassCard, PageHeader, PageSection } from '../../components/editorial'
+import { cloudinaryImage } from '../../config/cloudinary'
 
 const PILLAR_COLOR = 'text-jona-blue dark:text-blue-300'
 
@@ -31,7 +32,10 @@ export default function Nosotros() {
         <FadeIn delay={0.1} className="shrink-0">
           <GlassCard padding="p-0" className="relative aspect-[4/5] w-[min(100%,26.2rem)] overflow-hidden sm:w-[27.625rem] lg:w-[25.45rem]">
             <img
-              src="https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg"
+              src={cloudinaryImage(
+                'https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg',
+                'card',
+              )}
               alt="Detalle de etiqueta textil de satín en producción"
               loading="lazy"
               className="h-full w-full object-cover"

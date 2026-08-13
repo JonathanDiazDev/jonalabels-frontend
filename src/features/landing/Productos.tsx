@@ -2,11 +2,21 @@ import { Link } from 'react-router-dom'
 import QuoteForm from './QuoteForm'
 import FadeIn, { Stagger, StaggerItem } from '../../components/FadeIn'
 import { GlassCard, PageHeader, PageSection, SectionHeading } from '../../components/editorial'
+import { cloudinaryImage } from '../../config/cloudinary'
 
 const CLOUDINARY = {
-  satin: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg',
-  colgante: 'https://res.cloudinary.com/oisispbh/image/upload/v1784921824/pexels-ron-lach-9594081_x9fu4i.jpg',
-  bordado: 'https://res.cloudinary.com/oisispbh/image/upload/v1784922414/wmremove-transformed_cnwfot.png',
+  satin: cloudinaryImage(
+    'https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg',
+    'card',
+  ),
+  colgante: cloudinaryImage(
+    'https://res.cloudinary.com/oisispbh/image/upload/v1784921824/pexels-ron-lach-9594081_x9fu4i.jpg',
+    'card',
+  ),
+  bordado: cloudinaryImage(
+    'https://res.cloudinary.com/oisispbh/image/upload/v1784922414/wmremove-transformed_cnwfot.png',
+    'card',
+  ),
 }
 
 const CATEGORIES = [

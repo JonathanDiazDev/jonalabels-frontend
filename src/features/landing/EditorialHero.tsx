@@ -2,6 +2,12 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { Check, Factory, Gem, MessageSquareText, Truck } from 'lucide-react'
 import FadeIn, { MotionLinkButton, Stagger, StaggerItem } from '../../components/FadeIn'
 import { GlassCard, SectionHeading, AccentIcon, brandAccentAt, brandAccentTitle, pageMaxWidthClass } from '../../components/editorial'
+import { cloudinaryImage, cloudinaryVideo } from '../../config/cloudinary'
+
+const HERO_POSTER =
+  'https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg'
+const HERO_VIDEO =
+  'https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4'
 
 function MexicanFlagIcon({ className = '' }: { className?: string }) {
   return (
@@ -48,9 +54,9 @@ export default function EditorialHero() {
             muted
             playsInline
             preload="none"
-            poster="https://res.cloudinary.com/oisispbh/image/upload/v1784921748/pexels-dmitriy-steinke-559643503-31438256_kioskz.jpg"
+            poster={cloudinaryImage(HERO_POSTER, 'hero')}
             className="h-full w-full object-cover will-change-transform transform-gpu"
-            src="https://res.cloudinary.com/oisispbh/video/upload/v1784917112/0724_njhd6w.mp4"
+            src={cloudinaryVideo(HERO_VIDEO)}
           />
           <div className="absolute inset-0 bg-black/70" />
         </div>
