@@ -8,9 +8,8 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 function getInitialTheme(): boolean {
-  const saved = localStorage.getItem('jona-theme')
-  if (saved) return saved === 'dark'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
+  // Light by default on first visit — do not mirror OS dark mode (common on mobile).
+  return localStorage.getItem('jona-theme') === 'dark'
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -20,6 +19,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const root = document.documentElement
     root.classList.toggle('dark', isDark)
     localStorage.setItem('jona-theme', isDark ? 'dark' : 'light')
+    document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', isDark ? 'dark' : 'light')
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#0c0a09' : '#fafaf9')
   }, [isDark])
 
   const toggle = useCallback(() => setIsDark((prev) => !prev), [])

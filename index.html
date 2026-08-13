@@ -9,6 +9,19 @@
     <meta name="apple-mobile-web-app-title" content="JonaLabels" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#fafaf9" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem('jona-theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.querySelector('meta[name="color-scheme"]')?.setAttribute('content', 'dark');
+            document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0c0a09');
+          }
+        } catch (_) {}
+      })();
+    </script>
     <meta name="description" content="Etiquetas textiles personalizadas para dar identidad a tu marca. Producción rápida con satén de alta definición." />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://jonalabels.com" />
