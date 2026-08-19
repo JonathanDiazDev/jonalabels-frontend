@@ -1,7 +1,7 @@
 import { memo, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { AnimatePresence, motion, useMotionValue, type MotionValue } from 'framer-motion'
-import { ArrowRight, CheckCircle2, Pipette, Sparkles, Upload, X } from 'lucide-react'
-import { useQuote } from '../../context/QuoteContext'
+import { ArrowRight, CheckCircle2, Eye, Pipette, Sparkles, Upload, X } from 'lucide-react'
+import { useQuote, type GarmentZoneKey } from '../../context/QuoteContext'
 import { whatsAppUrl } from '../../config/constants'
 import { SectionEyebrow, btnPrimaryClass, pageMaxWidthNarrowClass } from '../../components/editorial'
 
@@ -197,14 +197,199 @@ function ZoomSlider({ scale }: { scale: MotionValue<number> }) {
   )
 }
 
+const GARMENT_ZONES: Record<
+  GarmentZoneKey,
+  {
+    label: string
+    baseImage: string
+    shadingLayer: string
+    material: 'SATIN' | 'COLGANTE'
+    zone?: { top: string; left: string; width: string; height: string }
+    rotatedZone?: {
+      centerTop: string
+      centerLeft: string
+      width: string
+      height: string
+      rotate: string
+    }
+  }
+> = {
+  cuello_playera: {
+    label: 'Cuello de playera',
+    baseImage: '/mockups/saten/saten-base/cuello_playera_base.jpg',
+    shadingLayer: '/mockups/saten/saten-shading/cuello_playera_shading.png',
+    zone: { top: '41.25%', left: '28.79%', width: '44.87%', height: '14.58%' },
+    material: 'SATIN',
+  },
+  dobladillo_sudadera: {
+    label: 'Dobladillo',
+    baseImage: '/mockups/saten/saten-base/dobladillo_sudadera_base.jpg',
+    shadingLayer: '/mockups/saten/saten-shading/dobladillo_sudadera_shading.png',
+    zone: { top: '41.25%', left: '35.94%', width: '30.80%', height: '14.17%' },
+    material: 'SATIN',
+  },
+  cuello_negro: {
+    label: 'Cuello negro',
+    baseImage: '/mockups/saten/saten-base/cuello_negro_base.jpg',
+    shadingLayer: '/mockups/saten/saten-shading/cuello_negro_shading.png',
+    zone: { top: '35.67%', left: '42.19%', width: '15.51%', height: '8.33%' },
+    material: 'SATIN',
+  },
+  colgante_1: {
+    label: 'Colgante 1',
+    baseImage: '/mockups/saten/hangtag-base/hangtag_1_base.png',
+    shadingLayer: '/mockups/saten/hangtag-shading/hangtag_1_shading.png',
+    rotatedZone: {
+      centerTop: '59.10%',
+      centerLeft: '55.14%',
+      width: '17.60%',
+      height: '58.67%',
+      rotate: '35.8deg',
+    },
+    material: 'COLGANTE',
+  },
+  colgante_2: {
+    label: 'Colgante 2',
+    baseImage: '/mockups/saten/hangtag-base/hangtag_2_base.png',
+    shadingLayer: '/mockups/saten/hangtag-shading/hangtag_2_shading.png',
+    zone: { top: '36.67%', left: '33.86%', width: '12.75%', height: '47.30%' },
+    material: 'COLGANTE',
+  },
+  colgante_3: {
+    label: 'Colgante 3',
+    baseImage: '/mockups/saten/hangtag-base/hangtag_3_base.png',
+    shadingLayer: '/mockups/saten/hangtag-shading/hangtag_3_shading.png',
+    rotatedZone: {
+      centerTop: '59.25%',
+      centerLeft: '56.44%',
+      width: '14.33%',
+      height: '47.03%',
+      rotate: '49.15deg',
+    },
+    material: 'COLGANTE',
+  },
+  colgante_4: {
+    label: 'Colgante 4',
+    baseImage: '/mockups/saten/hangtag-base/hangtag_4_base.png',
+    shadingLayer: '/mockups/saten/hangtag-shading/hangtag_4_shading.png',
+    rotatedZone: {
+      centerTop: '59.15%',
+      centerLeft: '54.78%',
+      width: '15.18%',
+      height: '55.47%',
+      rotate: '40.52deg',
+    },
+    material: 'COLGANTE',
+  },
+}
+
+interface GarmentPreviewProps {
+  previewUrl: string | null
+  garmentKey: GarmentZoneKey
+  scale: MotionValue<number>
+}
+
+const GarmentPreview = memo(function GarmentPreview({
+  previewUrl,
+  garmentKey,
+  scale,
+}: GarmentPreviewProps) {
+  const garment = GARMENT_ZONES[garmentKey]
+  const isSatin = garment.material === 'SATIN'
+
+  return (
+    <div className="relative mx-auto w-full max-w-[380px]">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={garmentKey}
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ duration: 0.25, ease: 'easeOut' }}
+          className="relative w-full overflow-hidden rounded-2xl bg-stone-100 shadow-lg shadow-stone-900/10 ring-1 ring-stone-900/5 dark:bg-stone-800 dark:ring-white/5"
+          style={{ aspectRatio: isSatin ? '896 / 1200' : '3 / 4' }}
+        >
+          <img
+            src={garment.baseImage}
+            alt={garment.label}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+
+          {previewUrl && garment.zone && (
+            <>
+              <motion.img
+                src={previewUrl}
+                alt="Tu logo"
+                className="absolute object-contain"
+                style={{
+                  top: garment.zone.top,
+                  left: garment.zone.left,
+                  width: garment.zone.width,
+                  height: garment.zone.height,
+                  scale,
+                }}
+              />
+              <img
+                src={garment.shadingLayer}
+                alt=""
+                aria-hidden
+                className="pointer-events-none absolute object-cover"
+                style={{
+                  top: garment.zone.top,
+                  left: garment.zone.left,
+                  width: garment.zone.width,
+                  height: garment.zone.height,
+                  mixBlendMode: 'multiply',
+                }}
+              />
+            </>
+          )}
+
+          {previewUrl && garment.rotatedZone && (
+            <div
+              className="absolute overflow-hidden"
+              style={{
+                top: garment.rotatedZone.centerTop,
+                left: garment.rotatedZone.centerLeft,
+                width: garment.rotatedZone.width,
+                height: garment.rotatedZone.height,
+                transform: `translate(-50%, -50%) rotate(${garment.rotatedZone.rotate})`,
+              }}
+            >
+              <motion.img
+                src={previewUrl}
+                alt="Tu logo"
+                className="absolute inset-0 h-full w-full object-contain"
+                style={{ scale }}
+              />
+              <img
+                src={garment.shadingLayer}
+                alt=""
+                aria-hidden
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+                style={{ mixBlendMode: 'multiply' }}
+              />
+            </div>
+          )}
+
+          <span className="absolute bottom-4 left-0 right-0 z-10 text-center text-[10px] font-medium uppercase tracking-[0.28em] text-stone-500/80">
+            {garment.label}
+          </span>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )
+})
+
 export default function LabelVisualizer() {
-  const { labelType, logoFile, setLabelType, setLogoFile } = useQuote()
+  const { labelType, garmentZone, logoFile, setLabelType, setGarmentZone, setLogoFile } = useQuote()
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [presetId, setPresetId] = useState<PresetId | 'custom'>('beige')
   const [customHex, setCustomHex] = useState('#F3F0E6')
   const [hexInput, setHexInput] = useState('F3F0E6')
   const [hexError, setHexError] = useState('')
+  const [showMockup, setShowMockup] = useState(false)
   const designScale = useMotionValue(0.75)
   const inputRef = useRef<HTMLInputElement>(null)
   const colorPickerRef = useRef<HTMLInputElement>(null)
@@ -496,23 +681,63 @@ export default function LabelVisualizer() {
             <div className="aspect-square w-full overflow-hidden rounded-2xl bg-white/60 p-4 shadow-lg shadow-stone-900/5 ring-1 ring-stone-900/5 backdrop-blur-sm dark:bg-stone-900/60 dark:ring-white/5 sm:p-5">
               <div className="flex h-full w-full items-center justify-center">
                 <AnimatePresence mode="wait">
-                  <motion.div
-                    key={`${labelType}-${activeColor.hex}`}
-                    initial={{ opacity: 0, scale: 0.96, y: 6 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96, y: -6 }}
-                    transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="flex h-full w-full items-center justify-center"
-                  >
-                    {labelType === 'SATIN' ? (
-                      <SatinPreview previewUrl={previewUrl} color={activeColor} scale={designScale} />
-                    ) : (
-                      <ColgantePreview previewUrl={previewUrl} color={activeColor} scale={designScale} />
-                    )}
-                  </motion.div>
+                  {showMockup ? (
+                    <motion.div
+                      key={`mockup-${garmentZone}`}
+                      initial={{ opacity: 0, scale: 0.96, y: 6 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.96, y: -6 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className="flex h-full w-full items-center justify-center"
+                    >
+                      <GarmentPreview
+                        previewUrl={previewUrl}
+                        garmentKey={garmentZone}
+                        scale={designScale}
+                      />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key={`${labelType}-${activeColor.hex}`}
+                      initial={{ opacity: 0, scale: 0.96, y: 6 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.96, y: -6 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className="flex h-full w-full items-center justify-center"
+                    >
+                      {labelType === 'SATIN' ? (
+                        <SatinPreview previewUrl={previewUrl} color={activeColor} scale={designScale} />
+                      ) : (
+                        <ColgantePreview previewUrl={previewUrl} color={activeColor} scale={designScale} />
+                      )}
+                    </motion.div>
+                  )}
                 </AnimatePresence>
               </div>
             </div>
+
+            {showMockup && (
+              <div className="mt-4 flex w-full flex-wrap justify-center gap-2 px-1">
+                {(Object.entries(GARMENT_ZONES) as [GarmentZoneKey, (typeof GARMENT_ZONES)[GarmentZoneKey]][])
+                  .filter(([, g]) => g.material === labelType)
+                  .map(([key, g]) => (
+                    <motion.button
+                      key={key}
+                      type="button"
+                      onClick={() => setGarmentZone(key)}
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.96 }}
+                      className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
+                        garmentZone === key
+                          ? 'bg-[#11317B] text-white shadow-md shadow-[#11317B]/20'
+                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700'
+                      }`}
+                    >
+                      {g.label}
+                    </motion.button>
+                  ))}
+              </div>
+            )}
 
             {previewUrl && (
               <div className="mt-4 flex w-full items-center gap-3 px-1">
@@ -522,6 +747,15 @@ export default function LabelVisualizer() {
                 <ZoomSlider scale={designScale} />
               </div>
             )}
+
+            <button
+              type="button"
+              onClick={() => setShowMockup((v) => !v)}
+              className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-stone-500 transition-colors duration-200 hover:text-[#11317B] dark:text-stone-400 dark:hover:text-blue-300"
+            >
+              <Eye className="h-3.5 w-3.5" />
+              {showMockup ? 'Volver al diseño' : '¿Quieres ver cómo se vería en una prenda?'}
+            </button>
 
             <motion.button
               type="button"
